@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programme Affilié — Speed Ecom</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #111111;
+      --white: #ffffff;
+      --gray-50: #f9f9f9;
+      --gray-100: #f2f2f2;
+      --gray-200: #e5e5e5;
+      --gray-400: #999999;
+      --gray-600: #555555;
+      --green: #16a34a;
+      --orange: #d97706;
+      --red: #dc2626;
+    }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--gray-50);
+      color: var(--black);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .header-logo span { color: var(--gray-400); font-weight: 400; }
+    .header-user { font-size: 13px; color: var(--gray-600); display: flex; align-items: center; gap: 12px; }
+    .btn-logout {
+      font-size: 12px;
+      color: var(--gray-400);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 0;
+    }
+    .btn-logout:hover { color: var(--black); }
+
+    /* ── Layout ─────────────────────────────────────────── */
+    .page { max-width: 900px; margin: 0 auto; padding: 32px 24px 64px; }
+
+    /* ── Auth screen ────────────────────────────────────── */
+    #auth-screen {
+      max-width: 420px;
+      margin: 80px auto;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 40px 36px;
+    }
+    #auth-screen h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.4px;
+    }
+    #auth-screen .subtitle { font-size: 14px; color: var(--gray-600); margin-bottom: 32px; }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 28px;
+      gap: 0;
+    }
+    .tab {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      color: var(--gray-400);
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      transition: all 0.15s;
+      margin-bottom: -1px;
+    }
+    .tab.active { color: var(--black); border-bottom-color: var(--black); }
+
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--black);
+      background: var(--white);
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    input:focus { border-color: var(--black); }
+    input::placeholder { color: var(--gray-400); }
+
+    .btn-primary {
+      width: 100%;
+      padding: 12px 20px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .msg { font-size: 13px; text-align: center; margin-top: 16px; padding: 10px 14px; border-radius: 6px; display: none; }
+    .msg.success { background: #f0fdf4; color: var(--green); display: block; }
+    .msg.error   { background: #fef2f2; color: var(--red);   display: block; }
+
+    /* ── Dashboard ──────────────────────────────────────── */
+    #dashboard-screen { display: none; }
+
+    .greeting { font-size: 20px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
+    .greeting-sub { font-size: 14px; color: var(--gray-600); margin-bottom: 32px; }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (min-width: 640px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+    .kpi-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 20px 18px;
+    }
+    .kpi-label { font-size: 12px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .kpi-value { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+    .kpi-sub   { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+
+    /* Section title */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.2px;
+    }
+
+    /* Code affilié box */
+    .code-box {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .code-display {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .code-badge {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      background: var(--gray-100);
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: var(--black);
+    }
+    .code-rate { font-size: 14px; color: var(--gray-600); }
+    .code-rate strong { color: var(--green); }
+
+    .links-grid { display: flex; flex-direction: column; gap: 10px; }
+    .link-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 10px 14px;
+      flex-wrap: wrap;
+    }
+    .link-label { font-size: 12px; font-weight: 600; color: var(--gray-600); min-width: 90px; }
+    .link-url {
+      font-size: 13px;
+      color: var(--black);
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn-copy {
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-copy:hover { opacity: 0.8; }
+    .btn-copy.copied { background: var(--green); }
+
+    /* Commission table */
+    .commissions-box {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .commissions-box table { width: 100%; border-collapse: collapse; }
+    .commissions-box th {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--gray-50);
+    }
+    .commissions-box td {
+      font-size: 13px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--black);
+    }
+    .commissions-box tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-pending   { background: #fffbeb; color: var(--orange); }
+    .badge-validated { background: #f0fdf4; color: var(--green);  }
+    .badge-paid      { background: #f0f4ff; color: #3b82f6;       }
+    .badge-canceled  { background: #fef2f2; color: var(--red);    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--gray-400);
+      font-size: 14px;
+    }
+
+    /* Notice anti-remboursement */
+    .notice {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #92400e;
+      margin-bottom: 24px;
+    }
+
+    /* Loading */
+    .loading { text-align: center; padding: 60px; color: var(--gray-400); font-size: 14px; }
+
+    /* Balance card */
+    .balance-card {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .balance-label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .balance-amount { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
+    .balance-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
+    .balance-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; }
+    .balance-item-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+    .balance-item-value { font-size: 16px; font-weight: 700; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      #auth-screen { margin: 40px 16px; padding: 28px 24px; }
+      .page { padding: 24px 16px 48px; }
+      .balance-grid { grid-template-columns: 1fr; gap: 8px; }
+      .commissions-box { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────── -->
+<header class="header">
+  <a href="https://speed-ecom.eu" class="header-logo">Speed Ecom <span>/ Affiliés</span></a>
+  <div class="header-user" id="header-user" style="display:none">
+    <span id="header-email"></span>
+    <button class="btn-logout" onclick="logout()">Déconnexion</button>
+  </div>
+</header>
+
+<!-- ── Auth screen ──────────────────────────────────────── -->
+<div id="auth-screen">
+  <h1>Programme affilié</h1>
+  <p class="subtitle">Gagnez 30% de commission sur chaque vente.</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('register')">Rejoindre</button>
+    <button class="tab" onclick="switchTab('login')">Se connecter</button>
+  </div>
+
+  <!-- Register form -->
+  <div id="tab-register">
+    <div class="form-group">
+      <label for="reg-name">Prénom et nom</label>
+      <input type="text" id="reg-name" placeholder="Cédric Anger" />
+    </div>
+    <div class="form-group">
+      <label for="reg-email">Email</label>
+      <input type="email" id="reg-email" placeholder="vous@exemple.com" />
+    </div>
+    <div class="form-group">
+      <label for="reg-paypal">Email PayPal (pour recevoir vos commissions)</label>
+      <input type="email" id="reg-paypal" placeholder="paypal@exemple.com (optionnel)" />
+    </div>
+    <button class="btn-primary" id="btn-register" onclick="doRegister()">Créer mon compte affilié</button>
+    <div class="msg" id="msg-register"></div>
+  </div>
+
+  <!-- Login form -->
+  <div id="tab-login" style="display:none">
+    <div class="form-group">
+      <label for="login-email">Votre email affilié</label>
+      <input type="email" id="login-email" placeholder="vous@exemple.com" />
+    </div>
+    <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion</button>
+    <div class="msg" id="msg-login"></div>
+  </div>
+</div>
+
+<!-- ── Dashboard ────────────────────────────────────────── -->
+<div id="dashboard-screen">
+  <div class="page">
+
+    <div class="loading" id="dashboard-loading">Chargement de votre dashboard...</div>
+
+    <div id="dashboard-content" style="display:none">
+
+      <p class="greeting" id="greeting-name">Bonjour</p>
+      <p class="greeting-sub" id="greeting-sub">Voici votre tableau de bord affilié Speed Ecom</p>
+
+      <!-- Solde -->
+      <div class="balance-card">
+        <p class="balance-label">À payer ce mois</p>
+        <p class="balance-amount" id="balance-validated">0,00€</p>
+        <p class="balance-sub">Commissions validées en attente de paiement</p>
+        <div class="balance-grid">
+          <div>
+            <p class="balance-item-label">En attente (J+30)</p>
+            <p class="balance-item-value" id="balance-pending">0,00€</p>
+          </div>
+          <div>
+            <p class="balance-item-label">Total gagné</p>
+            <p class="balance-item-value" id="balance-total">0,00€</p>
+          </div>
+          <div>
+            <p class="balance-item-label">Déjà payé</p>
+            <p class="balance-item-value" id="balance-paid">0,00€</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <p class="kpi-label">Clics</p>
+          <p class="kpi-value" id="kpi-clicks">0</p>
+          <p class="kpi-sub">via vos liens</p>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">Ventes</p>
+          <p class="kpi-value" id="kpi-conversions">0</p>
+          <p class="kpi-sub">conversions</p>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">Taux conv.</p>
+          <p class="kpi-value" id="kpi-rate">0%</p>
+          <p class="kpi-sub">clics → ventes</p>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">Filleuls actifs</p>
+          <p class="kpi-value" id="kpi-active">—</p>
+          <p class="kpi-sub">abonnements</p>
+        </div>
+      </div>
+
+      <!-- Liens affiliés -->
+      <div class="code-box">
+        <p class="section-title">Vos liens affiliés</p>
+        <div class="code-display">
+          <span class="code-badge" id="aff-code">—</span>
+          <span class="code-rate">Commission : <strong>30%</strong> par vente</span>
+        </div>
+        <div class="links-grid" id="links-grid"></div>
+      </div>
+
+      <!-- Notice -->
+      <div class="notice">
+        Les commissions sont validées automatiquement 30 jours après la vente (délai anti-remboursement).
+        Une fois validées, elles sont incluses dans le prochain virement mensuel.
+      </div>
+
+      <!-- Commissions -->
+      <p class="section-title">Historique des commissions</p>
+      <div class="commissions-box" id="commissions-box">
+        <div class="empty-state" id="commissions-empty">Aucune commission pour l'instant.<br>Partagez vos liens pour commencer !</div>
+        <table id="commissions-table" style="display:none">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Produit</th>
+              <th>Vente</th>
+              <th>Commission</th>
+              <th>Statut</th>
+              <th>Valide le</th>
+            </tr>
+          </thead>
+          <tbody id="commissions-body"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Config ──────────────────────────────────────────────
+  const API = 'https://speedfly-api.up.railway.app/api'
+  // const API = 'http://localhost:3000/api' // dev
+
+  const LINKS = {
+    speedfly:   (code) => `https://speed-ecom.eu/speedfly?ref=${code}`,
+    ecomSphere: (code) => `https://speed-ecom.eu/ecom-sphere?ref=${code}`,
+  }
+
+  const LINK_LABELS = {
+    speedfly:   'Speedfly',
+    ecomSphere: 'Ecom Sphere',
+  }
+
+  let authToken = null
+
+  // ── Init ────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    // 1. Lire le token dans l'URL (magic link)
+    const urlParams = new URLSearchParams(window.location.search)
+    const tokenFromUrl = urlParams.get('token')
+    if (tokenFromUrl) {
+      localStorage.setItem('affiliate_token', tokenFromUrl)
+      // Nettoyer l'URL
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+
+    // 2. Vérifier si un token est stocké
+    authToken = localStorage.getItem('affiliate_token')
+    if (authToken) {
+      showDashboard()
+    } else {
+      showAuth()
+    }
+  })
+
+  // ── Auth ────────────────────────────────────────────────
+  function showAuth() {
+    document.getElementById('auth-screen').style.display = 'block'
+    document.getElementById('dashboard-screen').style.display = 'none'
+    document.getElementById('header-user').style.display = 'none'
+  }
+
+  function showDashboard() {
+    document.getElementById('auth-screen').style.display = 'none'
+    document.getElementById('dashboard-screen').style.display = 'block'
+    loadDashboard()
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (tab === 'register' && i === 0) || (tab === 'login' && i === 1))
+    })
+    document.getElementById('tab-register').style.display = tab === 'register' ? 'block' : 'none'
+    document.getElementById('tab-login').style.display    = tab === 'login'    ? 'block' : 'none'
+  }
+
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id)
+    el.textContent = text
+    el.className   = 'msg ' + type
+  }
+
+  async function doRegister() {
+    const name  = document.getElementById('reg-name').value.trim()
+    const email = document.getElementById('reg-email').value.trim()
+    const paypal = document.getElementById('reg-paypal').value.trim()
+
+    if (!name || !email) { showMsg('msg-register', 'Nom et email obligatoires.', 'error'); return }
+
+    const btn = document.getElementById('btn-register')
+    btn.disabled = true
+    btn.textContent = 'Envoi...'
+
+    try {
+      const res = await fetch(`${API}/affiliates/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, paypalEmail: paypal || undefined }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        showMsg('msg-register', data.message, 'success')
+      } else {
+        showMsg('msg-register', data.error || 'Une erreur est survenue.', 'error')
+      }
+    } catch {
+      showMsg('msg-register', 'Impossible de contacter le serveur. Réessayez.', 'error')
+    } finally {
+      btn.disabled = false
+      btn.textContent = 'Créer mon compte affilié'
+    }
+  }
+
+  async function doLogin() {
+    const email = document.getElementById('login-email').value.trim()
+    if (!email) { showMsg('msg-login', 'Email obligatoire.', 'error'); return }
+
+    const btn = document.getElementById('btn-login')
+    btn.disabled = true
+    btn.textContent = 'Envoi...'
+
+    try {
+      const res = await fetch(`${API}/affiliates/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      showMsg('msg-login', data.message || 'Lien envoyé !', res.ok ? 'success' : 'error')
+    } catch {
+      showMsg('msg-login', 'Impossible de contacter le serveur.', 'error')
+    } finally {
+      btn.disabled = false
+      btn.textContent = 'Recevoir mon lien de connexion'
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('affiliate_token')
+    authToken = null
+    showAuth()
+  }
+
+  // ── Dashboard ────────────────────────────────────────────
+  async function loadDashboard() {
+    try {
+      const res = await fetch(`${API}/affiliates/me/stats`, {
+        headers: { 'Authorization': `Bearer ${authToken}` },
+      })
+
+      if (res.status === 401) {
+        localStorage.removeItem('affiliate_token')
+        authToken = null
+        showAuth()
+        return
+      }
+
+      const data = await res.json()
+      renderDashboard(data)
+    } catch {
+      document.getElementById('dashboard-loading').textContent = 'Erreur de chargement. Rechargez la page.'
+    }
+  }
+
+  function renderDashboard(data) {
+    document.getElementById('dashboard-loading').style.display  = 'none'
+    document.getElementById('dashboard-content').style.display = 'block'
+
+    const { affiliate, clicks, conversions, conversionRate, balance, commissions } = data
+
+    // Header
+    document.getElementById('header-user').style.display = 'flex'
+    document.getElementById('header-email').textContent  = affiliate.email
+
+    // Greeting
+    document.getElementById('greeting-name').textContent = `Bonjour, ${affiliate.name.split(' ')[0]}`
+
+    // Balance
+    document.getElementById('balance-validated').textContent = fmtEur(balance.validated)
+    document.getElementById('balance-pending').textContent   = fmtEur(balance.pending)
+    document.getElementById('balance-total').textContent     = fmtEur(balance.totalEarned)
+    document.getElementById('balance-paid').textContent      = fmtEur(balance.paid)
+
+    // KPIs
+    document.getElementById('kpi-clicks').textContent      = clicks
+    document.getElementById('kpi-conversions').textContent = conversions
+    document.getElementById('kpi-rate').textContent        = conversionRate + '%'
+
+    // Compter les abonnements actifs (commissions récurrentes non annulées)
+    const recurringActive = commissions.filter(c => c.isRecurring && c.status !== 'CANCELED').length
+    document.getElementById('kpi-active').textContent = recurringActive > 0 ? recurringActive : '0'
+
+    // Code & liens
+    document.getElementById('aff-code').textContent = affiliate.code
+    const linksGrid = document.getElementById('links-grid')
+    linksGrid.innerHTML = ''
+
+    const linkDefs = [
+      { label: 'Speedfly',    url: LINKS.speedfly(affiliate.code) },
+      { label: 'Ecom Sphere', url: LINKS.ecomSphere(affiliate.code) },
+    ]
+    linkDefs.forEach(({ label, url }) => {
+      const row = document.createElement('div')
+      row.className = 'link-row'
+      row.innerHTML = `
+        <span class="link-label">${label}</span>
+        <span class="link-url">${url}</span>
+        <button class="btn-copy" onclick="copyLink(this, '${url}')">Copier</button>
+      `
+      linksGrid.appendChild(row)
+    })
+
+    // Commissions
+    if (commissions.length === 0) {
+      document.getElementById('commissions-empty').style.display = 'block'
+      document.getElementById('commissions-table').style.display = 'none'
+    } else {
+      document.getElementById('commissions-empty').style.display = 'none'
+      document.getElementById('commissions-table').style.display = 'table'
+      const tbody = document.getElementById('commissions-body')
+      tbody.innerHTML = ''
+      commissions.forEach((c) => {
+        const tr = document.createElement('tr')
+        tr.innerHTML = `
+          <td>${fmtDate(c.createdAt)}</td>
+          <td>${c.productName}${c.isRecurring ? ' <span style="color:var(--gray-400);font-size:11px">récurrent</span>' : ''}</td>
+          <td>${fmtEur(c.saleAmountCents / 100)}</td>
+          <td style="font-weight:700">${fmtEur(c.commissionAmountCents / 100)}</td>
+          <td>${badge(c.status)}</td>
+          <td style="color:var(--gray-400)">${c.status === 'PENDING' ? fmtDate(c.validatesAt) : '—'}</td>
+        `
+        tbody.appendChild(tr)
+      })
+    }
+  }
+
+  // ── Helpers ──────────────────────────────────────────────
+  function fmtEur(v) {
+    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(v)
+  }
+  function fmtDate(d) {
+    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })
+  }
+  function badge(status) {
+    const map = {
+      PENDING:   ['badge-pending',   'En attente'],
+      VALIDATED: ['badge-validated', 'Validée'],
+      PAID:      ['badge-paid',      'Payée'],
+      CANCELED:  ['badge-canceled',  'Annulée'],
+    }
+    const [cls, label] = map[status] || ['', status]
+    return `<span class="badge ${cls}">${label}</span>`
+  }
+  function copyLink(btn, url) {
+    navigator.clipboard.writeText(url).then(() => {
+      btn.textContent = 'Copié !'
+      btn.classList.add('copied')
+      setTimeout(() => {
+        btn.textContent = 'Copier'
+        btn.classList.remove('copied')
+      }, 2000)
+    })
+  }
+</script>
+</body>
+</html>
