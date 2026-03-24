@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Affilié — Speed Ecom</title>
+  <title>Programme Affilié — Speed Ecom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,44 +17,104 @@
       --orange: #d97706; --orange-light: #fffbeb; --orange-border: #fde68a;
       --blue: #2563eb; --blue-light: #eff6ff; --blue-border: #bfdbfe;
       --red: #dc2626; --red-light: #fef2f2;
-      --gold: #D4AF37;
+      --accent: #22c55e;
     }
     html { font-size: 16px; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--gray-50); color: var(--black); min-height: 100vh; line-height: 1.5; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-50); color: var(--black); min-height: 100vh; line-height: 1.5; }
 
     /* ── Header ── */
-    .header { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .logo { font-size: 14px; font-weight: 700; color: var(--black); text-decoration: none; letter-spacing: -0.3px; }
-    .logo span { color: var(--gray-400); font-weight: 400; }
-    .header-right { display: flex; align-items: center; gap: 16px; }
-    .user-pill { display: flex; align-items: center; gap: 8px; background: var(--gray-100); border-radius: 100px; padding: 4px 12px 4px 4px; }
-    .user-avatar { width: 26px; height: 26px; background: var(--black); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-    .user-name { font-size: 13px; font-weight: 500; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .btn-sm { font-size: 12px; color: var(--gray-400); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 4px; }
-    .btn-sm:hover { color: var(--black); background: var(--gray-100); }
+    .header { background: var(--black); padding: 0 28px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 30px; height: 30px; background: var(--white); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: var(--black); letter-spacing: -0.5px; flex-shrink: 0; }
+    .logo-text { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: -0.3px; }
+    .logo-badge { font-size: 10px; font-weight: 600; color: rgba(255,255,255,.4); background: rgba(255,255,255,.08); padding: 2px 8px; border-radius: 20px; letter-spacing: .3px; text-transform: uppercase; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .user-pill { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border-radius: 100px; padding: 4px 12px 4px 4px; }
+    .user-avatar { width: 26px; height: 26px; background: var(--accent); color: var(--black); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+    .user-name { font-size: 13px; font-weight: 500; color: var(--white); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn-sm { font-size: 12px; color: rgba(255,255,255,.5); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 4px; font-family: inherit; }
+    .btn-sm:hover { color: var(--white); background: rgba(255,255,255,.08); }
 
     /* ── Page ── */
     .page { max-width: 960px; margin: 0 auto; padding: 28px 20px 64px; }
 
-    /* ── Auth ── */
-    #auth-screen { max-width: 420px; margin: 64px auto; }
-    .auth-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 36px; }
-    .auth-title { font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 4px; }
+    /* ── Auth — split screen ── */
+    #auth-screen { display: flex; min-height: calc(100vh - 56px); }
+
+    .auth-brand {
+      width: 42%;
+      background: var(--black);
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-brand::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(34,197,94,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .auth-brand-eyebrow { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+    .auth-brand-title { font-size: 38px; font-weight: 900; color: var(--white); line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 12px; }
+    .auth-brand-title span { color: var(--accent); }
+    .auth-brand-sub { font-size: 15px; color: rgba(255,255,255,.5); margin-bottom: 40px; line-height: 1.6; }
+
+    .auth-products { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+    .auth-product { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .auth-product-info { }
+    .auth-product-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+    .auth-product-price { font-size: 12px; color: rgba(255,255,255,.4); }
+    .auth-product-commission { text-align: right; }
+    .auth-product-amount { font-size: 20px; font-weight: 800; color: var(--accent); letter-spacing: -0.5px; }
+    .auth-product-freq { font-size: 11px; color: rgba(255,255,255,.35); }
+
+    .auth-divider { width: 40px; height: 1px; background: rgba(255,255,255,.1); margin-bottom: 28px; }
+
+    .auth-features { display: flex; flex-direction: column; gap: 10px; }
+    .auth-feature { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,.55); }
+    .auth-feature-icon { width: 20px; height: 20px; background: rgba(34,197,94,.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .auth-feature-icon svg { width: 10px; height: 10px; stroke: var(--accent); stroke-width: 2.5; }
+
+    .auth-form-side {
+      flex: 1;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+    }
+    .auth-form-inner { width: 100%; max-width: 380px; }
+    .auth-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
     .auth-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 28px; }
+
     .tabs { display: flex; border-bottom: 1px solid var(--gray-200); margin-bottom: 24px; }
-    .tab { font-size: 13px; font-weight: 500; padding: 8px 16px; cursor: pointer; border: none; background: none; color: var(--gray-400); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; }
+    .tab { font-size: 13px; font-weight: 500; padding: 8px 16px; cursor: pointer; border: none; background: none; color: var(--gray-400); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; font-family: inherit; }
     .tab.active { color: var(--black); border-bottom-color: var(--black); }
     .form-group { margin-bottom: 14px; }
     label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 5px; }
-    input[type=text], input[type=email] { width: 100%; padding: 9px 12px; border: 1px solid var(--gray-200); border-radius: 6px; font-size: 14px; outline: none; transition: border-color .15s; }
+    input[type=text], input[type=email] { width: 100%; padding: 10px 13px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; outline: none; transition: border-color .15s; font-family: inherit; }
     input:focus { border-color: var(--black); }
-    input::placeholder { color: var(--gray-400); }
-    .btn-primary { width: 100%; padding: 11px 20px; background: var(--black); color: var(--white); border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: opacity .15s; }
+    input::placeholder { color: var(--gray-300); }
+    .btn-primary { width: 100%; padding: 12px 20px; background: var(--black); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: opacity .15s; font-family: inherit; letter-spacing: -.2px; }
     .btn-primary:hover { opacity: .85; }
     .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
-    .msg { font-size: 13px; margin-top: 14px; padding: 10px 12px; border-radius: 6px; display: none; }
+    .msg { font-size: 13px; margin-top: 14px; padding: 10px 12px; border-radius: 8px; display: none; }
     .msg.success { background: var(--green-light); color: var(--green); display: block; }
     .msg.error { background: var(--red-light); color: var(--red); display: block; }
+
+    .auth-trust { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--gray-100); font-size: 12px; color: var(--gray-400); text-align: center; }
+
+    @media (max-width: 768px) {
+      #auth-screen { flex-direction: column; }
+      .auth-brand { width: 100%; padding: 36px 24px; }
+      .auth-brand-title { font-size: 28px; }
+      .auth-form-side { padding: 32px 24px; }
+    }
 
     /* ── Dashboard header ── */
     .dash-greeting { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 2px; }
@@ -60,30 +122,30 @@
     .dash-sub .code-inline { font-family: monospace; background: var(--gray-100); padding: 1px 6px; border-radius: 4px; font-size: 12px; letter-spacing: 1px; color: var(--black); }
 
     /* ── Balance hero ── */
-    .balance-hero { background: var(--black); color: var(--white); border-radius: 12px; padding: 24px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .balance-hero { background: var(--black); color: var(--white); border-radius: 14px; padding: 28px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     @media (max-width: 600px) { .balance-hero { grid-template-columns: 1fr; } }
-    .balance-main-label { font-size: 11px; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
-    .balance-main-value { font-size: 40px; font-weight: 900; letter-spacing: -1.5px; line-height: 1; margin-bottom: 6px; }
-    .balance-main-sub { font-size: 12px; color: rgba(255,255,255,.4); }
-    .balance-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: start; }
-    .bkd-item { background: rgba(255,255,255,.06); border-radius: 8px; padding: 12px 14px; }
-    .bkd-label { font-size: 11px; color: rgba(255,255,255,.4); margin-bottom: 4px; }
-    .bkd-value { font-size: 18px; font-weight: 700; }
+    .balance-main-label { font-size: 11px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .balance-main-value { font-size: 44px; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
+    .balance-main-sub { font-size: 12px; color: rgba(255,255,255,.35); }
+    .balance-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: start; }
+    .bkd-item { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; padding: 12px 14px; }
+    .bkd-label { font-size: 11px; color: rgba(255,255,255,.35); margin-bottom: 4px; }
+    .bkd-value { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
     .bkd-value.green  { color: #4ade80; }
     .bkd-value.blue   { color: #60a5fa; }
     .bkd-value.orange { color: #fbbf24; }
 
     /* ── Payout notice ── */
-    .payout-notice { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 10px; }
+    .payout-notice { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 10px; }
     .payout-notice svg { flex-shrink: 0; }
     .payout-notice .amount { font-weight: 700; }
 
     /* ── KPI grid ── */
     .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
     @media (max-width: 640px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
-    .kpi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; }
-    .kpi-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
-    .kpi-value { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+    .kpi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; }
+    .kpi-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+    .kpi-value { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
     .kpi-delta { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
     .kpi-delta.up { color: var(--green); }
 
@@ -91,38 +153,38 @@
     .section { margin-bottom: 24px; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .section-title { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
-    .section-action { font-size: 12px; color: var(--gray-400); cursor: pointer; background: none; border: none; padding: 4px 8px; border-radius: 4px; }
+    .section-action { font-size: 12px; color: var(--gray-400); cursor: pointer; background: none; border: none; padding: 4px 8px; border-radius: 4px; font-family: inherit; }
     .section-action:hover { color: var(--black); background: var(--gray-100); }
 
     /* ── Chart card ── */
-    .chart-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px; }
+    .chart-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; }
     .chart-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
-    .chart-tab { font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 5px; cursor: pointer; background: none; border: 1px solid var(--gray-200); color: var(--gray-600); transition: all .15s; }
+    .chart-tab { font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 6px; cursor: pointer; background: none; border: 1px solid var(--gray-200); color: var(--gray-600); transition: all .15s; font-family: inherit; }
     .chart-tab.active { background: var(--black); color: var(--white); border-color: var(--black); }
     .chart-wrap { position: relative; height: 180px; }
 
     /* ── Links card ── */
-    .links-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px; }
-    .code-display { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
-    .code-badge { font-size: 26px; font-weight: 900; letter-spacing: 3px; font-family: monospace; background: var(--gray-100); padding: 8px 18px; border-radius: 6px; }
+    .links-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 22px; }
+    .code-display { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .code-badge { font-size: 24px; font-weight: 900; letter-spacing: 4px; font-family: monospace; background: var(--black); color: var(--white); padding: 10px 20px; border-radius: 8px; }
     .code-meta { font-size: 13px; color: var(--gray-600); }
-    .code-meta strong { color: var(--green); }
-    .link-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; margin-bottom: 8px; }
+    .code-meta strong { color: var(--accent); }
+    .link-row { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; margin-bottom: 8px; }
     .link-label { font-size: 12px; font-weight: 600; color: var(--gray-600); width: 90px; flex-shrink: 0; }
     .link-url { font-size: 12px; font-family: monospace; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--black); }
-    .btn-copy { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 4px; background: var(--black); color: var(--white); border: none; cursor: pointer; flex-shrink: 0; transition: all .15s; }
+    .btn-copy { font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 6px; background: var(--black); color: var(--white); border: none; cursor: pointer; flex-shrink: 0; transition: all .15s; font-family: inherit; }
     .btn-copy:hover { opacity: .8; }
     .btn-copy.copied { background: var(--green); }
-    .cookie-notice { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 12px; background: var(--blue-light); border: 1px solid var(--blue-border); border-radius: 6px; font-size: 12px; color: var(--blue); }
+    .cookie-notice { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 14px; background: #f0fdf4; border: 1px solid var(--green-border); border-radius: 8px; font-size: 12px; color: var(--green); }
     .cookie-notice svg { flex-shrink: 0; }
 
     /* ── Breakdown grid ── */
     .breakdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     @media (max-width: 480px) { .breakdown-grid { grid-template-columns: 1fr; } }
-    .bk-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; }
+    .bk-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; }
     .bk-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
     .bk-sub { font-size: 11px; color: var(--gray-400); margin-bottom: 12px; }
-    .bk-stat { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px solid var(--gray-100); }
+    .bk-stat { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid var(--gray-100); }
     .bk-stat:last-child { border-bottom: none; }
     .bk-stat-label { color: var(--gray-600); }
     .bk-stat-value { font-weight: 600; }
@@ -130,22 +192,22 @@
 
     /* ── Active subs ── */
     .sub-list { display: flex; flex-direction: column; gap: 8px; }
-    .sub-item { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .sub-item { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .sub-product { font-size: 13px; font-weight: 600; }
     .sub-date { font-size: 12px; color: var(--gray-400); }
     .sub-amount { font-size: 14px; font-weight: 700; color: var(--green); }
 
     /* ── Commissions table ── */
-    .commissions-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
+    .commissions-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; }
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; min-width: 560px; }
-    th { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; padding: 10px 16px; text-align: left; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
+    th { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; padding: 11px 16px; text-align: left; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
     td { font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--gray-100); }
     tr:last-child td { border-bottom: none; }
-    .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
     .badge-pending   { background: var(--orange-light); color: var(--orange); }
     .badge-validated { background: var(--green-light);  color: var(--green); }
-    .badge-paid      { background: var(--blue-light);   color: var(--blue); }
+    .badge-paid      { background: #f0fdf4; color: #166534; }
     .badge-canceled  { background: var(--red-light);    color: var(--red); }
     .recurring-tag { font-size: 10px; color: var(--gray-400); margin-left: 4px; }
 
@@ -154,18 +216,18 @@
     .empty strong { display: block; color: var(--black); font-size: 15px; margin-bottom: 4px; }
 
     /* ── Validation bar ── */
-    .validation-bar { background: var(--orange-light); border: 1px solid var(--orange-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #92400e; }
+    .validation-bar { background: var(--orange-light); border: 1px solid var(--orange-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #92400e; }
 
     /* ── Loading ── */
     .loading { text-align: center; padding: 60px; color: var(--gray-400); font-size: 14px; }
 
     /* ── Progress motivational ── */
-    .progress-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+    .progress-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; }
     .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .progress-title { font-size: 13px; font-weight: 600; }
     .progress-target { font-size: 12px; color: var(--gray-400); }
-    .progress-bar-bg { background: var(--gray-100); border-radius: 100px; height: 8px; overflow: hidden; }
-    .progress-bar-fill { background: var(--black); border-radius: 100px; height: 8px; transition: width .6s ease; }
+    .progress-bar-bg { background: var(--gray-100); border-radius: 100px; height: 6px; overflow: hidden; }
+    .progress-bar-fill { background: var(--black); border-radius: 100px; height: 6px; transition: width .6s ease; }
     .progress-msg { font-size: 12px; color: var(--gray-600); margin-top: 8px; }
   </style>
 </head>
@@ -173,7 +235,11 @@
 
 <!-- ── Header ── -->
 <header class="header">
-  <a href="https://speed-ecom.eu" class="logo">Speed Ecom <span>/ Affiliés</span></a>
+  <a href="https://speed-ecom.eu" class="logo">
+    <div class="logo-mark">SE</div>
+    <span class="logo-text">Speed Ecom</span>
+    <span class="logo-badge">Affiliés</span>
+  </a>
   <div class="header-right">
     <div class="user-pill" id="user-pill" style="display:none">
       <div class="user-avatar" id="user-avatar">?</div>
@@ -185,24 +251,80 @@
 
 <!-- ── Auth ── -->
 <div id="auth-screen">
-  <div class="auth-card">
-    <p class="auth-title">Programme affilié</p>
-    <p class="auth-sub">Gagnez 30% sur chaque vente Speedfly et Ecom Sphere.</p>
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('register')">Rejoindre</button>
-      <button class="tab" onclick="switchTab('login')">Se connecter</button>
+
+  <!-- LEFT — Branding panel -->
+  <div class="auth-brand">
+    <p class="auth-brand-eyebrow">Programme Affilié</p>
+    <h1 class="auth-brand-title">Gagnez <span>30%</span><br>sur chaque vente</h1>
+    <p class="auth-brand-sub">Partagez Speedfly et Ecom Sphere.<br>Touchez une commission à chaque achat.</p>
+
+    <div class="auth-products">
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name">🚀 Speedfly</p>
+          <p class="auth-product-price">Thème Shopify — 197€ unique</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">59€</p>
+          <p class="auth-product-freq">par vente</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name">🌐 Ecom Sphere</p>
+          <p class="auth-product-price">Communauté — 39€/mois</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">11,70€</p>
+          <p class="auth-product-freq">par mois récurrent</p>
+        </div>
+      </div>
     </div>
-    <div id="tab-register">
-      <div class="form-group"><label>Prénom et nom</label><input type="text" id="reg-name" placeholder="Cédric Anger" /></div>
-      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="vous@exemple.com" /></div>
-      <div class="form-group"><label>Email PayPal (pour vos virements)</label><input type="email" id="reg-paypal" placeholder="paypal@exemple.com (optionnel)" /></div>
-      <button class="btn-primary" id="btn-reg" onclick="doRegister()">Créer mon compte affilié</button>
-      <div class="msg" id="msg-reg"></div>
+
+    <div class="auth-divider"></div>
+
+    <div class="auth-features">
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Cookie 30 jours — vous êtes crédité même si l'achat est tardif
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Paiement via PayPal ou virement bancaire
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Dashboard temps réel — clics, ventes, commissions
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Commissions récurrentes sur les abonnements actifs
+      </div>
     </div>
-    <div id="tab-login" style="display:none">
-      <div class="form-group"><label>Votre email affilié</label><input type="email" id="login-email" placeholder="vous@exemple.com" /></div>
-      <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion</button>
-      <div class="msg" id="msg-login"></div>
+  </div>
+
+  <!-- RIGHT — Form -->
+  <div class="auth-form-side">
+    <div class="auth-form-inner">
+      <p class="auth-title">Rejoindre le programme</p>
+      <p class="auth-sub">Créez votre compte gratuit en 30 secondes.</p>
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('register')">Rejoindre</button>
+        <button class="tab" onclick="switchTab('login')">Se connecter</button>
+      </div>
+      <div id="tab-register">
+        <div class="form-group"><label>Prénom et nom</label><input type="text" id="reg-name" placeholder="Cédric Anger" /></div>
+        <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="vous@exemple.com" /></div>
+        <div class="form-group"><label>Email PayPal <span style="font-weight:400;color:#aaa">(pour vos virements)</span></label><input type="email" id="reg-paypal" placeholder="paypal@exemple.com (optionnel)" /></div>
+        <button class="btn-primary" id="btn-reg" onclick="doRegister()">Créer mon compte affilié →</button>
+        <div class="msg" id="msg-reg"></div>
+      </div>
+      <div id="tab-login" style="display:none">
+        <div class="form-group"><label>Votre email affilié</label><input type="email" id="login-email" placeholder="vous@exemple.com" /></div>
+        <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion →</button>
+        <div class="msg" id="msg-login"></div>
+      </div>
+      <p class="auth-trust">Gratuit · Sans engagement · 850+ membres Speed Ecom</p>
     </div>
   </div>
 </div>
@@ -217,7 +339,7 @@
       <p class="dash-greeting" id="dash-greeting">Bonjour</p>
       <p class="dash-sub" id="dash-sub"></p>
 
-      <!-- Payout notice (si validé > 0) -->
+      <!-- Payout notice -->
       <div class="payout-notice" id="payout-notice" style="display:none">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
         <span><span class="amount" id="payout-amount"></span> disponible pour le prochain virement — <span id="payout-date"></span></span>
@@ -372,7 +494,6 @@
   let chartMode = 'clicks';
   let timeseriesData = null;
 
-  // ── Init ────────────────────────────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', function () {
     var params = new URLSearchParams(location.search);
     var tok = params.get('token');
@@ -384,9 +505,8 @@
     authToken ? showDash() : showAuth();
   });
 
-  // ── Auth ────────────────────────────────────────────────────────────────────
   function showAuth() {
-    document.getElementById('auth-screen').style.display = 'block';
+    document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('dashboard-screen').style.display = 'none';
     document.getElementById('user-pill').style.display = 'none';
     document.getElementById('btn-logout').style.display = 'none';
@@ -424,7 +544,7 @@
       var d = await r.json();
       showMsg('msg-reg', d.message || d.error, r.ok ? 'success' : 'error');
     } catch { showMsg('msg-reg', 'Erreur réseau. Réessayez.', 'error'); }
-    finally { btn.disabled = false; btn.textContent = 'Créer mon compte affilié'; }
+    finally { btn.disabled = false; btn.textContent = 'Créer mon compte affilié →'; }
   }
   async function doLogin() {
     var email = document.getElementById('login-email').value.trim();
@@ -439,14 +559,13 @@
       var d = await r.json();
       showMsg('msg-login', d.message || d.error, r.ok ? 'success' : 'error');
     } catch { showMsg('msg-login', 'Erreur réseau.', 'error'); }
-    finally { btn.disabled = false; btn.textContent = 'Recevoir mon lien de connexion'; }
+    finally { btn.disabled = false; btn.textContent = 'Recevoir mon lien de connexion →'; }
   }
   function showMsg(id, text, type) {
     var el = document.getElementById(id);
     el.textContent = text; el.className = 'msg ' + type;
   }
 
-  // ── Dashboard ───────────────────────────────────────────────────────────────
   async function loadDashboard() {
     try {
       var [statsRes, timeRes, breakRes] = await Promise.all([
@@ -474,24 +593,20 @@
     var aff = stats.affiliate;
     var bal = stats.balance;
 
-    // Header
     document.getElementById('user-pill').style.display = 'flex';
     document.getElementById('btn-logout').style.display = 'block';
     document.getElementById('user-avatar').textContent = aff.name.charAt(0).toUpperCase();
     document.getElementById('user-name').textContent   = aff.email;
 
-    // Greeting
-    document.getElementById('dash-greeting').textContent = 'Bonjour, ' + aff.name.split(' ')[0];
+    document.getElementById('dash-greeting').textContent = 'Bonjour, ' + aff.name.split(' ')[0] + ' 👋';
     document.getElementById('dash-sub').innerHTML =
       'Code affilié : <span class="code-inline">' + aff.code + '</span> · Membre depuis le ' + fmtDate(aff.createdAt);
 
-    // Balance
     document.getElementById('bal-total').textContent     = fmtEur(bal.totalEarned);
     document.getElementById('bal-pending').textContent   = fmtEur(bal.pending);
     document.getElementById('bal-validated').textContent = fmtEur(bal.validated);
     document.getElementById('bal-paid').textContent      = fmtEur(bal.paid);
 
-    // Active recurring subs
     var recurringActive = stats.commissions.filter(function(c){ return c.isRecurring && c.status !== 'CANCELED'; });
     var uniqueSubs = {};
     recurringActive.forEach(function(c){ uniqueSubs[c.stripeSubscriptionId || c.id] = c; });
@@ -499,7 +614,6 @@
     document.getElementById('bal-subs').textContent = subsCount;
     document.getElementById('kpi-recur').textContent = subsCount;
 
-    // Payout notice
     if (bal.validated > 0) {
       var nextPayout = getNextPayoutDate();
       document.getElementById('payout-notice').style.display = 'flex';
@@ -507,7 +621,6 @@
       document.getElementById('payout-date').textContent     = 'prochain virement le ' + nextPayout;
     }
 
-    // Pending notice
     if (bal.pending > 0) {
       document.getElementById('validation-bar').style.display = 'block';
       document.getElementById('validation-msg').textContent =
@@ -517,18 +630,14 @@
       document.getElementById('anti-refund-notice').style.display = 'block';
     }
 
-    // KPIs
     document.getElementById('kpi-clicks').textContent = stats.clicks;
     document.getElementById('kpi-conv').textContent   = stats.conversions;
     document.getElementById('kpi-rate').textContent   = stats.conversionRate + '%';
 
-    // Progress motivational
     renderProgress(bal, stats.conversions);
 
-    // Chart
     if (timeseries) renderChart(timeseries, chartMode);
 
-    // Vos liens
     var code  = aff.code;
     var base  = 'https://speed-ecom.eu';
     var links = [
@@ -547,10 +656,8 @@
       ll.appendChild(row);
     });
 
-    // Breakdown
     renderBreakdown(breakdown);
 
-    // Active subs detail
     if (subsCount > 0) {
       document.getElementById('subs-section').style.display = 'block';
       var sl = document.getElementById('subs-list');
@@ -565,7 +672,6 @@
       });
     }
 
-    // Commissions table
     if (stats.commissions.length === 0) {
       document.getElementById('comm-empty').style.display = 'block';
       document.getElementById('comm-table').style.display = 'none';
@@ -588,7 +694,6 @@
   }
 
   function renderProgress(bal, conversions) {
-    var target = 100; // 100€ objectif
     var current = bal.totalEarned;
     var milestones = [50, 100, 250, 500, 1000, 2500, 5000];
     var next = milestones.find(function(m){ return m > current; }) || milestones[milestones.length-1];
@@ -597,7 +702,7 @@
     document.getElementById('progress-target').textContent = fmtEur(current) + ' / ' + fmtEur(next);
     document.getElementById('progress-fill').style.width   = pct + '%';
     var remaining = next - current;
-    var ventes = Math.ceil(remaining / 59.10); // Speedfly
+    var ventes = Math.ceil(remaining / 59.10);
     document.getElementById('progress-msg').textContent = remaining > 0
       ? 'Plus que ' + fmtEur(remaining) + ' — soit environ ' + ventes + ' vente' + (ventes > 1 ? 's' : '') + ' Speedfly.'
       : 'Objectif atteint ! Prochain cap : ' + fmtEur(milestones[milestones.indexOf(next) + 1] || next * 2);
@@ -611,7 +716,7 @@
     }
     var products = [
       { id: 'speedfly',    name: 'Speedfly',    sub: 'Paiement unique 197€' },
-      { id: 'ecom-sphere', name: 'Ecom Sphere', sub: 'Abonnement 49€/mois' },
+      { id: 'ecom-sphere', name: 'Ecom Sphere', sub: 'Abonnement 39€/mois' },
     ];
     grid.innerHTML = '';
     products.forEach(function(p){
@@ -633,17 +738,14 @@
     });
   }
 
-  // ── Chart ───────────────────────────────────────────────────────────────────
   function renderChart(data, mode) {
     var ctx = document.getElementById('perf-chart').getContext('2d');
     if (chartInstance) chartInstance.destroy();
-
     var labels   = data.series.map(function(d){ return fmtDateShort(d.date); });
     var values   = mode === 'clicks'
       ? data.series.map(function(d){ return d.clicks; })
       : data.series.map(function(d){ return d.commissionCents / 100; });
     var maxVal = Math.max.apply(null, values.concat([1]));
-
     chartInstance = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -681,7 +783,6 @@
     if (timeseriesData) renderChart(timeseriesData, mode);
   }
 
-  // ── Helpers ─────────────────────────────────────────────────────────────────
   function fmtEur(v) {
     return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 }).format(v || 0);
   }
