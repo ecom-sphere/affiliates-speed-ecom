@@ -3,711 +3,711 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programme Affilié — Speed Ecom</title>
+  <title>Dashboard Affilié — Speed Ecom</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --black: #111111;
-      --white: #ffffff;
-      --gray-50: #f9f9f9;
-      --gray-100: #f2f2f2;
-      --gray-200: #e5e5e5;
-      --gray-400: #999999;
-      --gray-600: #555555;
-      --green: #16a34a;
-      --orange: #d97706;
-      --red: #dc2626;
+      --black: #111111; --white: #ffffff;
+      --gray-50: #f9f9f9; --gray-100: #f2f2f2; --gray-200: #e5e5e5;
+      --gray-300: #d0d0d0; --gray-400: #999; --gray-600: #555;
+      --green: #16a34a; --green-light: #f0fdf4; --green-border: #bbf7d0;
+      --orange: #d97706; --orange-light: #fffbeb; --orange-border: #fde68a;
+      --blue: #2563eb; --blue-light: #eff6ff; --blue-border: #bfdbfe;
+      --red: #dc2626; --red-light: #fef2f2;
+      --gold: #D4AF37;
     }
-    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--gray-50);
-      color: var(--black);
-      min-height: 100vh;
-      line-height: 1.5;
-    }
+    html { font-size: 16px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--gray-50); color: var(--black); min-height: 100vh; line-height: 1.5; }
 
-    /* ── Header ─────────────────────────────────────────── */
-    .header {
-      background: var(--white);
-      border-bottom: 1px solid var(--gray-200);
-      padding: 0 24px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-logo {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--black);
-      text-decoration: none;
-      letter-spacing: -0.3px;
-    }
-    .header-logo span { color: var(--gray-400); font-weight: 400; }
-    .header-user { font-size: 13px; color: var(--gray-600); display: flex; align-items: center; gap: 12px; }
-    .btn-logout {
-      font-size: 12px;
-      color: var(--gray-400);
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px 0;
-    }
-    .btn-logout:hover { color: var(--black); }
+    /* ── Header ── */
+    .header { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 14px; font-weight: 700; color: var(--black); text-decoration: none; letter-spacing: -0.3px; }
+    .logo span { color: var(--gray-400); font-weight: 400; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .user-pill { display: flex; align-items: center; gap: 8px; background: var(--gray-100); border-radius: 100px; padding: 4px 12px 4px 4px; }
+    .user-avatar { width: 26px; height: 26px; background: var(--black); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .user-name { font-size: 13px; font-weight: 500; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn-sm { font-size: 12px; color: var(--gray-400); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 4px; }
+    .btn-sm:hover { color: var(--black); background: var(--gray-100); }
 
-    /* ── Layout ─────────────────────────────────────────── */
-    .page { max-width: 900px; margin: 0 auto; padding: 32px 24px 64px; }
+    /* ── Page ── */
+    .page { max-width: 960px; margin: 0 auto; padding: 28px 20px 64px; }
 
-    /* ── Auth screen ────────────────────────────────────── */
-    #auth-screen {
-      max-width: 420px;
-      margin: 80px auto;
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: 12px;
-      padding: 40px 36px;
-    }
-    #auth-screen h1 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      letter-spacing: -0.4px;
-    }
-    #auth-screen .subtitle { font-size: 14px; color: var(--gray-600); margin-bottom: 32px; }
-
-    .tabs {
-      display: flex;
-      border-bottom: 1px solid var(--gray-200);
-      margin-bottom: 28px;
-      gap: 0;
-    }
-    .tab {
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      color: var(--gray-400);
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      transition: all 0.15s;
-      margin-bottom: -1px;
-    }
+    /* ── Auth ── */
+    #auth-screen { max-width: 420px; margin: 64px auto; }
+    .auth-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 36px; }
+    .auth-title { font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 4px; }
+    .auth-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 28px; }
+    .tabs { display: flex; border-bottom: 1px solid var(--gray-200); margin-bottom: 24px; }
+    .tab { font-size: 13px; font-weight: 500; padding: 8px 16px; cursor: pointer; border: none; background: none; color: var(--gray-400); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; }
     .tab.active { color: var(--black); border-bottom-color: var(--black); }
-
-    .form-group { margin-bottom: 16px; }
-    label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-    input[type="text"], input[type="email"], input[type="password"] {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid var(--gray-200);
-      border-radius: 6px;
-      font-size: 14px;
-      color: var(--black);
-      background: var(--white);
-      transition: border-color 0.15s;
-      outline: none;
-    }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 5px; }
+    input[type=text], input[type=email] { width: 100%; padding: 9px 12px; border: 1px solid var(--gray-200); border-radius: 6px; font-size: 14px; outline: none; transition: border-color .15s; }
     input:focus { border-color: var(--black); }
     input::placeholder { color: var(--gray-400); }
+    .btn-primary { width: 100%; padding: 11px 20px; background: var(--black); color: var(--white); border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: opacity .15s; }
+    .btn-primary:hover { opacity: .85; }
+    .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+    .msg { font-size: 13px; margin-top: 14px; padding: 10px 12px; border-radius: 6px; display: none; }
+    .msg.success { background: var(--green-light); color: var(--green); display: block; }
+    .msg.error { background: var(--red-light); color: var(--red); display: block; }
 
-    .btn-primary {
-      width: 100%;
-      padding: 12px 20px;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: opacity 0.15s;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    /* ── Dashboard header ── */
+    .dash-greeting { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 2px; }
+    .dash-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 24px; }
+    .dash-sub .code-inline { font-family: monospace; background: var(--gray-100); padding: 1px 6px; border-radius: 4px; font-size: 12px; letter-spacing: 1px; color: var(--black); }
 
-    .msg { font-size: 13px; text-align: center; margin-top: 16px; padding: 10px 14px; border-radius: 6px; display: none; }
-    .msg.success { background: #f0fdf4; color: var(--green); display: block; }
-    .msg.error   { background: #fef2f2; color: var(--red);   display: block; }
+    /* ── Balance hero ── */
+    .balance-hero { background: var(--black); color: var(--white); border-radius: 12px; padding: 24px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 600px) { .balance-hero { grid-template-columns: 1fr; } }
+    .balance-main-label { font-size: 11px; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .balance-main-value { font-size: 40px; font-weight: 900; letter-spacing: -1.5px; line-height: 1; margin-bottom: 6px; }
+    .balance-main-sub { font-size: 12px; color: rgba(255,255,255,.4); }
+    .balance-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: start; }
+    .bkd-item { background: rgba(255,255,255,.06); border-radius: 8px; padding: 12px 14px; }
+    .bkd-label { font-size: 11px; color: rgba(255,255,255,.4); margin-bottom: 4px; }
+    .bkd-value { font-size: 18px; font-weight: 700; }
+    .bkd-value.green  { color: #4ade80; }
+    .bkd-value.blue   { color: #60a5fa; }
+    .bkd-value.orange { color: #fbbf24; }
 
-    /* ── Dashboard ──────────────────────────────────────── */
-    #dashboard-screen { display: none; }
+    /* ── Payout notice ── */
+    .payout-notice { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 10px; }
+    .payout-notice svg { flex-shrink: 0; }
+    .payout-notice .amount { font-weight: 700; }
 
-    .greeting { font-size: 20px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
-    .greeting-sub { font-size: 14px; color: var(--gray-600); margin-bottom: 32px; }
+    /* ── KPI grid ── */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+    @media (max-width: 640px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; }
+    .kpi-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+    .kpi-value { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+    .kpi-delta { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
+    .kpi-delta.up { color: var(--green); }
 
-    /* KPI cards */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-    @media (min-width: 640px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
-    .kpi-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
-      padding: 20px 18px;
-    }
-    .kpi-label { font-size: 12px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .kpi-value { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
-    .kpi-sub   { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+    /* ── Section ── */
+    .section { margin-bottom: 24px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .section-title { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
+    .section-action { font-size: 12px; color: var(--gray-400); cursor: pointer; background: none; border: none; padding: 4px 8px; border-radius: 4px; }
+    .section-action:hover { color: var(--black); background: var(--gray-100); }
 
-    /* Section title */
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: -0.2px;
-    }
+    /* ── Chart card ── */
+    .chart-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px; }
+    .chart-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+    .chart-tab { font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 5px; cursor: pointer; background: none; border: 1px solid var(--gray-200); color: var(--gray-600); transition: all .15s; }
+    .chart-tab.active { background: var(--black); color: var(--white); border-color: var(--black); }
+    .chart-wrap { position: relative; height: 180px; }
 
-    /* Code affilié box */
-    .code-box {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-    .code-display {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-    .code-badge {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      font-family: 'SF Mono', Monaco, Consolas, monospace;
-      background: var(--gray-100);
-      padding: 10px 20px;
-      border-radius: 6px;
-      color: var(--black);
-    }
-    .code-rate { font-size: 14px; color: var(--gray-600); }
-    .code-rate strong { color: var(--green); }
-
-    .links-grid { display: flex; flex-direction: column; gap: 10px; }
-    .link-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--gray-50);
-      border: 1px solid var(--gray-200);
-      border-radius: 6px;
-      padding: 10px 14px;
-      flex-wrap: wrap;
-    }
-    .link-label { font-size: 12px; font-weight: 600; color: var(--gray-600); min-width: 90px; }
-    .link-url {
-      font-size: 13px;
-      color: var(--black);
-      font-family: 'SF Mono', Monaco, Consolas, monospace;
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .btn-copy {
-      font-size: 12px;
-      font-weight: 600;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: 4px;
-      padding: 5px 12px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-      flex-shrink: 0;
-    }
-    .btn-copy:hover { opacity: 0.8; }
+    /* ── Links card ── */
+    .links-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 20px; }
+    .code-display { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+    .code-badge { font-size: 26px; font-weight: 900; letter-spacing: 3px; font-family: monospace; background: var(--gray-100); padding: 8px 18px; border-radius: 6px; }
+    .code-meta { font-size: 13px; color: var(--gray-600); }
+    .code-meta strong { color: var(--green); }
+    .link-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; margin-bottom: 8px; }
+    .link-label { font-size: 12px; font-weight: 600; color: var(--gray-600); width: 90px; flex-shrink: 0; }
+    .link-url { font-size: 12px; font-family: monospace; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--black); }
+    .btn-copy { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 4px; background: var(--black); color: var(--white); border: none; cursor: pointer; flex-shrink: 0; transition: all .15s; }
+    .btn-copy:hover { opacity: .8; }
     .btn-copy.copied { background: var(--green); }
+    .cookie-notice { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 12px; background: var(--blue-light); border: 1px solid var(--blue-border); border-radius: 6px; font-size: 12px; color: var(--blue); }
+    .cookie-notice svg { flex-shrink: 0; }
 
-    /* Commission table */
-    .commissions-box {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 24px;
-    }
-    .commissions-box table { width: 100%; border-collapse: collapse; }
-    .commissions-box th {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--gray-400);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--gray-200);
-      background: var(--gray-50);
-    }
-    .commissions-box td {
-      font-size: 13px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--gray-100);
-      color: var(--black);
-    }
-    .commissions-box tr:last-child td { border-bottom: none; }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-    }
-    .badge-pending   { background: #fffbeb; color: var(--orange); }
-    .badge-validated { background: #f0fdf4; color: var(--green);  }
-    .badge-paid      { background: #f0f4ff; color: #3b82f6;       }
-    .badge-canceled  { background: #fef2f2; color: var(--red);    }
+    /* ── Breakdown grid ── */
+    .breakdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .breakdown-grid { grid-template-columns: 1fr; } }
+    .bk-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; }
+    .bk-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .bk-sub { font-size: 11px; color: var(--gray-400); margin-bottom: 12px; }
+    .bk-stat { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px solid var(--gray-100); }
+    .bk-stat:last-child { border-bottom: none; }
+    .bk-stat-label { color: var(--gray-600); }
+    .bk-stat-value { font-weight: 600; }
+    .bk-empty { font-size: 12px; color: var(--gray-400); text-align: center; padding: 16px 0; }
 
-    .empty-state {
-      text-align: center;
-      padding: 48px 24px;
-      color: var(--gray-400);
-      font-size: 14px;
-    }
+    /* ── Active subs ── */
+    .sub-list { display: flex; flex-direction: column; gap: 8px; }
+    .sub-item { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .sub-product { font-size: 13px; font-weight: 600; }
+    .sub-date { font-size: 12px; color: var(--gray-400); }
+    .sub-amount { font-size: 14px; font-weight: 700; color: var(--green); }
 
-    /* Notice anti-remboursement */
-    .notice {
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      border-radius: 8px;
-      padding: 14px 16px;
-      font-size: 13px;
-      color: #92400e;
-      margin-bottom: 24px;
-    }
+    /* ── Commissions table ── */
+    .commissions-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 560px; }
+    th { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; padding: 10px 16px; text-align: left; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
+    td { font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--gray-100); }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-pending   { background: var(--orange-light); color: var(--orange); }
+    .badge-validated { background: var(--green-light);  color: var(--green); }
+    .badge-paid      { background: var(--blue-light);   color: var(--blue); }
+    .badge-canceled  { background: var(--red-light);    color: var(--red); }
+    .recurring-tag { font-size: 10px; color: var(--gray-400); margin-left: 4px; }
 
-    /* Loading */
+    /* ── Empty ── */
+    .empty { text-align: center; padding: 40px; color: var(--gray-400); font-size: 13px; }
+    .empty strong { display: block; color: var(--black); font-size: 15px; margin-bottom: 4px; }
+
+    /* ── Validation bar ── */
+    .validation-bar { background: var(--orange-light); border: 1px solid var(--orange-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #92400e; }
+
+    /* ── Loading ── */
     .loading { text-align: center; padding: 60px; color: var(--gray-400); font-size: 14px; }
 
-    /* Balance card */
-    .balance-card {
-      background: var(--black);
-      color: var(--white);
-      border-radius: 10px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-    .balance-label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-    .balance-amount { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
-    .balance-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
-    .balance-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; }
-    .balance-item-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
-    .balance-item-value { font-size: 16px; font-weight: 700; }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      #auth-screen { margin: 40px 16px; padding: 28px 24px; }
-      .page { padding: 24px 16px 48px; }
-      .balance-grid { grid-template-columns: 1fr; gap: 8px; }
-      .commissions-box { overflow-x: auto; }
-    }
+    /* ── Progress motivational ── */
+    .progress-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 18px 20px; margin-bottom: 24px; }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .progress-title { font-size: 13px; font-weight: 600; }
+    .progress-target { font-size: 12px; color: var(--gray-400); }
+    .progress-bar-bg { background: var(--gray-100); border-radius: 100px; height: 8px; overflow: hidden; }
+    .progress-bar-fill { background: var(--black); border-radius: 100px; height: 8px; transition: width .6s ease; }
+    .progress-msg { font-size: 12px; color: var(--gray-600); margin-top: 8px; }
   </style>
 </head>
 <body>
 
-<!-- ── Header ───────────────────────────────────────────── -->
+<!-- ── Header ── -->
 <header class="header">
-  <a href="https://speed-ecom.eu" class="header-logo">Speed Ecom <span>/ Affiliés</span></a>
-  <div class="header-user" id="header-user" style="display:none">
-    <span id="header-email"></span>
-    <button class="btn-logout" onclick="logout()">Déconnexion</button>
+  <a href="https://speed-ecom.eu" class="logo">Speed Ecom <span>/ Affiliés</span></a>
+  <div class="header-right">
+    <div class="user-pill" id="user-pill" style="display:none">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <span class="user-name" id="user-name"></span>
+    </div>
+    <button class="btn-sm" id="btn-logout" style="display:none" onclick="logout()">Déconnexion</button>
   </div>
 </header>
 
-<!-- ── Auth screen ──────────────────────────────────────── -->
+<!-- ── Auth ── -->
 <div id="auth-screen">
-  <h1>Programme affilié</h1>
-  <p class="subtitle">Gagnez 30% de commission sur chaque vente.</p>
-
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('register')">Rejoindre</button>
-    <button class="tab" onclick="switchTab('login')">Se connecter</button>
-  </div>
-
-  <!-- Register form -->
-  <div id="tab-register">
-    <div class="form-group">
-      <label for="reg-name">Prénom et nom</label>
-      <input type="text" id="reg-name" placeholder="Cédric Anger" />
+  <div class="auth-card">
+    <p class="auth-title">Programme affilié</p>
+    <p class="auth-sub">Gagnez 30% sur chaque vente Speedfly et Ecom Sphere.</p>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('register')">Rejoindre</button>
+      <button class="tab" onclick="switchTab('login')">Se connecter</button>
     </div>
-    <div class="form-group">
-      <label for="reg-email">Email</label>
-      <input type="email" id="reg-email" placeholder="vous@exemple.com" />
+    <div id="tab-register">
+      <div class="form-group"><label>Prénom et nom</label><input type="text" id="reg-name" placeholder="Cédric Anger" /></div>
+      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="vous@exemple.com" /></div>
+      <div class="form-group"><label>Email PayPal (pour vos virements)</label><input type="email" id="reg-paypal" placeholder="paypal@exemple.com (optionnel)" /></div>
+      <button class="btn-primary" id="btn-reg" onclick="doRegister()">Créer mon compte affilié</button>
+      <div class="msg" id="msg-reg"></div>
     </div>
-    <div class="form-group">
-      <label for="reg-paypal">Email PayPal (pour recevoir vos commissions)</label>
-      <input type="email" id="reg-paypal" placeholder="paypal@exemple.com (optionnel)" />
+    <div id="tab-login" style="display:none">
+      <div class="form-group"><label>Votre email affilié</label><input type="email" id="login-email" placeholder="vous@exemple.com" /></div>
+      <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion</button>
+      <div class="msg" id="msg-login"></div>
     </div>
-    <button class="btn-primary" id="btn-register" onclick="doRegister()">Créer mon compte affilié</button>
-    <div class="msg" id="msg-register"></div>
-  </div>
-
-  <!-- Login form -->
-  <div id="tab-login" style="display:none">
-    <div class="form-group">
-      <label for="login-email">Votre email affilié</label>
-      <input type="email" id="login-email" placeholder="vous@exemple.com" />
-    </div>
-    <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion</button>
-    <div class="msg" id="msg-login"></div>
   </div>
 </div>
 
-<!-- ── Dashboard ────────────────────────────────────────── -->
-<div id="dashboard-screen">
+<!-- ── Dashboard ── -->
+<div id="dashboard-screen" style="display:none">
   <div class="page">
+    <div class="loading" id="dash-loading">Chargement de votre dashboard...</div>
+    <div id="dash-content" style="display:none">
 
-    <div class="loading" id="dashboard-loading">Chargement de votre dashboard...</div>
+      <!-- Greeting -->
+      <p class="dash-greeting" id="dash-greeting">Bonjour</p>
+      <p class="dash-sub" id="dash-sub"></p>
 
-    <div id="dashboard-content" style="display:none">
+      <!-- Payout notice (si validé > 0) -->
+      <div class="payout-notice" id="payout-notice" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span><span class="amount" id="payout-amount"></span> disponible pour le prochain virement — <span id="payout-date"></span></span>
+      </div>
 
-      <p class="greeting" id="greeting-name">Bonjour</p>
-      <p class="greeting-sub" id="greeting-sub">Voici votre tableau de bord affilié Speed Ecom</p>
+      <!-- Validation en attente -->
+      <div class="validation-bar" id="validation-bar" style="display:none">
+        <span id="validation-msg"></span>
+      </div>
 
-      <!-- Solde -->
-      <div class="balance-card">
-        <p class="balance-label">À payer ce mois</p>
-        <p class="balance-amount" id="balance-validated">0,00€</p>
-        <p class="balance-sub">Commissions validées en attente de paiement</p>
-        <div class="balance-grid">
-          <div>
-            <p class="balance-item-label">En attente (J+30)</p>
-            <p class="balance-item-value" id="balance-pending">0,00€</p>
+      <!-- Balance hero -->
+      <div class="balance-hero">
+        <div>
+          <p class="balance-main-label">Total gagné</p>
+          <p class="balance-main-value" id="bal-total">0€</p>
+          <p class="balance-main-sub">Depuis le début de votre affiliation</p>
+        </div>
+        <div class="balance-breakdown">
+          <div class="bkd-item">
+            <p class="bkd-label">À valider (J+30)</p>
+            <p class="bkd-value orange" id="bal-pending">0€</p>
           </div>
-          <div>
-            <p class="balance-item-label">Total gagné</p>
-            <p class="balance-item-value" id="balance-total">0,00€</p>
+          <div class="bkd-item">
+            <p class="bkd-label">Validé ✓</p>
+            <p class="bkd-value green" id="bal-validated">0€</p>
           </div>
-          <div>
-            <p class="balance-item-label">Déjà payé</p>
-            <p class="balance-item-value" id="balance-paid">0,00€</p>
+          <div class="bkd-item">
+            <p class="bkd-label">Déjà payé</p>
+            <p class="bkd-value blue" id="bal-paid">0€</p>
+          </div>
+          <div class="bkd-item">
+            <p class="bkd-label">Abonnements actifs</p>
+            <p class="bkd-value" id="bal-subs">0</p>
           </div>
         </div>
+      </div>
+
+      <!-- Progress motivational -->
+      <div class="progress-card" id="progress-card">
+        <div class="progress-header">
+          <span class="progress-title" id="progress-title">Objectif du mois</span>
+          <span class="progress-target" id="progress-target"></span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+        <p class="progress-msg" id="progress-msg"></p>
       </div>
 
       <!-- KPIs -->
-      <div class="kpi-grid">
+      <div class="kpi-row">
         <div class="kpi-card">
-          <p class="kpi-label">Clics</p>
+          <p class="kpi-label">Clics (30j)</p>
           <p class="kpi-value" id="kpi-clicks">0</p>
-          <p class="kpi-sub">via vos liens</p>
+          <p class="kpi-delta" id="kpi-clicks-sub">via vos liens</p>
         </div>
         <div class="kpi-card">
-          <p class="kpi-label">Ventes</p>
-          <p class="kpi-value" id="kpi-conversions">0</p>
-          <p class="kpi-sub">conversions</p>
+          <p class="kpi-label">Ventes (total)</p>
+          <p class="kpi-value" id="kpi-conv">0</p>
+          <p class="kpi-delta" id="kpi-conv-sub">conversions</p>
         </div>
         <div class="kpi-card">
           <p class="kpi-label">Taux conv.</p>
-          <p class="kpi-value" id="kpi-rate">0%</p>
-          <p class="kpi-sub">clics → ventes</p>
+          <p class="kpi-value" id="kpi-rate">—</p>
+          <p class="kpi-delta">clics → vente</p>
         </div>
         <div class="kpi-card">
-          <p class="kpi-label">Filleuls actifs</p>
-          <p class="kpi-value" id="kpi-active">—</p>
-          <p class="kpi-sub">abonnements</p>
+          <p class="kpi-label">Récurrents</p>
+          <p class="kpi-value" id="kpi-recur">0</p>
+          <p class="kpi-delta">paiements/mois</p>
         </div>
       </div>
 
-      <!-- Liens affiliés -->
-      <div class="code-box">
+      <!-- Graphique -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Performance</span>
+          <div class="chart-tabs">
+            <button class="chart-tab active" onclick="switchChart('clicks')">Clics</button>
+            <button class="chart-tab" onclick="switchChart('commissions')">Commissions</button>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-wrap"><canvas id="perf-chart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Vos liens -->
+      <div class="section">
         <p class="section-title">Vos liens affiliés</p>
-        <div class="code-display">
-          <span class="code-badge" id="aff-code">—</span>
-          <span class="code-rate">Commission : <strong>30%</strong> par vente</span>
+        <div class="links-card">
+          <div class="code-display">
+            <span class="code-badge" id="aff-code">—</span>
+            <div class="code-meta">Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 30 jours après le clic</span></div>
+          </div>
+          <div id="links-list"></div>
+          <div class="cookie-notice">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Le cookie est stocké 30 jours. Si votre filleul revient acheter plus tard, vous touchez quand même la commission.
+          </div>
         </div>
-        <div class="links-grid" id="links-grid"></div>
       </div>
 
-      <!-- Notice -->
-      <div class="notice">
-        Les commissions sont validées automatiquement 30 jours après la vente (délai anti-remboursement).
-        Une fois validées, elles sont incluses dans le prochain virement mensuel.
+      <!-- Breakdown produits -->
+      <div class="section">
+        <p class="section-title">Par produit</p>
+        <div class="breakdown-grid" id="breakdown-grid">
+          <div class="bk-card"><div class="bk-empty">Chargement...</div></div>
+          <div class="bk-card"><div class="bk-empty">Chargement...</div></div>
+        </div>
+      </div>
+
+      <!-- Abonnements actifs -->
+      <div class="section" id="subs-section" style="display:none">
+        <p class="section-title">Abonnements récurrents actifs</p>
+        <div class="sub-list" id="subs-list"></div>
       </div>
 
       <!-- Commissions -->
-      <p class="section-title">Historique des commissions</p>
-      <div class="commissions-box" id="commissions-box">
-        <div class="empty-state" id="commissions-empty">Aucune commission pour l'instant.<br>Partagez vos liens pour commencer !</div>
-        <table id="commissions-table" style="display:none">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Produit</th>
-              <th>Vente</th>
-              <th>Commission</th>
-              <th>Statut</th>
-              <th>Valide le</th>
-            </tr>
-          </thead>
-          <tbody id="commissions-body"></tbody>
-        </table>
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Historique des commissions</span>
+          <button class="section-action" onclick="loadDashboard()">↻ Actualiser</button>
+        </div>
+        <div class="validation-bar" id="anti-refund-notice" style="display:none;margin-bottom:12px">
+          Les commissions en attente sont validées automatiquement 30 jours après la vente (protection anti-remboursement).
+        </div>
+        <div class="commissions-card">
+          <div class="table-wrap">
+            <div class="empty" id="comm-empty" style="display:none"><strong>Aucune commission pour l'instant</strong>Partagez vos liens pour générer vos premières ventes.</div>
+            <table id="comm-table" style="display:none">
+              <thead><tr>
+                <th>Date</th>
+                <th>Produit</th>
+                <th>Vente</th>
+                <th>Commission</th>
+                <th>Statut</th>
+                <th>Valide le</th>
+              </tr></thead>
+              <tbody id="comm-body"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
-    </div>
+    </div><!-- /dash-content -->
   </div>
 </div>
 
 <script>
-  // ── Config ──────────────────────────────────────────────
-  const API = 'https://speedfly-api.up.railway.app/api'
-  // const API = 'http://localhost:3000/api' // dev
+  const API = 'https://speedfly-api.up.railway.app/api';
+  let authToken = null;
+  let chartInstance = null;
+  let chartMode = 'clicks';
+  let timeseriesData = null;
 
-  const LINKS = {
-    speedfly:   (code) => `https://speed-ecom.eu/speedfly?ref=${code}`,
-    ecomSphere: (code) => `https://speed-ecom.eu/ecom-sphere?ref=${code}`,
-  }
-
-  const LINK_LABELS = {
-    speedfly:   'Speedfly',
-    ecomSphere: 'Ecom Sphere',
-  }
-
-  let authToken = null
-
-  // ── Init ────────────────────────────────────────────────
-  window.addEventListener('DOMContentLoaded', () => {
-    // 1. Lire le token dans l'URL (magic link)
-    const urlParams = new URLSearchParams(window.location.search)
-    const tokenFromUrl = urlParams.get('token')
-    if (tokenFromUrl) {
-      localStorage.setItem('affiliate_token', tokenFromUrl)
-      // Nettoyer l'URL
-      window.history.replaceState({}, '', window.location.pathname)
+  // ── Init ────────────────────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', function () {
+    var params = new URLSearchParams(location.search);
+    var tok = params.get('token');
+    if (tok) {
+      localStorage.setItem('affiliate_token', tok);
+      window.history.replaceState({}, '', location.pathname);
     }
+    authToken = localStorage.getItem('affiliate_token');
+    authToken ? showDash() : showAuth();
+  });
 
-    // 2. Vérifier si un token est stocké
-    authToken = localStorage.getItem('affiliate_token')
-    if (authToken) {
-      showDashboard()
-    } else {
-      showAuth()
-    }
-  })
-
-  // ── Auth ────────────────────────────────────────────────
+  // ── Auth ────────────────────────────────────────────────────────────────────
   function showAuth() {
-    document.getElementById('auth-screen').style.display = 'block'
-    document.getElementById('dashboard-screen').style.display = 'none'
-    document.getElementById('header-user').style.display = 'none'
+    document.getElementById('auth-screen').style.display = 'block';
+    document.getElementById('dashboard-screen').style.display = 'none';
+    document.getElementById('user-pill').style.display = 'none';
+    document.getElementById('btn-logout').style.display = 'none';
   }
-
-  function showDashboard() {
-    document.getElementById('auth-screen').style.display = 'none'
-    document.getElementById('dashboard-screen').style.display = 'block'
-    loadDashboard()
+  function showDash() {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('dashboard-screen').style.display = 'block';
+    loadDashboard();
   }
-
-  function switchTab(tab) {
-    document.querySelectorAll('.tab').forEach((t, i) => {
-      t.classList.toggle('active', (tab === 'register' && i === 0) || (tab === 'login' && i === 1))
-    })
-    document.getElementById('tab-register').style.display = tab === 'register' ? 'block' : 'none'
-    document.getElementById('tab-login').style.display    = tab === 'login'    ? 'block' : 'none'
+  function logout() {
+    localStorage.removeItem('affiliate_token');
+    authToken = null;
+    showAuth();
   }
-
-  function showMsg(id, text, type) {
-    const el = document.getElementById(id)
-    el.textContent = text
-    el.className   = 'msg ' + type
+  function switchTab(t) {
+    document.querySelectorAll('.tab').forEach(function (el, i) {
+      el.classList.toggle('active', (t === 'register' && i === 0) || (t === 'login' && i === 1));
+    });
+    document.getElementById('tab-register').style.display = t === 'register' ? 'block' : 'none';
+    document.getElementById('tab-login').style.display    = t === 'login'    ? 'block' : 'none';
   }
 
   async function doRegister() {
-    const name  = document.getElementById('reg-name').value.trim()
-    const email = document.getElementById('reg-email').value.trim()
-    const paypal = document.getElementById('reg-paypal').value.trim()
-
-    if (!name || !email) { showMsg('msg-register', 'Nom et email obligatoires.', 'error'); return }
-
-    const btn = document.getElementById('btn-register')
-    btn.disabled = true
-    btn.textContent = 'Envoi...'
-
+    var name   = document.getElementById('reg-name').value.trim();
+    var email  = document.getElementById('reg-email').value.trim();
+    var paypal = document.getElementById('reg-paypal').value.trim();
+    if (!name || !email) { showMsg('msg-reg', 'Nom et email obligatoires.', 'error'); return; }
+    var btn = document.getElementById('btn-reg');
+    btn.disabled = true; btn.textContent = 'Envoi...';
     try {
-      const res = await fetch(`${API}/affiliates/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      var r = await fetch(API + '/affiliates/register', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, paypalEmail: paypal || undefined }),
-      })
-      const data = await res.json()
-      if (res.ok) {
-        showMsg('msg-register', data.message, 'success')
-      } else {
-        showMsg('msg-register', data.error || 'Une erreur est survenue.', 'error')
-      }
-    } catch {
-      showMsg('msg-register', 'Impossible de contacter le serveur. Réessayez.', 'error')
-    } finally {
-      btn.disabled = false
-      btn.textContent = 'Créer mon compte affilié'
-    }
+      });
+      var d = await r.json();
+      showMsg('msg-reg', d.message || d.error, r.ok ? 'success' : 'error');
+    } catch { showMsg('msg-reg', 'Erreur réseau. Réessayez.', 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Créer mon compte affilié'; }
   }
-
   async function doLogin() {
-    const email = document.getElementById('login-email').value.trim()
-    if (!email) { showMsg('msg-login', 'Email obligatoire.', 'error'); return }
-
-    const btn = document.getElementById('btn-login')
-    btn.disabled = true
-    btn.textContent = 'Envoi...'
-
+    var email = document.getElementById('login-email').value.trim();
+    if (!email) { showMsg('msg-login', 'Email obligatoire.', 'error'); return; }
+    var btn = document.getElementById('btn-login');
+    btn.disabled = true; btn.textContent = 'Envoi...';
     try {
-      const res = await fetch(`${API}/affiliates/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      var r = await fetch(API + '/affiliates/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
-      })
-      const data = await res.json()
-      showMsg('msg-login', data.message || 'Lien envoyé !', res.ok ? 'success' : 'error')
-    } catch {
-      showMsg('msg-login', 'Impossible de contacter le serveur.', 'error')
-    } finally {
-      btn.disabled = false
-      btn.textContent = 'Recevoir mon lien de connexion'
-    }
+      });
+      var d = await r.json();
+      showMsg('msg-login', d.message || d.error, r.ok ? 'success' : 'error');
+    } catch { showMsg('msg-login', 'Erreur réseau.', 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Recevoir mon lien de connexion'; }
+  }
+  function showMsg(id, text, type) {
+    var el = document.getElementById(id);
+    el.textContent = text; el.className = 'msg ' + type;
   }
 
-  function logout() {
-    localStorage.removeItem('affiliate_token')
-    authToken = null
-    showAuth()
-  }
-
-  // ── Dashboard ────────────────────────────────────────────
+  // ── Dashboard ───────────────────────────────────────────────────────────────
   async function loadDashboard() {
     try {
-      const res = await fetch(`${API}/affiliates/me/stats`, {
-        headers: { 'Authorization': `Bearer ${authToken}` },
-      })
+      var [statsRes, timeRes, breakRes] = await Promise.all([
+        fetch(API + '/affiliates/me/stats',      { headers: { Authorization: 'Bearer ' + authToken } }),
+        fetch(API + '/affiliates/me/timeseries?days=30', { headers: { Authorization: 'Bearer ' + authToken } }),
+        fetch(API + '/affiliates/me/breakdown',  { headers: { Authorization: 'Bearer ' + authToken } }),
+      ]);
 
-      if (res.status === 401) {
-        localStorage.removeItem('affiliate_token')
-        authToken = null
-        showAuth()
-        return
-      }
+      if (statsRes.status === 401) { logout(); return; }
 
-      const data = await res.json()
-      renderDashboard(data)
-    } catch {
-      document.getElementById('dashboard-loading').textContent = 'Erreur de chargement. Rechargez la page.'
+      var stats     = await statsRes.json();
+      timeseriesData = timeRes.ok ? await timeRes.json() : null;
+      var breakdown = breakRes.ok ? await breakRes.json() : null;
+
+      renderDash(stats, timeseriesData, breakdown);
+    } catch (e) {
+      document.getElementById('dash-loading').textContent = 'Erreur de chargement. Rechargez la page.';
     }
   }
 
-  function renderDashboard(data) {
-    document.getElementById('dashboard-loading').style.display  = 'none'
-    document.getElementById('dashboard-content').style.display = 'block'
+  function renderDash(stats, timeseries, breakdown) {
+    document.getElementById('dash-loading').style.display  = 'none';
+    document.getElementById('dash-content').style.display = 'block';
 
-    const { affiliate, clicks, conversions, conversionRate, balance, commissions } = data
+    var aff = stats.affiliate;
+    var bal = stats.balance;
 
     // Header
-    document.getElementById('header-user').style.display = 'flex'
-    document.getElementById('header-email').textContent  = affiliate.email
+    document.getElementById('user-pill').style.display = 'flex';
+    document.getElementById('btn-logout').style.display = 'block';
+    document.getElementById('user-avatar').textContent = aff.name.charAt(0).toUpperCase();
+    document.getElementById('user-name').textContent   = aff.email;
 
     // Greeting
-    document.getElementById('greeting-name').textContent = `Bonjour, ${affiliate.name.split(' ')[0]}`
+    document.getElementById('dash-greeting').textContent = 'Bonjour, ' + aff.name.split(' ')[0];
+    document.getElementById('dash-sub').innerHTML =
+      'Code affilié : <span class="code-inline">' + aff.code + '</span> · Membre depuis le ' + fmtDate(aff.createdAt);
 
     // Balance
-    document.getElementById('balance-validated').textContent = fmtEur(balance.validated)
-    document.getElementById('balance-pending').textContent   = fmtEur(balance.pending)
-    document.getElementById('balance-total').textContent     = fmtEur(balance.totalEarned)
-    document.getElementById('balance-paid').textContent      = fmtEur(balance.paid)
+    document.getElementById('bal-total').textContent     = fmtEur(bal.totalEarned);
+    document.getElementById('bal-pending').textContent   = fmtEur(bal.pending);
+    document.getElementById('bal-validated').textContent = fmtEur(bal.validated);
+    document.getElementById('bal-paid').textContent      = fmtEur(bal.paid);
+
+    // Active recurring subs
+    var recurringActive = stats.commissions.filter(function(c){ return c.isRecurring && c.status !== 'CANCELED'; });
+    var uniqueSubs = {};
+    recurringActive.forEach(function(c){ uniqueSubs[c.stripeSubscriptionId || c.id] = c; });
+    var subsCount = Object.keys(uniqueSubs).length;
+    document.getElementById('bal-subs').textContent = subsCount;
+    document.getElementById('kpi-recur').textContent = subsCount;
+
+    // Payout notice
+    if (bal.validated > 0) {
+      var nextPayout = getNextPayoutDate();
+      document.getElementById('payout-notice').style.display = 'flex';
+      document.getElementById('payout-amount').textContent   = fmtEur(bal.validated);
+      document.getElementById('payout-date').textContent     = 'prochain virement le ' + nextPayout;
+    }
+
+    // Pending notice
+    if (bal.pending > 0) {
+      document.getElementById('validation-bar').style.display = 'block';
+      document.getElementById('validation-msg').textContent =
+        fmtEur(bal.pending) + ' en cours de validation (délai 30 jours anti-remboursement).';
+    }
+    if (stats.commissions.some(function(c){ return c.status === 'PENDING'; })) {
+      document.getElementById('anti-refund-notice').style.display = 'block';
+    }
 
     // KPIs
-    document.getElementById('kpi-clicks').textContent      = clicks
-    document.getElementById('kpi-conversions').textContent = conversions
-    document.getElementById('kpi-rate').textContent        = conversionRate + '%'
+    document.getElementById('kpi-clicks').textContent = stats.clicks;
+    document.getElementById('kpi-conv').textContent   = stats.conversions;
+    document.getElementById('kpi-rate').textContent   = stats.conversionRate + '%';
 
-    // Compter les abonnements actifs (commissions récurrentes non annulées)
-    const recurringActive = commissions.filter(c => c.isRecurring && c.status !== 'CANCELED').length
-    document.getElementById('kpi-active').textContent = recurringActive > 0 ? recurringActive : '0'
+    // Progress motivational
+    renderProgress(bal, stats.conversions);
 
-    // Code & liens
-    document.getElementById('aff-code').textContent = affiliate.code
-    const linksGrid = document.getElementById('links-grid')
-    linksGrid.innerHTML = ''
+    // Chart
+    if (timeseries) renderChart(timeseries, chartMode);
 
-    const linkDefs = [
-      { label: 'Speedfly',    url: LINKS.speedfly(affiliate.code) },
-      { label: 'Ecom Sphere', url: LINKS.ecomSphere(affiliate.code) },
-    ]
-    linkDefs.forEach(({ label, url }) => {
-      const row = document.createElement('div')
-      row.className = 'link-row'
-      row.innerHTML = `
-        <span class="link-label">${label}</span>
-        <span class="link-url">${url}</span>
-        <button class="btn-copy" onclick="copyLink(this, '${url}')">Copier</button>
-      `
-      linksGrid.appendChild(row)
-    })
+    // Vos liens
+    var code  = aff.code;
+    var base  = 'https://speed-ecom.eu';
+    var links = [
+      { label: 'Speedfly',    url: base + '/speedfly?ref='     + code },
+      { label: 'Ecom Sphere', url: base + '/ecom-sphere?ref='  + code },
+    ];
+    document.getElementById('aff-code').textContent = code;
+    var ll = document.getElementById('links-list');
+    ll.innerHTML = '';
+    links.forEach(function(l){
+      var row = document.createElement('div');
+      row.className = 'link-row';
+      row.innerHTML = '<span class="link-label">' + l.label + '</span>' +
+        '<span class="link-url">' + l.url + '</span>' +
+        '<button class="btn-copy" onclick="copyLink(this,\'' + l.url + '\')">Copier</button>';
+      ll.appendChild(row);
+    });
 
-    // Commissions
-    if (commissions.length === 0) {
-      document.getElementById('commissions-empty').style.display = 'block'
-      document.getElementById('commissions-table').style.display = 'none'
+    // Breakdown
+    renderBreakdown(breakdown);
+
+    // Active subs detail
+    if (subsCount > 0) {
+      document.getElementById('subs-section').style.display = 'block';
+      var sl = document.getElementById('subs-list');
+      sl.innerHTML = '';
+      Object.values(uniqueSubs).forEach(function(c){
+        var item = document.createElement('div');
+        item.className = 'sub-item';
+        item.innerHTML = '<div><p class="sub-product">' + c.productName + '</p>' +
+          '<p class="sub-date">Depuis le ' + fmtDate(c.createdAt) + '</p></div>' +
+          '<p class="sub-amount">+' + fmtEur(c.commissionAmountCents/100) + '/mois</p>';
+        sl.appendChild(item);
+      });
+    }
+
+    // Commissions table
+    if (stats.commissions.length === 0) {
+      document.getElementById('comm-empty').style.display = 'block';
+      document.getElementById('comm-table').style.display = 'none';
     } else {
-      document.getElementById('commissions-empty').style.display = 'none'
-      document.getElementById('commissions-table').style.display = 'table'
-      const tbody = document.getElementById('commissions-body')
-      tbody.innerHTML = ''
-      commissions.forEach((c) => {
-        const tr = document.createElement('tr')
-        tr.innerHTML = `
-          <td>${fmtDate(c.createdAt)}</td>
-          <td>${c.productName}${c.isRecurring ? ' <span style="color:var(--gray-400);font-size:11px">récurrent</span>' : ''}</td>
-          <td>${fmtEur(c.saleAmountCents / 100)}</td>
-          <td style="font-weight:700">${fmtEur(c.commissionAmountCents / 100)}</td>
-          <td>${badge(c.status)}</td>
-          <td style="color:var(--gray-400)">${c.status === 'PENDING' ? fmtDate(c.validatesAt) : '—'}</td>
-        `
-        tbody.appendChild(tr)
-      })
+      document.getElementById('comm-empty').style.display = 'none';
+      document.getElementById('comm-table').style.display = 'table';
+      var tbody = document.getElementById('comm-body');
+      tbody.innerHTML = '';
+      stats.commissions.forEach(function(c){
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + fmtDate(c.createdAt) + '</td>' +
+          '<td>' + c.productName + (c.isRecurring ? '<span class="recurring-tag">↺</span>' : '') + '</td>' +
+          '<td>' + fmtEur(c.saleAmountCents/100) + '</td>' +
+          '<td style="font-weight:700">' + fmtEur(c.commissionAmountCents/100) + '</td>' +
+          '<td>' + badge(c.status) + '</td>' +
+          '<td style="color:#999">' + (c.status === 'PENDING' ? fmtDate(c.validatesAt) : '—') + '</td>';
+        tbody.appendChild(tr);
+      });
     }
   }
 
-  // ── Helpers ──────────────────────────────────────────────
+  function renderProgress(bal, conversions) {
+    var target = 100; // 100€ objectif
+    var current = bal.totalEarned;
+    var milestones = [50, 100, 250, 500, 1000, 2500, 5000];
+    var next = milestones.find(function(m){ return m > current; }) || milestones[milestones.length-1];
+    var pct  = Math.min(100, (current / next) * 100);
+    document.getElementById('progress-title').textContent  = 'Vers ' + fmtEur(next) + ' de commissions';
+    document.getElementById('progress-target').textContent = fmtEur(current) + ' / ' + fmtEur(next);
+    document.getElementById('progress-fill').style.width   = pct + '%';
+    var remaining = next - current;
+    var ventes = Math.ceil(remaining / 59.10); // Speedfly
+    document.getElementById('progress-msg').textContent = remaining > 0
+      ? 'Plus que ' + fmtEur(remaining) + ' — soit environ ' + ventes + ' vente' + (ventes > 1 ? 's' : '') + ' Speedfly.'
+      : 'Objectif atteint ! Prochain cap : ' + fmtEur(milestones[milestones.indexOf(next) + 1] || next * 2);
+  }
+
+  function renderBreakdown(data) {
+    var grid = document.getElementById('breakdown-grid');
+    if (!data || !data.breakdown || data.breakdown.length === 0) {
+      grid.innerHTML = '<div class="bk-card"><div class="bk-empty">Aucune donnée encore</div></div>';
+      return;
+    }
+    var products = [
+      { id: 'speedfly',    name: 'Speedfly',    sub: 'Paiement unique 197€' },
+      { id: 'ecom-sphere', name: 'Ecom Sphere', sub: 'Abonnement 49€/mois' },
+    ];
+    grid.innerHTML = '';
+    products.forEach(function(p){
+      var d = data.breakdown.find(function(b){ return b.productId === p.id; });
+      var card = document.createElement('div');
+      card.className = 'bk-card';
+      if (d) {
+        card.innerHTML = '<p class="bk-name">' + p.name + '</p>' +
+          '<p class="bk-sub">' + p.sub + '</p>' +
+          '<div class="bk-stat"><span class="bk-stat-label">Ventes</span><span class="bk-stat-value">' + d.count + '</span></div>' +
+          (d.recurringCount > 0 ? '<div class="bk-stat"><span class="bk-stat-label">Récurrents</span><span class="bk-stat-value">' + d.recurringCount + '/mois</span></div>' : '') +
+          '<div class="bk-stat"><span class="bk-stat-label">Commissions totales</span><span class="bk-stat-value" style="color:#16a34a">' + fmtEur(d.totalCommissionEuros) + '</span></div>' +
+          '<div class="bk-stat"><span class="bk-stat-label">À venir</span><span class="bk-stat-value">' + fmtEur(d.pendingEuros + d.validatedEuros) + '</span></div>';
+      } else {
+        card.innerHTML = '<p class="bk-name">' + p.name + '</p><p class="bk-sub">' + p.sub + '</p>' +
+          '<div class="bk-empty">Aucune vente encore<br><span style="font-size:11px">Partagez votre lien pour commencer</span></div>';
+      }
+      grid.appendChild(card);
+    });
+  }
+
+  // ── Chart ───────────────────────────────────────────────────────────────────
+  function renderChart(data, mode) {
+    var ctx = document.getElementById('perf-chart').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+
+    var labels   = data.series.map(function(d){ return fmtDateShort(d.date); });
+    var values   = mode === 'clicks'
+      ? data.series.map(function(d){ return d.clicks; })
+      : data.series.map(function(d){ return d.commissionCents / 100; });
+    var maxVal = Math.max.apply(null, values.concat([1]));
+
+    chartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: values,
+          backgroundColor: 'rgba(17,17,17,0.08)',
+          borderColor: 'rgba(17,17,17,0.6)',
+          borderWidth: 1.5,
+          borderRadius: 3,
+        }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return mode === 'clicks' ? ctx.raw + ' clic' + (ctx.raw > 1 ? 's' : '') : fmtEur(ctx.raw);
+            }
+          }
+        }},
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#999', font: { size: 10 }, maxTicksLimit: 10 } },
+          y: { grid: { color: '#f2f2f2' }, ticks: { color: '#999', font: { size: 10 }, stepSize: Math.max(1, Math.ceil(maxVal / 5)) } },
+        },
+      }
+    });
+  }
+
+  function switchChart(mode) {
+    chartMode = mode;
+    document.querySelectorAll('.chart-tab').forEach(function(el){
+      el.classList.toggle('active', el.textContent.toLowerCase().includes(mode === 'clicks' ? 'clic' : 'comm'));
+    });
+    if (timeseriesData) renderChart(timeseriesData, mode);
+  }
+
+  // ── Helpers ─────────────────────────────────────────────────────────────────
   function fmtEur(v) {
-    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(v)
+    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 }).format(v || 0);
   }
   function fmtDate(d) {
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })
+    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
   }
-  function badge(status) {
-    const map = {
-      PENDING:   ['badge-pending',   'En attente'],
-      VALIDATED: ['badge-validated', 'Validée'],
-      PAID:      ['badge-paid',      'Payée'],
-      CANCELED:  ['badge-canceled',  'Annulée'],
-    }
-    const [cls, label] = map[status] || ['', status]
-    return `<span class="badge ${cls}">${label}</span>`
+  function fmtDateShort(d) {
+    var parts = d.split('-');
+    return parts[2] + '/' + parts[1];
+  }
+  function badge(s) {
+    var m = { PENDING: ['badge-pending','En attente'], VALIDATED: ['badge-validated','Validée'], PAID: ['badge-paid','Payée'], CANCELED: ['badge-canceled','Annulée'] };
+    var b = m[s] || ['', s];
+    return '<span class="badge ' + b[0] + '">' + b[1] + '</span>';
+  }
+  function getNextPayoutDate() {
+    var d = new Date();
+    d.setMonth(d.getMonth() + 1, 1);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   }
   function copyLink(btn, url) {
-    navigator.clipboard.writeText(url).then(() => {
-      btn.textContent = 'Copié !'
-      btn.classList.add('copied')
-      setTimeout(() => {
-        btn.textContent = 'Copier'
-        btn.classList.remove('copied')
-      }, 2000)
-    })
+    navigator.clipboard.writeText(url).then(function(){
+      btn.textContent = '✓ Copié';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
+    });
   }
 </script>
 </body>
