@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programme Affilié — Speed Ecom</title>
+  <title>Programme Affilié · Speed Ecom</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -250,6 +250,19 @@
     .progress-bar-bg { background: var(--gray-100); border-radius: 100px; height: 6px; overflow: hidden; }
     .progress-bar-fill { background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 100px; height: 6px; transition: width .6s ease; }
     .progress-msg { font-size: 12px; color: var(--gray-600); margin-top: 8px; }
+    /* ── Logo image ── */
+    .logo-img { height: 26px; width: auto; display: block; }
+    /* ── Premium polish ── */
+    .balance-main-value, .kpi-value, .bkd-value, .auth-product-amount, .code-badge { font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
+    .auth-brand-title, .auth-title, .dash-greeting { text-wrap: balance; }
+    a:focus-visible, button:focus-visible, input:focus-visible, .tab:focus-visible, .btn-copy:focus-visible, .chart-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+    .auth-products-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .auth-products { gap: 8px; margin-bottom: 32px; }
+    .auth-product { padding: 11px 14px; }
+    .auth-product-name { display: flex; align-items: center; }
+    .auth-product-name svg { width: 14px; height: 14px; margin-right: 8px; flex-shrink: 0; }
+    .ico-gold { color: var(--gold); }
   </style>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/speedecom_icon.png">
@@ -259,8 +272,7 @@
 <!-- ── Header ── -->
 <header class="header">
   <a href="https://speed-ecom.eu" class="logo">
-    <div class="logo-mark">SE</div>
-    <span class="logo-text">Speed Ecom</span>
+    <img class="logo-img" src="https://speed-ecom.eu/logo-speed-ecom.png" alt="Speed Ecom" />
     <span class="logo-badge">Affiliés</span>
   </a>
   <div class="header-right">
@@ -281,21 +293,42 @@
     <h1 class="auth-brand-title">Gagnez <span>30%</span><br>sur chaque vente</h1>
     <p class="auth-brand-sub">Partagez Speedfly et Ecom Sphere.<br>Touchez une commission à chaque achat.</p>
 
+    <p class="auth-products-title">Vos commissions : 30% sur tout</p>
     <div class="auth-products">
       <div class="auth-product">
         <div class="auth-product-info">
-          <p class="auth-product-name">🚀 Speedfly</p>
-          <p class="auth-product-price">Thème Shopify — 197€ unique</p>
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="currentColor" class="ico-gold"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Speedfly mensuel</p>
+          <p class="auth-product-price">Abonnement 27€/mois</p>
         </div>
         <div class="auth-product-commission">
-          <p class="auth-product-amount">59€</p>
+          <p class="auth-product-amount">8,10€</p>
+          <p class="auth-product-freq">par mois, 6 mois</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="currentColor" class="ico-gold"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Speedfly annuel</p>
+          <p class="auth-product-price">Abonnement 197€/an</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">59,10€</p>
+          <p class="auth-product-freq">par filleul</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="currentColor" class="ico-gold"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5z"/></svg>Speedfly Lifetime</p>
+          <p class="auth-product-price">Paiement unique 397€</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">119,10€</p>
           <p class="auth-product-freq">par vente</p>
         </div>
       </div>
       <div class="auth-product">
         <div class="auth-product-info">
-          <p class="auth-product-name">🌐 Ecom Sphere</p>
-          <p class="auth-product-price">Communauté — 49 €/mois</p>
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>Ecom Sphere</p>
+          <p class="auth-product-price">Communauté 49€/mois</p>
         </div>
         <div class="auth-product-commission">
           <p class="auth-product-amount">14,70€</p>
@@ -309,19 +342,19 @@
     <div class="auth-features">
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
-        Cookie 30 jours — vous êtes crédité même si l'achat est tardif
+        Cookie 30 jours : vous êtes crédité même si l'achat est tardif
       </div>
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
-        Paiement via PayPal ou virement bancaire
+        Paiement par virement bancaire ou PayPal
       </div>
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
-        Dashboard temps réel — clics, ventes, commissions
+        Dashboard temps réel : clics, ventes, commissions
       </div>
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
-        Commissions récurrentes sur les abonnements actifs
+        Commissions récurrentes jusqu'à 6 mois sur les abonnements
       </div>
     </div>
   </div>
@@ -347,7 +380,7 @@
         <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion →</button>
         <div class="msg" id="msg-login"></div>
       </div>
-      <p class="auth-trust">Gratuit · Sans engagement · 850+ membres Speed Ecom</p>
+      <p class="auth-trust">Gratuit · Sans engagement · 8 000+ boutiques Speedfly depuis 2017</p>
     </div>
   </div>
 </div>
@@ -365,7 +398,7 @@
       <!-- Payout notice -->
       <div class="payout-notice" id="payout-notice" style="display:none">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        <span><span class="amount" id="payout-amount"></span> disponible pour le prochain virement — <span id="payout-date"></span></span>
+        <span><span class="amount" id="payout-amount"></span> disponible · <span id="payout-date"></span></span>
       </div>
 
       <!-- Validation en attente -->
@@ -386,7 +419,7 @@
             <p class="bkd-value orange" id="bal-pending">0€</p>
           </div>
           <div class="bkd-item">
-            <p class="bkd-label">Validé ✓</p>
+            <p class="bkd-label">Validé</p>
             <p class="bkd-value green" id="bal-validated">0€</p>
           </div>
           <div class="bkd-item">
@@ -424,7 +457,7 @@
         </div>
         <div class="kpi-card">
           <p class="kpi-label">Taux conv.</p>
-          <p class="kpi-value" id="kpi-rate">—</p>
+          <p class="kpi-value" id="kpi-rate">·</p>
           <p class="kpi-delta">clics → vente</p>
         </div>
         <div class="kpi-card">
@@ -453,7 +486,7 @@
         <p class="section-title">Vos liens affiliés</p>
         <div class="links-card">
           <div class="code-display">
-            <span class="code-badge" id="aff-code">—</span>
+            <span class="code-badge" id="aff-code">·</span>
             <div class="code-meta">Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 30 jours après le clic</span></div>
           </div>
           <div id="links-list"></div>
@@ -525,7 +558,13 @@
       window.history.replaceState({}, '', location.pathname);
     }
     authToken = localStorage.getItem('affiliate_token');
-    authToken ? showDash() : showAuth();
+    if (authToken) {
+      showDash();
+    } else {
+      showAuth();
+      var route = (location.pathname + location.hash).toLowerCase();
+      if (route.indexOf('login') !== -1 || route.indexOf('connexion') !== -1) switchTab('login');
+    }
   });
 
   function showAuth() {
@@ -621,7 +660,7 @@
     document.getElementById('user-avatar').textContent = aff.name.charAt(0).toUpperCase();
     document.getElementById('user-name').textContent   = aff.email;
 
-    document.getElementById('dash-greeting').innerHTML = 'Bonjour, <strong>' + aff.name.replace(/<[^>]*>/g,'').split(' ')[0] + '</strong> 👋';
+    document.getElementById('dash-greeting').innerHTML = 'Bonjour, <strong>' + aff.name.replace(/<[^>]*>/g,'').split(' ')[0] + '</strong>';
     document.getElementById('dash-sub').innerHTML =
       'Code affilié : <span class="code-inline">' + aff.code + '</span> · Membre depuis le ' + fmtDate(aff.createdAt);
 
@@ -706,11 +745,11 @@
       stats.commissions.forEach(function(c){
         var tr = document.createElement('tr');
         tr.innerHTML = '<td>' + fmtDate(c.createdAt) + '</td>' +
-          '<td>' + c.productName + (c.isRecurring ? '<span class="recurring-tag">↺</span>' : '') + '</td>' +
+          '<td>' + c.productName + (c.isRecurring ? ' <span class="recurring-tag">récurrent</span>' : '') + '</td>' +
           '<td>' + fmtEur(c.saleAmountCents/100) + '</td>' +
           '<td style="font-weight:700">' + fmtEur(c.commissionAmountCents/100) + '</td>' +
           '<td>' + badge(c.status) + '</td>' +
-          '<td style="color:#999">' + (c.status === 'PENDING' ? fmtDate(c.validatesAt) : '—') + '</td>';
+          '<td style="color:#999">' + (c.status === 'PENDING' ? fmtDate(c.validatesAt) : '·') + '</td>';
         tbody.appendChild(tr);
       });
     }
@@ -727,7 +766,7 @@
     var remaining = next - current;
     var ventes = Math.ceil(remaining / 59.10);
     document.getElementById('progress-msg').textContent = remaining > 0
-      ? 'Plus que ' + fmtEur(remaining) + ' — soit environ ' + ventes + ' vente' + (ventes > 1 ? 's' : '') + ' Speedfly.'
+      ? 'Plus que ' + fmtEur(remaining) + ', soit environ ' + ventes + ' vente' + (ventes > 1 ? 's' : '') + ' Speedfly.'
       : 'Objectif atteint ! Prochain cap : ' + fmtEur(milestones[milestones.indexOf(next) + 1] || next * 2);
   }
 
@@ -738,8 +777,9 @@
       return;
     }
     var products = [
-      { id: 'speedfly',    name: 'Speedfly',    sub: 'Paiement unique 197€' },
-      { id: 'ecom-sphere', name: 'Ecom Sphere', sub: 'Abonnement 49 €/mois' },
+      { id: 'speedfly-v6',          name: 'Speedfly',          sub: 'Abonnement 27€/mois ou 197€/an' },
+      { id: 'speedfly-v6-lifetime', name: 'Speedfly Lifetime', sub: 'Paiement unique 397€' },
+      { id: 'ecom-sphere',          name: 'Ecom Sphere',       sub: 'Abonnement 49€/mois' },
     ];
     grid.innerHTML = '';
     products.forEach(function(p){
@@ -828,7 +868,7 @@
   }
   function copyLink(btn, url) {
     navigator.clipboard.writeText(url).then(function(){
-      btn.textContent = '✓ Copié';
+      btn.textContent = 'Copié';
       btn.classList.add('copied');
       setTimeout(function(){ btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
     });
