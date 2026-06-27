@@ -514,6 +514,12 @@
             <span class="code-badge" id="aff-code">·</span>
             <div class="code-meta">Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 30 jours après le clic</span></div>
           </div>
+          <div style="display:flex;gap:8px;align-items:center;margin:0 0 18px;flex-wrap:wrap">
+            <span style="font-size:13px;color:var(--gray-600);font-weight:600">Personnalise ton lien :</span>
+            <input id="slug-input" type="text" placeholder="ton-nom" maxlength="12" style="padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:inherit;width:150px;color:var(--navy);outline:none" />
+            <button class="btn-copy" onclick="saveSlug()" style="background:var(--gold);color:var(--navy)">Enregistrer</button>
+            <span id="slug-msg" style="font-size:12px"></span>
+          </div>
           <div id="links-list"></div>
           <div class="cookie-notice">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -662,6 +668,17 @@
     var el = document.getElementById(id);
     el.textContent = text; el.className = 'msg ' + type;
   }
+  async function saveSlug() {
+    var v = document.getElementById('slug-input').value.trim().toLowerCase();
+    var m = document.getElementById('slug-msg');
+    if (!/^[a-z0-9]{4,12}$/.test(v)) { m.style.color = '#dc2626'; m.textContent = '4 à 12 lettres ou chiffres, sans espace.'; return; }
+    try {
+      var r = await fetch(API + '/affiliates/me/slug', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + authToken }, body: JSON.stringify({ slug: v }) });
+      var d = await r.json();
+      if (r.ok) { m.style.color = '#16a34a'; m.textContent = 'Lien personnalisé enregistré.'; loadDashboard(); }
+      else { m.style.color = '#dc2626'; m.textContent = d.error || 'Erreur.'; }
+    } catch { m.style.color = '#dc2626'; m.textContent = 'Erreur réseau.'; }
+  }
 
   async function loadDashboard() {
     try {
@@ -735,13 +752,14 @@
 
     if (timeseries) renderChart(timeseries, chartMode);
 
-    var code  = aff.code;
+    var ref   = aff.slug || aff.code;
     var base  = 'https://speed-ecom.eu';
     var links = [
-      { label: 'Speedfly',    url: base + '/speedfly?ref='     + code },
-      { label: 'Ecom Sphere', url: base + '/ecom-sphere?ref='  + code },
+      { label: 'Speedfly',    url: base + '/speedfly?ref='     + ref },
+      { label: 'Ecom Sphere', url: base + '/ecom-sphere?ref='  + ref },
     ];
-    document.getElementById('aff-code').textContent = code;
+    document.getElementById('aff-code').textContent = ref;
+    var si = document.getElementById('slug-input'); if (si && !si.value) si.value = aff.slug || '';
     var ll = document.getElementById('links-list');
     ll.innerHTML = '';
     links.forEach(function(l){
