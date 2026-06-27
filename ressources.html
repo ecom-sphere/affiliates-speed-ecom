@@ -65,6 +65,18 @@
   .foot{background:var(--navy);color:rgba(255,255,255,.6);padding:28px 0;text-align:center;font-size:13px}
   .foot a{color:var(--gold-light)}
   .btn{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:800;font-size:14px;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:8px}
+  .kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0 6px}
+  @media(max-width:720px){.kit-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.kit-grid{grid-template-columns:1fr}}
+  .kit-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .kit-card img{width:100%;height:150px;object-fit:cover;object-position:top;display:block;background:var(--navy)}
+  .kit-card a{font-size:12.5px;font-weight:700;color:var(--navy);text-align:center;padding:10px;border-top:1px solid var(--line)}
+  .kit-card a:hover{color:var(--gold);text-decoration:none}
+  .swipe-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0;position:relative}
+  .swipe-item .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;margin-bottom:6px}
+  .swipe-item .txt{font-size:13.5px;color:#2a2f3c;white-space:pre-wrap}
+  .swipe-item .cp{position:absolute;top:12px;right:12px;font-size:11px;font-weight:700;background:var(--navy);color:#fff;border:none;border-radius:6px;padding:5px 10px;cursor:pointer}
+  .swipe-item .cp:hover{background:var(--gold);color:var(--navy)}
 </style>
 </head>
 <body>
@@ -131,6 +143,33 @@
   <div class="note">Rappel obligatoire : indique clairement, dans chaque publication, que tu es affilié Speed Ecom. N'enchéris jamais sur la marque en publicité payante (voir <a href="/cgu.html">CGU</a>).</div>
 </div></section>
 
+<section><div class="wrap">
+  <span class="k">MEDIA KIT</span>
+  <h2>Tes ressources pour vendre</h2>
+  <p>Visuels brandés prêts à poster et textes à copier. Mets ton lien affilié en légende ou en bio.</p>
+  <h3>Bannières</h3>
+  <div class="kit-grid">
+    <div class="kit-card"><img src="/assets/kit/speedfly-carre-1080.png" alt="Banniere carre" /><a href="/assets/kit/speedfly-carre-1080.png" download>Carré 1080 × 1080</a></div>
+    <div class="kit-card"><img src="/assets/kit/speedfly-paysage-1200x628.png" alt="Banniere paysage" /><a href="/assets/kit/speedfly-paysage-1200x628.png" download>Paysage 1200 × 628</a></div>
+    <div class="kit-card"><img src="/assets/kit/speedfly-story-1080x1920.png" alt="Banniere story" /><a href="/assets/kit/speedfly-story-1080x1920.png" download>Story 1080 × 1920</a></div>
+  </div>
+  <p style="margin-top:10px"><a href="https://speed-ecom.eu/logo-speed-ecom.png" download>Télécharger le logo Speed Ecom</a></p>
+  <h3>Textes prêts à copier</h3>
+  <div class="swipe-item"><button class="cp" onclick="copyKit(this)">Copier</button><div class="lbl">Hook TikTok 1</div><div class="txt">J'ai refait ma boutique Shopify avec ce thème, et voici ce qui a tout changé.</div></div>
+  <div class="swipe-item"><button class="cp" onclick="copyKit(this)">Copier</button><div class="lbl">Hook TikTok 2</div><div class="txt">Le thème Shopify dont personne ne parle, mais qui convertit le mieux.</div></div>
+  <div class="swipe-item"><button class="cp" onclick="copyKit(this)">Copier</button><div class="lbl">Hook TikTok 3</div><div class="txt">Arrête de payer 200 € d'apps Shopify par mois : ce thème fait presque tout nativement.</div></div>
+  <div class="swipe-item"><button class="cp" onclick="copyKit(this)">Copier</button><div class="lbl">Légende Instagram</div><div class="txt">Si ta boutique Shopify est lente et ne convertit pas, le coupable c'est souvent le thème. Speedfly est pensé pour la vitesse et la conversion, avec 50+ fonctionnalités natives. 14 jours d'essai gratuit, mon lien en bio.
+#shopify #ecommerce #dropshipping #shopifytheme</div></div>
+  <div class="swipe-item"><button class="cp" onclick="copyKit(this)">Copier</button><div class="lbl">Email à ta liste</div><div class="txt">Objet : le thème qui a boosté ma boutique
+
+Salut,
+
+Si tu es sur Shopify et que ta boutique mérite mieux, je te recommande Speedfly : rapide, mobile-first, 50+ fonctionnalités natives (tu remplaces des centaines d'euros d'apps). Tu peux l'essayer 14 jours gratuitement ici : [TON LIEN]
+
+À toi de jouer.</div></div>
+  <div class="swipe-item"><button class="cp" onclick="copyKit(this)">Copier</button><div class="lbl">Bio / lien</div><div class="txt">Le thème Shopify qui convertit, 14 jours gratuits → [TON LIEN]</div></div>
+  <p style="margin-top:8px;font-size:12.5px;color:var(--muted)">Remplace [TON LIEN] par ton lien affilié (dispo dans ton dashboard).</p>
+</div></section>
 <section style="background:#fff;border-top:1px solid var(--line)"><div class="wrap">
   <span class="k">FAQ</span>
   <h2>Questions fréquentes</h2>
@@ -185,6 +224,7 @@
   box.addEventListener('input',calc);
   // valeurs de demonstration
   document.getElementById('q-lifetime').value=2; document.getElementById('q-ecom').value=3; calc();
+  function copyKit(btn){var t=btn.parentElement.querySelector('.txt').innerText;navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='Copié';setTimeout(function(){btn.textContent=o;},1500);});}
 </script>
 </body>
 </html>
