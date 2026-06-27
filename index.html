@@ -346,7 +346,7 @@
       </div>
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
-        Paiement par virement bancaire ou PayPal
+        Paiement par virement ou PayPal, dès 50€ le 1er du mois
       </div>
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
@@ -371,7 +371,10 @@
       <div id="tab-register">
         <div class="form-group"><label>Prénom et nom</label><input type="text" id="reg-name" placeholder="Cédric Anger" /></div>
         <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="vous@exemple.com" /></div>
-        <div class="form-group"><label>Email PayPal <span style="font-weight:400;color:#aaa">(pour vos virements)</span></label><input type="email" id="reg-paypal" placeholder="paypal@exemple.com (optionnel)" /></div>
+        <div class="form-group"><label>Méthode de paiement</label><select id="reg-method" onchange="toggleMethod()" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none"><option value="paypal">PayPal</option><option value="virement">Virement bancaire (IBAN)</option></select></div>
+        <div class="form-group" id="grp-paypal"><label>Email PayPal</label><input type="email" id="reg-paypal" placeholder="paypal@exemple.com" /></div>
+        <div class="form-group" id="grp-iban" style="display:none"><label>IBAN</label><input type="text" id="reg-iban" placeholder="FR76 1234 5678 ..." /></div>
+        <label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--gray-600);font-weight:400;margin:2px 0 12px;cursor:pointer"><input type="checkbox" id="reg-cgu" style="margin-top:3px;flex-shrink:0" /><span>J'accepte les <a href="/cgu.html" target="_blank" style="color:var(--gold)">CGU du programme</a> et la <a href="/confidentialite.html" target="_blank" style="color:var(--gold)">politique de confidentialité</a>.</span></label>
         <button class="btn-primary" id="btn-reg" onclick="doRegister()">Créer mon compte affilié →</button>
         <div class="msg" id="msg-reg"></div>
       </div>
@@ -381,6 +384,7 @@
         <div class="msg" id="msg-login"></div>
       </div>
       <p class="auth-trust">Gratuit · Sans engagement · 8 000+ boutiques Speedfly depuis 2017</p>
+      <p class="auth-trust" style="margin-top:8px;padding-top:0;border:none"><a href="/cgu.html" target="_blank" style="color:var(--gray-400)">CGU du programme</a> · <a href="/confidentialite.html" target="_blank" style="color:var(--gray-400)">Confidentialité</a></p>
     </div>
   </div>
 </div>
@@ -591,17 +595,27 @@
     document.getElementById('tab-login').style.display    = t === 'login'    ? 'block' : 'none';
   }
 
+  function toggleMethod() {
+    var m = document.getElementById('reg-method').value;
+    document.getElementById('grp-paypal').style.display = m === 'paypal' ? 'block' : 'none';
+    document.getElementById('grp-iban').style.display   = m === 'virement' ? 'block' : 'none';
+  }
   async function doRegister() {
     var name   = document.getElementById('reg-name').value.trim();
     var email  = document.getElementById('reg-email').value.trim();
+    var method = document.getElementById('reg-method').value;
     var paypal = document.getElementById('reg-paypal').value.trim();
+    var iban   = document.getElementById('reg-iban').value.trim();
     if (!name || !email) { showMsg('msg-reg', 'Nom et email obligatoires.', 'error'); return; }
+    if (!document.getElementById('reg-cgu').checked) { showMsg('msg-reg', "Merci d'accepter les CGU pour continuer.", 'error'); return; }
+    if (method === 'paypal' && !paypal) { showMsg('msg-reg', 'Indiquez votre email PayPal.', 'error'); return; }
+    if (method === 'virement' && !iban) { showMsg('msg-reg', 'Indiquez votre IBAN.', 'error'); return; }
     var btn = document.getElementById('btn-reg');
     btn.disabled = true; btn.textContent = 'Envoi...';
     try {
       var r = await fetch(API + '/affiliates/register', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, paypalEmail: paypal || undefined }),
+        body: JSON.stringify({ name, email, paypalEmail: paypal || undefined, iban: iban || undefined, acceptedTerms: true }),
       });
       var d = await r.json();
       showMsg('msg-reg', d.message || d.error, r.ok ? 'success' : 'error');
