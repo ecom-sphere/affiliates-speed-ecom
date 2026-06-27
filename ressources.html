@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ressources Affiliés · Speed Ecom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--navy:#0a0e1a;--navy2:#0f1629;--navy3:#1a2340;--nb:#243058;--gold:#e8a800;--gold-light:#f7c948;--gold-dim:rgba(232,168,0,.1);--gold-border:rgba(232,168,0,.28);--ink:#11151f;--muted:#5a6478;--muted2:#8a92a6;--line:#e7eaf0;--cream:#f8f9fb;--green:#127a3e}
+  html{font-size:16px;-webkit-font-smoothing:antialiased}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--cream);color:var(--ink);line-height:1.65}
+  .num{font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+  .top{background:var(--navy);border-bottom:3px solid var(--gold);padding:18px 0;position:sticky;top:0;z-index:50}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+  .top .wrap{display:flex;align-items:center;gap:12px}
+  .logo-img{height:24px;width:auto;display:block}
+  .badge{font-size:10px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px}
+  .top .sp{flex:1}
+  .top a.nav{font-size:13px;color:rgba(255,255,255,.7);text-decoration:none;font-weight:600}
+  .top a.nav:hover{color:#fff}
+  .hero{background:linear-gradient(180deg,#0a0e1a,#0f1629);color:#fff;padding:48px 0 56px;border-bottom:1px solid var(--nb)}
+  .hero .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .hero h1{font-size:34px;font-weight:900;letter-spacing:-1px;line-height:1.1}
+  .hero h1 span{color:var(--gold)}
+  .hero p{color:rgba(255,255,255,.55);font-size:15px;margin-top:12px;max-width:620px}
+  section{padding:40px 0}
+  .k{font-size:12px;font-weight:800;color:var(--gold);letter-spacing:1px}
+  h2{font-size:24px;font-weight:900;letter-spacing:-.5px;color:var(--navy);margin:4px 0 16px}
+  h3{font-size:15px;font-weight:800;color:var(--navy);margin:18px 0 8px}
+  p,li{font-size:14.5px;color:#2a2f3c}
+  .tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13.5px}
+  .tbl th{background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .tbl td{padding:11px 14px;border-bottom:1px solid var(--line)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl td.c{color:var(--gold);font-weight:800}
+  .note{background:var(--gold-dim);border:1px solid var(--gold-border);border-left:3px solid var(--gold);border-radius:10px;padding:14px 16px;font-size:13.5px;color:#33384a;margin:16px 0}
+  .note .g{color:var(--green);font-weight:700}
+  ul{margin:6px 0 6px 20px}
+  li{margin:5px 0}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{text-decoration:underline}
+  /* Simulateur */
+  .sim{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px -30px rgba(10,14,26,.35)}
+  .sim-grid{display:grid;grid-template-columns:1.1fr .9fr}
+  @media(max-width:720px){.sim-grid{grid-template-columns:1fr}}
+  .sim-in{padding:24px 26px}
+  .sim-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .sim-row:last-child{border-bottom:none}
+  .sim-row .lab{font-size:13.5px}
+  .sim-row .lab small{display:block;color:var(--muted);font-size:11.5px}
+  .stepper{display:flex;align-items:center;gap:6px}
+  .stepper button{width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--cream);font-size:16px;font-weight:800;color:var(--navy);cursor:pointer;line-height:1}
+  .stepper button:hover{border-color:var(--gold);color:var(--gold)}
+  .stepper input{width:46px;text-align:center;border:1px solid var(--line);border-radius:7px;padding:6px 0;font-size:14px;font-weight:700;font-family:inherit;color:var(--navy);-moz-appearance:textfield}
+  .stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .sim-out{background:var(--navy);color:#fff;padding:26px;display:flex;flex-direction:column;justify-content:center}
+  .sim-out .ol{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:4px}
+  .sim-out .big{font-size:40px;font-weight:900;color:var(--gold);line-height:1}
+  .sim-out .sub{font-size:12px;color:rgba(255,255,255,.45);margin:4px 0 18px}
+  .sim-line{display:flex;justify-content:space-between;font-size:13.5px;padding:8px 0;border-top:1px solid rgba(255,255,255,.08)}
+  .sim-line span:last-child{font-weight:800;color:var(--gold-light)}
+  .sim-foot{font-size:11px;color:rgba(255,255,255,.35);margin-top:14px;line-height:1.5}
+  .foot{background:var(--navy);color:rgba(255,255,255,.6);padding:28px 0;text-align:center;font-size:13px}
+  .foot a{color:var(--gold-light)}
+  .btn{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:800;font-size:14px;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><img class="logo-img" src="https://speed-ecom.eu/logo-speed-ecom.png" alt="Speed Ecom" /><span class="badge">Affiliés</span><span class="sp"></span><a class="nav" href="/">Mon espace</a></div></header>
+
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">Ressources Affiliés</div>
+  <h1>Le programme affilié, <span>en détail</span></h1>
+  <p>Comment tu gagnes, combien tu peux gagner, et comment promouvoir Speed Ecom efficacement. Tout est ici.</p>
+</div></div>
+
+<section><div class="wrap">
+  <span class="k">LE MODÈLE</span>
+  <h2>Comment tu gagnes</h2>
+  <p>Tu touches <b>30% sur chaque vente</b> de la gamme. Le rythme dépend de l'offre :</p>
+  <table class="tbl" style="margin-top:14px">
+    <tr><th>Offre</th><th>Prix client</th><th>Ta commission</th><th>Type</th></tr>
+    <tr><td>Speedfly mensuel</td><td>27 €/mois</td><td class="c">8,10 €/mois</td><td>Récurrent, 6 mois max</td></tr>
+    <tr><td>Speedfly annuel</td><td>197 €/an</td><td class="c">59,10 €</td><td>Une seule fois</td></tr>
+    <tr><td>Speedfly Lifetime</td><td>397 €</td><td class="c">119,10 €</td><td>Une seule fois</td></tr>
+    <tr><td>Ecom Sphere</td><td>49 €/mois</td><td class="c">14,70 €/mois</td><td>Récurrent sans limite</td></tr>
+    <tr><td>Plan de Lancement</td><td>29 €</td><td class="c">8,70 €</td><td>Une seule fois</td></tr>
+    <tr><td>Audit de boutique</td><td>49 €</td><td class="c">14,70 €</td><td>Une seule fois</td></tr>
+  </table>
+  <div class="note"><b>À retenir :</b> le récurrent est limité. Speedfly mensuel = 6 mois ; annuel, Lifetime, Plan de lancement et Audit = une fois. Seul <span class="g">Ecom Sphere</span> est récurrent sans limite (tant que ton filleul reste abonné). L'essai de 14 jours ne génère pas de commission : elle est due au 1er paiement réel.</div>
+</div></section>
+
+<section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <span class="k">SIMULATEUR</span>
+  <h2>Combien tu peux gagner</h2>
+  <p style="margin-bottom:18px">Indique ce que tu penses générer, et vois ton estimation en direct.</p>
+  <div class="sim"><div class="sim-grid">
+    <div class="sim-in" id="sim-in"></div>
+    <div class="sim-out">
+      <div class="ol">Estimation sur 6 mois</div>
+      <div class="big num" id="sim-total">0 €</div>
+      <div class="sub">commissions uniques + récurrent cumulé</div>
+      <div class="sim-line"><span>Commissions uniques</span><span class="num" id="sim-uniq">0 €</span></div>
+      <div class="sim-line"><span>Récurrent par mois</span><span class="num" id="sim-rec">0 €</span></div>
+      <div class="sim-foot">Le récurrent inclut Ecom Sphere (sans limite) et Speedfly mensuel (6 mois). Estimation indicative, pas une promesse de gains.</div>
+    </div>
+  </div></div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="k">PLAYBOOK</span>
+  <h2>Où et comment promouvoir</h2>
+  <p>Tu vends des produits visuels et des services. Montre, ne dis pas.</p>
+  <h3>Les canaux qui marchent</h3>
+  <ul>
+    <li><b>TikTok / Reels</b> : démos courtes, avant/après, une fonctionnalité = une vidéo</li>
+    <li><b>YouTube</b> : tuto « je refais ma boutique avec Speedfly », revue complète</li>
+    <li><b>Email / newsletter</b> : recommandation personnelle avec ton lien</li>
+    <li><b>Blog / SEO</b> : « meilleur thème Shopify », comparatifs</li>
+    <li><b>Communautés</b> : groupes e-commerce, en apportant de la valeur (sans spam)</li>
+  </ul>
+  <h3>Des angles qui convertissent</h3>
+  <ul>
+    <li>« Ce thème remplace plus de 200 € d'apps Shopify par mois »</li>
+    <li>Avant / après sur la vitesse et le score PageSpeed</li>
+    <li>Démo d'une fonctionnalité native (mini-panier, page produit)</li>
+    <li>Pour les services : « fais auditer ta boutique » ou « un plan pour lancer »</li>
+  </ul>
+  <div class="note">Rappel obligatoire : indique clairement, dans chaque publication, que tu es affilié Speed Ecom. N'enchéris jamais sur la marque en publicité payante (voir <a href="/cgu.html">CGU</a>).</div>
+</div></section>
+
+<section style="background:#fff;border-top:1px solid var(--line)"><div class="wrap">
+  <span class="k">FAQ</span>
+  <h2>Questions fréquentes</h2>
+  <h3>Mon inscription est-elle immédiate ?</h3><p>Non : chaque compte est validé manuellement (sous 24 à 48h). Tu reçois ton accès par email une fois approuvé.</p>
+  <h3>Combien de temps dure le cookie ?</h3><p>30 jours après le clic. Si ton filleul achète dans cette fenêtre, la vente t'est attribuée.</p>
+  <h3>Quand suis-je payé ?</h3><p>Validée 30 jours après la vente, versée le 1er du mois si ton solde atteint 50 €.</p>
+  <h3>Dois-je faire une facture ?</h3><p>Oui, conforme à ton statut (société, entreprise ou auto-entrepreneur). Auto-entrepreneur en franchise : mention « TVA non applicable, art. 293 B du CGI ». Tu déclares tes revenus selon ton statut.</p>
+  <p style="margin-top:20px"><a class="btn" href="/docs/guide-affilies-speed-ecom.pdf" target="_blank">Télécharger le guide complet (PDF)</a></p>
+</div></section>
+
+<div class="foot"><div class="wrap">Speed Ecom · Programme Affilié · <a href="/">Mon espace</a> · <a href="/cgu.html">CGU</a> · <a href="/confidentialite.html">Confidentialité</a></div></div>
+
+<script>
+  var OFFERS=[
+    {id:'lifetime',label:'Ventes Speedfly Lifetime',sub:'119,10 € une fois',c:119.10,kind:'uniq'},
+    {id:'annuel',label:'Ventes Speedfly annuel',sub:'59,10 € une fois',c:59.10,kind:'uniq'},
+    {id:'mensuel',label:'Abonnés Speedfly mensuel',sub:'8,10 €/mois pendant 6 mois',c:8.10,kind:'rec6'},
+    {id:'ecom',label:'Abonnés Ecom Sphere',sub:'14,70 €/mois sans limite',c:14.70,kind:'rec'},
+    {id:'audit',label:'Audits de boutique',sub:'14,70 € une fois',c:14.70,kind:'uniq'},
+    {id:'plan',label:'Plans de lancement',sub:'8,70 € une fois',c:8.70,kind:'uniq'}
+  ];
+  var box=document.getElementById('sim-in');
+  OFFERS.forEach(function(o){
+    var row=document.createElement('div'); row.className='sim-row';
+    row.innerHTML='<div class="lab">'+o.label+'<small>'+o.sub+'</small></div>'+
+      '<div class="stepper"><button data-a="-" data-id="'+o.id+'">-</button>'+
+      '<input type="number" min="0" id="q-'+o.id+'" value="0" />'+
+      '<button data-a="+" data-id="'+o.id+'">+</button></div>';
+    box.appendChild(row);
+  });
+  function fmt(v){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(v||0);}
+  function calc(){
+    var uniq=0, rec=0, rec6=0;
+    OFFERS.forEach(function(o){
+      var q=Math.max(0,parseInt(document.getElementById('q-'+o.id).value)||0);
+      if(o.kind==='uniq') uniq+=q*o.c;
+      else if(o.kind==='rec') rec+=q*o.c;
+      else if(o.kind==='rec6'){ rec+=q*o.c; rec6+=q*o.c; }
+    });
+    // total 6 mois : uniques + (recurrent sans limite x6) + (mensuel x6 deja compte dans rec6)
+    var recSansLimite = rec - rec6;
+    var total6 = uniq + recSansLimite*6 + rec6*6;
+    document.getElementById('sim-uniq').textContent=fmt(uniq);
+    document.getElementById('sim-rec').textContent=fmt(rec)+'/mois';
+    document.getElementById('sim-total').textContent=fmt(total6);
+  }
+  box.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    var inp=document.getElementById('q-'+b.dataset.id);
+    var v=Math.max(0,(parseInt(inp.value)||0)+(b.dataset.a==='+'?1:-1)); inp.value=v; calc();
+  });
+  box.addEventListener('input',calc);
+  // valeurs de demonstration
+  document.getElementById('q-lifetime').value=2; document.getElementById('q-ecom').value=3; calc();
+</script>
+</body>
+</html>
