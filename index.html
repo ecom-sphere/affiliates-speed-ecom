@@ -416,7 +416,9 @@
             <label class="chk"><input type="checkbox" class="app-ch" value="Autre" /> Autre</label>
           </div>
         </div>
-        <div class="form-group"><label>Quel est ton profil ?</label><select id="app-speedfly" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none"><option value="">— Choisir —</option><option value="Client Speedfly">Je suis client Speedfly</option><option value="Créateur / audience">Créateur, j'ai une audience</option><option value="Agence / freelance">Agence ou freelance</option></select></div>
+        <div class="form-group"><label>Quel est ton profil ?</label><select id="app-speedfly" onchange="onAppProfile()" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none"><option value="">— Choisir —</option><option value="Client Speedfly">J'utilise déjà Speedfly</option><option value="Créateur / audience">J'ai une audience (créateur, influenceur)</option><option value="Agence / freelance">Je crée des boutiques (agence, freelance)</option></select></div>
+        <div class="form-group" id="app-adapt-client" style="display:none"><label>Lien de ta boutique sous Speedfly</label><input type="text" id="app-shop" placeholder="https://ta-boutique.com" /></div>
+        <div class="form-group" id="app-adapt-agence" style="display:none"><label>Combien de boutiques Shopify montes-tu par an ?</label><input type="text" id="app-nbshops" placeholder="Ex : 10 à 20 par an" /></div>
         <div class="form-group"><label>Taille de ton audience / communauté</label><input type="text" id="app-audience" placeholder="Ex : 15 000 abonnés TikTok" /></div>
         <div class="form-group"><label>Lien de ton profil principal</label><input type="text" id="app-profile" placeholder="https://tiktok.com/@..." /></div>
         <div class="form-group"><label>Présente-toi en 2 lignes</label><textarea id="app-pitch" rows="3" placeholder="Qui es-tu, ton audience, pourquoi Speedfly ?" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none;resize:vertical"></textarea></div>
@@ -640,6 +642,11 @@
     authToken = null;
     showAuth();
   }
+  function onAppProfile() {
+    var v = document.getElementById('app-speedfly').value;
+    document.getElementById('app-adapt-client').style.display = (v === 'Client Speedfly') ? 'block' : 'none';
+    document.getElementById('app-adapt-agence').style.display = (v === 'Agence / freelance') ? 'block' : 'none';
+  }
   function switchTab(t) {
     var order = { register: 0, apply: 1, login: 2 };
     document.querySelectorAll('.tab').forEach(function (el, i) {
@@ -685,6 +692,9 @@
     var profile = document.getElementById('app-profile').value.trim();
     var pitch = document.getElementById('app-pitch').value.trim();
     var speedfly = document.getElementById('app-speedfly').value;
+    var profileDetail = '';
+    if (speedfly === 'Client Speedfly') { var sh = document.getElementById('app-shop').value.trim(); if (sh) profileDetail = 'Boutique Speedfly: ' + sh; }
+    else if (speedfly === 'Agence / freelance') { var nb = document.getElementById('app-nbshops').value.trim(); if (nb) profileDetail = 'Boutiques Shopify/an: ' + nb; }
     if (!name || !email) { showMsg('msg-apply', 'Nom et email obligatoires.', 'error'); return; }
     if (!document.getElementById('app-cgu').checked) { showMsg('msg-apply', "Merci d'accepter les CGU pour continuer.", 'error'); return; }
     var btn = document.getElementById('btn-apply');
@@ -692,7 +702,7 @@
     try {
       var r = await fetch(API + '/affiliates/register', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, acceptedTerms: true, source: 'application', speedflyStatus: speedfly || undefined, channels: channels, audience: audience || undefined, profileUrl: profile || undefined, pitch: pitch || undefined }),
+        body: JSON.stringify({ name, email, acceptedTerms: true, source: 'application', speedflyStatus: speedfly || undefined, profileDetail: profileDetail || undefined, channels: channels, audience: audience || undefined, profileUrl: profile || undefined, pitch: pitch || undefined }),
       });
       var d = await r.json();
       showMsg('msg-apply', d.message || d.error, r.ok ? 'success' : 'error');
