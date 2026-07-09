@@ -336,8 +336,8 @@
     .badge-canceled{  background:rgba(220,38,38,.14)  !important; color:#f87171 !important; }
 
     /* Misc */
-    .recurring-tag{ color:#6b7893 !important; }
-    .auth-trust{ color:#6b7893 !important; border-top-color:#1e2a44 !important; }
+    .recurring-tag{ color:#7f8ca3 !important; }
+    .auth-trust{ color:#7f8ca3 !important; border-top-color:#1e2a44 !important; }
     .empty{ color:#8a97ad !important; }
     .empty strong{ color:#e7ecf5 !important; }
     .bk-empty{ color:#8a97ad !important; }
@@ -370,7 +370,7 @@
     .aff-sec{ background:#0f1729; border:1px solid #1e2a44; border-radius:16px; padding:22px 24px; margin:0 0 16px; }
     .aff-sec h2{ font-size:16px; font-weight:800; margin-bottom:4px; color:#e7ecf5; }
     .aff-sec .aff-hint{ font-size:13px; color:#8a97ad; margin-bottom:16px; }
-    .aff-note{ font-size:12.5px; color:#6b7893; margin-top:14px; line-height:1.65; }
+    .aff-note{ font-size:12.5px; color:#7f8ca3; margin-top:14px; line-height:1.65; }
     .aff-empty{ font-size:13px; color:#8a97ad; text-align:center; padding:26px; }
 
     /* Messages */
@@ -386,9 +386,9 @@
     .aff-sim label{ font-size:12.5px; color:#8a97ad; display:block; margin-bottom:6px; }
     .aff-sim input[type=range]{ width:100%; accent-color:#e8a800; }
     .aff-out{ background:linear-gradient(135deg,#101a30,#0b1220); border:1px solid #1e2a44; border-radius:14px; padding:20px 22px; text-align:center; }
-    .aff-out .l{ font-size:12px; color:#6b7893; text-transform:uppercase; letter-spacing:.05em; font-weight:700; }
+    .aff-out .l{ font-size:12px; color:#7f8ca3; text-transform:uppercase; letter-spacing:.05em; font-weight:700; }
     .aff-out .v{ font-size:32px; font-weight:900; color:#f7c948; margin-top:4px; }
-    .aff-out .d{ font-size:12.5px; color:#6b7893; margin-top:4px; }
+    .aff-out .d{ font-size:12.5px; color:#7f8ca3; margin-top:4px; }
 
     /* Forms */
     .aff-frm{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
@@ -409,6 +409,12 @@
     .aff-kit a:hover{ border-color:#e8a800; }
 
     @media(max-width:640px){ .aff-sim,.aff-frm{ grid-template-columns:1fr; } }
+
+    /* ===== Audit front : ajouts ===== */
+    /* Mobile : le formulaire d'abord, le panneau produits ensuite */
+    @media (max-width:768px){ #auth-screen{ flex-direction:column-reverse !important; } }
+    /* Facture payée : badge vert */
+    .inv-badge-paid{ background:rgba(52,211,153,.14) !important; color:#34d399 !important; }
   </style>
 </head>
 <body>
@@ -534,7 +540,7 @@
         <button class="tab" onclick="switchTab('login')">Se connecter</button>
       </div>
       <div id="tab-register">
-        <p style="font-size:12.5px;color:var(--gray-600);margin:0 0 12px">Tu as été invité ou tu es déjà affilié Speed Ecom ? Crée ton compte.</p>
+        <p style="font-size:12.5px;color:var(--gray-600);margin:0 0 12px">Tu as été invité ou tu es déjà affilié Speed Ecom ? Crée ton compte. L'accès est activé après vérification (24 à 48 h).</p>
         <div class="form-group"><label>Prénom et nom</label><input type="text" id="reg-name" placeholder="Cédric Anger" /></div>
         <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="vous@exemple.com" /></div>
         <div class="form-group"><label>Méthode de paiement</label><select id="reg-method" onchange="toggleMethod()" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none"><option value="paypal">PayPal</option><option value="virement">Virement bancaire (IBAN)</option></select></div>
@@ -571,6 +577,7 @@
       <div id="tab-login" style="display:none">
         <div class="form-group"><label>Votre email affilié</label><input type="email" id="login-email" placeholder="vous@exemple.com" /></div>
         <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion →</button>
+        <p style="font-size:12px;color:var(--gray-400);margin-top:10px">Le lien arrive en général en moins d'une minute. Pense à vérifier tes spams.</p>
         <div class="msg" id="msg-login"></div>
       </div>
       <p class="auth-trust">Gratuit · Sans engagement · 8 000+ boutiques Speedfly depuis 2017</p>
@@ -854,14 +861,15 @@
       <div id="tab-factures" class="afftab" style="display:none">
         <div class="aff-sec">
           <h2>Factures</h2>
-          <p class="aff-hint">Tu factures Speed Ecom pour tes commissions validées. Un clic génère ta facture et l'envoie à notre comptabilité (facture@speed-ecom.eu). Ton virement est traité au prochain cycle de paiement.</p>
+          <p class="aff-hint">Tu factures Speed Ecom pour tes commissions validées. Un clic génère ta facture et l'envoie à notre comptabilité (facture@speed-ecom.eu). Ton virement est traité au prochain cycle de paiement. Deux règles à connaître : <b style="color:#e7ecf5">minimum de facturation 50 €</b>, et <b style="color:#e7ecf5">une seule facture en attente de règlement à la fois</b>.</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:#0b1220;border:1px solid #1e2a44;border-radius:12px;padding:16px 18px;margin-bottom:16px">
             <div>
-              <div style="font-size:11.5px;color:#6b7893;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Disponible à facturer</div>
+              <div style="font-size:11.5px;color:#7f8ca3;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Disponible à facturer</div>
               <div style="font-size:28px;font-weight:900;color:#f7c948;margin-top:4px" id="inv-available">0 &euro;</div>
             </div>
             <button class="aff-btn" id="inv-send" style="margin-top:0" onclick="sendInvoice()">Générer et envoyer ma facture</button>
           </div>
+          <div id="inv-help" style="display:none;font-size:12.5px;color:#fbbf24;margin:-4px 0 14px"></div>
           <div class="aff-msg" id="inv-msg"></div>
           <div id="inv-action" style="margin-top:12px"></div>
         </div>
@@ -1262,9 +1270,17 @@
   }
 </script>
 <script>
-/* ===== DARK THEME · ADDITIVE BEHAVIOUR (does not modify existing functions) ===== */
+/* ===== SCRIPT 2 · COMPORTEMENT ADDITIF + CORRECTIONS AUDIT =====
+   Le script 1 (couche de données) n'est jamais modifié : ses fonctions
+   (loadDashboard, renderDash, switchChart, renderBreakdown) sont réassignées ici. */
 (function(){
-  // ---- Tab navigation ----
+
+  /* timeseriesData / chartMode du script 1 sont des « let » internes :
+     on maintient des copies sûres côté script 2. */
+  window._tsData = window._tsData || null;
+  window._chartMode = window._chartMode || 'clicks';
+
+  // ---- Navigation par onglets (+ aria-selected) ----
   window.showAffTab = function(k){
     var keys = ['dash','ressources','profil','factures'];
     keys.forEach(function(kk){
@@ -1272,19 +1288,20 @@
       if(el) el.style.display = (kk===k) ? 'block' : 'none';
     });
     var btns = document.querySelectorAll('.afftab-btn');
-    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active', btns[i].getAttribute('data-tab')===k); }
+    for(var i=0;i<btns.length;i++){
+      var on = btns[i].getAttribute('data-tab')===k;
+      btns[i].classList.toggle('active', on);
+      btns[i].setAttribute('aria-selected', on ? 'true' : 'false');
+    }
     if(k==='dash'){
       try{
-        var _ts = null, _mode = 'clicks';
-        try{ if(typeof timeseriesData !== 'undefined' && timeseriesData) _ts = timeseriesData; }catch(e){}
-        if(!_ts && window.timeseriesData) _ts = window.timeseriesData;
-        try{ if(typeof chartMode !== 'undefined' && chartMode) _mode = chartMode; }catch(e){}
-        if(window.chartMode) _mode = window.chartMode;
-        if(_ts && typeof renderChart === 'function') renderChart(_ts, _mode || 'clicks');
+        var _ts = window._tsData || null;
+        if(!_ts){ try{ if(typeof timeseriesData !== 'undefined' && timeseriesData) _ts = timeseriesData; }catch(e){} }
+        if(_ts && typeof renderChart === 'function') renderChart(_ts, window._chartMode || 'clicks');
       }catch(e){ console.error(e); }
     }
     if(k==='factures'){
-      try{ if(!window._invLoaded){ window._invLoaded = true; window.loadInvoices(); } }catch(e){ console.error(e); }
+      try{ if(!window._invLoaded) window.refreshInvoices(); }catch(e){ console.error(e); }
     }
     try{ window.scrollTo(0,0); }catch(e){}
   };
@@ -1294,7 +1311,21 @@
   function _setVal(id,v){ var el=document.getElementById(id); if(el && v!=null && v!=='') el.value=v; }
   window.showAffMsg = function(id,text,type){ var el=document.getElementById(id); if(!el) return; el.textContent=text; el.className='aff-msg '+type; el.style.display='block'; };
 
-  // ---- Simulator (per-product, from the validated demo logic) ----
+  // ---- État d'erreur VISIBLE du dashboard (audit A-B2) ----
+  function showDashError(message){
+    var lo = document.getElementById('dash-loading');
+    var dc = document.getElementById('dash-content');
+    if(dc) dc.style.display = 'none';
+    if(lo){
+      lo.style.display = 'block';
+      lo.innerHTML =
+        '<strong style="display:block;color:#e7ecf5;font-size:15px;margin-bottom:6px">Impossible de charger ton dashboard</strong>' +
+        '<span style="display:block;margin-bottom:16px">' + message + '</span>' +
+        '<button type="button" class="aff-btn" style="margin-top:0" onclick="loadDashboard()">Réessayer</button>';
+    }
+  }
+
+  // ---- Simulateur (par produit, logique validée) ----
   var AFF_PRODS = {
     sfa:{per:59.10,type:'oneshot'},
     sfm:{per:8.10,type:'capped',cap:6},
@@ -1386,11 +1417,65 @@
     finally{ if(btn){ btn.disabled=false; btn.textContent='Enregistrer mon profil'; } }
   };
 
-  // ---- Factures ----
+  // ---- Factures : disponible réel (availableCents) + garde-fous visibles ----
+  window.refreshInvoices = function(){ window._invLoaded = true; return window.loadInvoices(); };
+
+  function setInvoiceGate(reason){
+    var btn = document.getElementById('inv-send');
+    var help = document.getElementById('inv-help');
+    if(btn) btn.disabled = !!reason;
+    if(help){ help.textContent = reason || ''; help.style.display = reason ? 'block' : 'none'; }
+  }
+
+  window.loadInvoices = async function(){
+    var wrap = document.getElementById('inv-list'); if(!wrap) return;
+    var av = document.getElementById('inv-available');
+    try{
+      var r = await fetch(API + '/affiliates/me/invoices', { headers:{ Authorization:'Bearer ' + authToken } });
+      if(!r.ok){
+        wrap.innerHTML = '<div class="aff-empty">Impossible de charger tes factures pour le moment. <button type="button" class="aff-btn ghost" style="margin:10px 0 0" onclick="refreshInvoices()">Réessayer</button></div>';
+        return;
+      }
+      var d = await r.json();
+      var list = Array.isArray(d) ? d : (d.invoices || []);
+      var availableCents = (d && typeof d.availableCents === 'number') ? d.availableCents : null;
+      if(av){
+        if(availableCents != null){ av.textContent = fmtEur(availableCents/100); }
+        else { try{ var b=(window._lastStats && window._lastStats.balance) || {}; av.textContent = fmtEur(b.validated || 0); }catch(e){} }
+      }
+      var pending = null;
+      for(var i=0;i<list.length;i++){ if(list[i] && list[i].status === 'SUBMITTED'){ pending = list[i]; break; } }
+      if(pending){
+        setInvoiceGate('Ta facture ' + (pending.number ? 'n° ' + pending.number + ' ' : '') + 'est en attente de règlement. Tu pourras en émettre une nouvelle une fois celle-ci payée.');
+      } else if(availableCents != null && availableCents < 5000){
+        setInvoiceGate('Minimum de facturation : 50 €.' + (availableCents > 0 ? ' Il te manque ' + fmtEur((5000 - availableCents)/100) + ' de commissions validées.' : ''));
+      } else {
+        setInvoiceGate('');
+      }
+      if(!list.length){
+        wrap.innerHTML = '<div class="aff-empty">Aucune facture pour l\'instant. Génère ta première facture ci-dessus dès que tu as au moins 50 € de commissions validées.</div>';
+        return;
+      }
+      var rows = list.map(function(inv){
+        var st = inv.status==='PAID' ? '<span class="badge inv-badge-paid">Payée</span>'
+               : inv.status==='SUBMITTED' ? '<span class="badge badge-pending">Transmise</span>'
+               : '<span class="badge">'+(inv.status||'—')+'</span>';
+        var amount = fmtEur((inv.amountCents||0)/100);
+        var date = inv.submittedAt || inv.createdAt;
+        return '<tr><td>'+(inv.number||'—')+'</td><td>'+(inv.periodLabel||'—')+'</td><td>'+amount+'</td><td>'+st+'</td><td>'+(date?fmtDate(date):'·')+'</td></tr>';
+      }).join('');
+      wrap.innerHTML = '<div class="table-wrap"><table style="min-width:520px"><thead><tr><th>N°</th><th>Période</th><th>Montant</th><th>Statut</th><th>Date</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    }catch(e){
+      console.error(e);
+      wrap.innerHTML = '<div class="aff-empty">Erreur réseau. <button type="button" class="aff-btn ghost" style="margin:10px 0 0" onclick="refreshInvoices()">Réessayer</button></div>';
+    }
+  };
+
   window.sendInvoice = async function(){
     var btn=document.getElementById('inv-send');
     var act=document.getElementById('inv-action'); if(act) act.innerHTML='';
     if(btn){ btn.disabled=true; btn.textContent='Envoi...'; }
+    var reEnable = true;
     try{
       var r = await fetch(API + '/affiliates/me/invoice/send', {
         method:'POST',
@@ -1398,40 +1483,22 @@
       });
       var d = {}; try{ d = await r.json(); }catch(e){}
       if(r.ok){
-        var num = d.invoiceNumber || d.number || (d.invoice && d.invoice.number) || '';
+        var num = (d.invoice && (d.invoice.number || d.invoice.invoiceNumber)) || d.invoiceNumber || d.number || '';
         window.showAffMsg('inv-msg', 'Facture ' + (num ? ('n° '+num+' ') : '') + 'générée et envoyée à notre comptabilité. Ton virement sera traité au prochain cycle de paiement.', 'success');
-        window.loadInvoices();
+        reEnable = false; /* loadInvoices() décide de l'état du bouton (disponible remis à 0) */
+        try{ await window.refreshInvoices(); }catch(e){ console.error(e); }
       } else {
         var err = d.error || 'Impossible de générer la facture pour le moment.';
         window.showAffMsg('inv-msg', err, 'error');
-        if(act && /paiement|payment|moyen|iban|paypal|coordonn/i.test(err)){
-          act.innerHTML = '<button class="aff-btn ghost" onclick="showAffTab(\'profil\')">Compléter mon moyen de paiement →</button>';
+        if(act && /coordonn|iban|paypal/i.test(err)){
+          act.innerHTML = '<button type="button" class="aff-btn ghost" onclick="showAffTab(\'profil\')">Compléter mon profil →</button>';
         }
       }
     }catch(e){ window.showAffMsg('inv-msg', 'Erreur réseau. Réessaye.', 'error'); }
-    finally{ if(btn){ btn.disabled=false; btn.textContent='Générer et envoyer ma facture'; } }
-  };
-  window.loadInvoices = async function(){
-    var wrap=document.getElementById('inv-list'); if(!wrap) return;
-    try{
-      var r = await fetch(API + '/affiliates/me/invoices', { headers:{ Authorization:'Bearer ' + authToken } });
-      if(!r.ok){ wrap.innerHTML = '<div class="aff-empty">Impossible de charger tes factures pour le moment.</div>'; return; }
-      var d = await r.json();
-      var list = Array.isArray(d) ? d : (d.invoices || []);
-      if(!list.length){ wrap.innerHTML = '<div class="aff-empty">Aucune facture pour l\'instant. Génère ta première facture ci-dessus dès que tu as des commissions validées.</div>'; return; }
-      var rows = list.map(function(inv){
-        var st = inv.status==='PAID' ? '<span class="badge badge-paid">Payée</span>'
-               : inv.status==='SUBMITTED' ? '<span class="badge badge-validated">Transmise</span>'
-               : '<span class="badge">'+(inv.status||'—')+'</span>';
-        var amount = fmtEur((inv.amountCents||0)/100);
-        var date = inv.submittedAt || inv.createdAt;
-        return '<tr><td>'+(inv.number||'—')+'</td><td>'+(inv.periodLabel||'—')+'</td><td>'+amount+'</td><td>'+st+'</td><td>'+(date?fmtDate(date):'·')+'</td></tr>';
-      }).join('');
-      wrap.innerHTML = '<div class="table-wrap"><table style="min-width:520px"><thead><tr><th>N°</th><th>Période</th><th>Montant</th><th>Statut</th><th>Date</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
-    }catch(e){ wrap.innerHTML = '<div class="aff-empty">Erreur réseau.</div>'; console.error(e); }
+    finally{ if(btn){ btn.textContent='Générer et envoyer ma facture'; if(reEnable) btn.disabled=false; } }
   };
 
-  // ---- afterRender: prefill profil + invoice available amount ----
+  // ---- afterRender : préremplissage profil + données honnêtes (audit A-I4 / A-I5) ----
   window.afterRender = function(stats){
     try{
       var aff = (stats && stats.affiliate) ? stats.affiliate : {};
@@ -1450,23 +1517,182 @@
       window.updateTaxLabel();
       window.updatePayMethodVisibility();
       window.updateAvatarPreview();
-      var bal = (stats && stats.balance) ? stats.balance : {};
-      var av = document.getElementById('inv-available');
-      if(av) av.textContent = fmtEur(bal.validated || 0);
+    }catch(e){ console.error(e); }
+
+    /* Clics honnêtes : 30 jours dans le KPI, total en sous-texte */
+    try{
+      if(stats && stats.clicks30 != null){
+        var kc=document.getElementById('kpi-clicks'); if(kc) kc.textContent = stats.clicks30;
+        var ks=document.getElementById('kpi-clicks-sub'); if(ks) ks.textContent = (stats.clicks || 0) + ' au total';
+      }
+    }catch(e){ console.error(e); }
+
+    /* Abonnements réellement actifs : paiement récurrent non annulé vu dans les
+       40 derniers jours, unique par stripeSubscriptionId (ou id).
+       Écrase l'estimation du script 1 (appelé juste après _origRenderDash). */
+    try{
+      var now = Date.now();
+      var WINDOW_MS = 40*24*60*60*1000;
+      var recent = ((stats && stats.commissions) || []).filter(function(c){
+        if(!c || !c.isRecurring || c.status === 'CANCELED' || !c.createdAt) return false;
+        var t = new Date(c.createdAt).getTime();
+        return isFinite(t) && (now - t) <= WINDOW_MS && (now - t) >= -24*60*60*1000;
+      });
+      var uniq = {};
+      recent.forEach(function(c){
+        var key = c.stripeSubscriptionId || c.id;
+        if(!uniq[key] || new Date(c.createdAt) > new Date(uniq[key].createdAt)) uniq[key] = c;
+      });
+      var subs = Object.keys(uniq).map(function(key){ return uniq[key]; });
+      subs.sort(function(a,b){ return new Date(b.createdAt) - new Date(a.createdAt); });
+      var bs=document.getElementById('bal-subs'); if(bs) bs.textContent = subs.length;
+      var kr=document.getElementById('kpi-recur'); if(kr) kr.textContent = subs.length;
+      var sec=document.getElementById('subs-section');
+      var sl=document.getElementById('subs-list');
+      if(sl) sl.innerHTML = '';
+      if(!subs.length){
+        if(sec) sec.style.display = 'none';
+      } else if(sec && sl){
+        sec.style.display = 'block';
+        subs.forEach(function(c){
+          var item = document.createElement('div');
+          item.className = 'sub-item';
+          item.innerHTML = '<div><p class="sub-product">' + (c.productName || 'Abonnement') + '</p>' +
+            '<p class="sub-date">Dernier paiement le ' + fmtDate(c.createdAt) + '</p></div>' +
+            '<p class="sub-amount">+' + fmtEur((c.commissionAmountCents || 0)/100) + '/mois</p>';
+          sl.appendChild(item);
+        });
+      }
+    }catch(e){ console.error(e); }
+
+    /* Factures : resynchroniser le « Disponible à facturer » réel (availableCents) */
+    try{
+      window._invLoaded = false;
+      var tf = document.getElementById('tab-factures');
+      if(tf && tf.style.display !== 'none') window.refreshInvoices();
     }catch(e){ console.error(e); }
   };
 
-  // ---- Wrap renderDash additively (do NOT modify the original) ----
+  // ---- loadDashboard robuste (audit A-B2) : 401/404 -> écran de connexion + message ;
+  //      autre erreur ou exception -> état d'erreur visible avec bouton Réessayer ----
+  loadDashboard = async function(){
+    var lo = document.getElementById('dash-loading');
+    var dc = document.getElementById('dash-content');
+    if(lo && dc && dc.style.display === 'none'){
+      lo.textContent = 'Chargement de votre dashboard...';
+      lo.style.display = 'block';
+    }
+    try{
+      var res = await Promise.all([
+        fetch(API + '/affiliates/me/stats',              { headers: { Authorization: 'Bearer ' + authToken } }),
+        fetch(API + '/affiliates/me/timeseries?days=30', { headers: { Authorization: 'Bearer ' + authToken } }),
+        fetch(API + '/affiliates/me/breakdown',          { headers: { Authorization: 'Bearer ' + authToken } }),
+      ]);
+      var statsRes = res[0], timeRes = res[1], breakRes = res[2];
+
+      if(statsRes.status === 401 || statsRes.status === 404){
+        logout();
+        switchTab('login');
+        showMsg('msg-login', "Ta session a expiré ou le compte n'existe plus. Entre ton email pour recevoir un nouveau lien.", 'error');
+        return;
+      }
+      if(!statsRes.ok){
+        showDashError('Le serveur a répondu avec une erreur (code ' + statsRes.status + '). Tes données sont en sécurité, réessaie dans un instant.');
+        return;
+      }
+      var stats = null;
+      try{ stats = await statsRes.json(); }catch(e){ stats = null; }
+      if(!stats){
+        showDashError('Réponse du serveur illisible. Réessaie dans un instant.');
+        return;
+      }
+      var ts = null, bk = null;
+      try{ ts = timeRes.ok ? await timeRes.json() : null; }catch(e){ ts = null; }
+      try{ bk = breakRes.ok ? await breakRes.json() : null; }catch(e){ bk = null; }
+      window._tsData = ts;
+      try{ timeseriesData = ts; }catch(e){} /* garde la variable du script 1 en phase si accessible */
+      try{ renderDash(stats, ts, bk); }
+      catch(e){ console.error(e); showDashError("Une erreur d'affichage est survenue. Réessaie dans un instant."); }
+    }catch(e){
+      console.error(e);
+      showDashError('Impossible de joindre le serveur. Vérifie ta connexion internet, puis réessaie.');
+    }
+  };
+
+  // ---- switchChart : cohérent avec la copie locale window._tsData ----
+  switchChart = function(mode){
+    window._chartMode = mode;
+    try{ chartMode = mode; }catch(e){}
+    document.querySelectorAll('.chart-tab').forEach(function(el){
+      el.classList.toggle('active', el.textContent.toLowerCase().indexOf(mode === 'clicks' ? 'clic' : 'comm') !== -1);
+    });
+    var ts = window._tsData || null;
+    if(!ts){ try{ if(typeof timeseriesData !== 'undefined' && timeseriesData) ts = timeseriesData; }catch(e){} }
+    if(ts && typeof renderChart === 'function') renderChart(ts, mode);
+  };
+
+  // ---- renderBreakdown : liste produits COMPLÈTE (audit A-I6) ----
+  renderBreakdown = function(data){
+    var grid = document.getElementById('breakdown-grid');
+    if(!grid) return;
+    var rows = (data && data.breakdown) ? data.breakdown : [];
+    var products = [
+      { id: 'speedfly-v6',          name: 'Speedfly',          sub: 'Abonnement 27€/mois ou 197€/an', always: true  },
+      { id: 'speedfly-v6-lifetime', name: 'Speedfly Lifetime', sub: 'Paiement unique 397€',           always: true  },
+      { id: 'ecom-sphere',          name: 'Ecom Sphere',       sub: 'Abonnement 49€/mois',            always: true  },
+      { id: 'plan-lancement',       name: 'Plan de lancement', sub: 'Plan personnalisé 29€',          always: false },
+      { id: 'audit-boutique',       name: 'Audit boutique',    sub: 'Audit Shopify 49€',              always: false },
+      { id: 'speedfly',             name: 'Speedfly v5',       sub: 'Version historique 197€',        always: false }
+    ];
+    grid.innerHTML = '';
+    products.forEach(function(p){
+      var d = null;
+      for(var i=0;i<rows.length;i++){ if(rows[i] && rows[i].productId === p.id){ d = rows[i]; break; } }
+      if(!d && !p.always) return; /* cartes vides seulement pour les 3 produits principaux */
+      var card = document.createElement('div');
+      card.className = 'bk-card';
+      if(d){
+        card.innerHTML = '<p class="bk-name">' + p.name + '</p>' +
+          '<p class="bk-sub">' + p.sub + '</p>' +
+          '<div class="bk-stat"><span class="bk-stat-label">Ventes</span><span class="bk-stat-value">' + d.count + '</span></div>' +
+          (d.recurringCount > 0 ? '<div class="bk-stat"><span class="bk-stat-label">Récurrents</span><span class="bk-stat-value">' + d.recurringCount + '/mois</span></div>' : '') +
+          '<div class="bk-stat"><span class="bk-stat-label">Commissions totales</span><span class="bk-stat-value" style="color:#34d399">' + fmtEur(d.totalCommissionEuros) + '</span></div>' +
+          '<div class="bk-stat"><span class="bk-stat-label">À venir</span><span class="bk-stat-value">' + fmtEur((d.pendingEuros || 0) + (d.validatedEuros || 0)) + '</span></div>';
+      } else {
+        card.innerHTML = '<p class="bk-name">' + p.name + '</p><p class="bk-sub">' + p.sub + '</p>' +
+          '<div class="bk-empty">Aucune vente encore<br><span style="font-size:11px">Partagez votre lien pour commencer</span></div>';
+      }
+      grid.appendChild(card);
+    });
+  };
+
+  // ---- Wrap renderDash additively (pattern d'origine conservé, renforcé par le garde-fou stats) ----
   if(typeof renderDash === 'function' && !window._renderDashWrapped){
     window._renderDashWrapped = true;
     var _origRenderDash = renderDash;
     renderDash = function(stats, ts, bk){
+      if(!stats || !stats.affiliate){
+        showDashError('Les données reçues sont incomplètes. Réessaie dans un instant.');
+        return;
+      }
       _origRenderDash(stats, ts, bk);
-      try{ window._lastStats = stats; window.timeseriesData = ts; window.afterRender(stats); }catch(e){ console.error(e); }
+      try{ window._lastStats = stats; window._tsData = ts; }catch(e){}
+      try{ window.afterRender(stats); }catch(e){ console.error(e); }
     };
   }
 
-  // ---- init simulator default output ----
+  // ---- A11y : role tablist/tab + aria-selected (mis à jour ensuite dans showAffTab) ----
+  try{
+    var bar = document.querySelector('.aff-navbar');
+    if(bar) bar.setAttribute('role','tablist');
+    var tbs = document.querySelectorAll('.afftab-btn');
+    for(var j=0;j<tbs.length;j++){
+      tbs[j].setAttribute('role','tab');
+      tbs[j].setAttribute('aria-selected', tbs[j].classList.contains('active') ? 'true' : 'false');
+    }
+  }catch(e){}
+
+  // ---- init simulateur ----
   try{ if(document.getElementById('sim-rg')) window.affSim(); }catch(e){}
 })();
 </script>
