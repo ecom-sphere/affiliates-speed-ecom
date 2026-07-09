@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programme Affilié · Speed Ecom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0a0e1a;
+      --navy-2: #0d1220;
+      --navy-3: #111827;
+      --gold: #e8a800;
+      --gold-light: #f7c948;
+      --gold-bg: rgba(232,168,0,.08);
+      --gold-border: rgba(232,168,0,.2);
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f2f2f2;
+      --gray-200: #e5e5e5;
+      --gray-300: #d0d0d0;
+      --gray-400: #999;
+      --gray-600: #555;
+      --green: #16a34a; --green-light: #f0fdf4; --green-border: #bbf7d0;
+      --orange: #d97706; --orange-light: #fffbeb; --orange-border: #fde68a;
+      --red: #dc2626; --red-light: #fef2f2;
+      --accent: #e8a800;
+    }
+    html { font-size: 16px; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-50); color: var(--navy); min-height: 100vh; line-height: 1.5; }
+
+    /* ── Header ── */
+    .header { background: var(--navy); border-bottom: 1px solid rgba(232,168,0,.12); padding: 0 28px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 30px; height: 30px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: var(--navy); letter-spacing: -0.5px; flex-shrink: 0; }
+    .logo-text { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: -0.3px; }
+    .logo-badge { font-size: 10px; font-weight: 600; color: var(--gold); background: var(--gold-bg); border: 1px solid var(--gold-border); padding: 2px 8px; border-radius: 20px; letter-spacing: .3px; text-transform: uppercase; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .user-pill { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); border-radius: 100px; padding: 4px 12px 4px 4px; }
+    .user-avatar { width: 26px; height: 26px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+    .user-name { font-size: 13px; font-weight: 500; color: var(--white); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn-sm { font-size: 12px; color: rgba(255,255,255,.4); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 4px; font-family: inherit; }
+    .btn-sm:hover { color: var(--white); background: rgba(255,255,255,.08); }
+
+    /* ── Page ── */
+    .page { max-width: 960px; margin: 0 auto; padding: 28px 20px 64px; }
+
+    /* ── Auth — split screen ── */
+    #auth-screen { display: flex; min-height: calc(100vh - 56px); }
+
+    .auth-brand {
+      width: 42%;
+      background: var(--navy);
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-brand::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(232,168,0,.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .auth-brand::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(232,168,0,.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .auth-brand-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+    .auth-brand-eyebrow::before { content: ''; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
+    .auth-brand-title { font-size: 38px; font-weight: 900; color: var(--white); line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 12px; }
+    .auth-brand-title span { color: var(--gold); }
+    .auth-brand-sub { font-size: 15px; color: rgba(255,255,255,.45); margin-bottom: 40px; line-height: 1.6; }
+
+    .auth-products { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+    .auth-product { background: rgba(255,255,255,.04); border: 1px solid rgba(232,168,0,.15); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .auth-product-info { }
+    .auth-product-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+    .auth-product-price { font-size: 12px; color: rgba(255,255,255,.35); }
+    .auth-product-commission { text-align: right; }
+    .auth-product-amount { font-size: 20px; font-weight: 800; color: var(--gold); letter-spacing: -0.5px; }
+    .auth-product-freq { font-size: 11px; color: rgba(255,255,255,.3); }
+
+    .auth-divider { width: 40px; height: 1px; background: rgba(232,168,0,.2); margin-bottom: 28px; }
+
+    .auth-features { display: flex; flex-direction: column; gap: 10px; }
+    .auth-feature { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,.5); }
+    .auth-feature-icon { width: 20px; height: 20px; background: rgba(232,168,0,.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .auth-feature-icon svg { width: 10px; height: 10px; stroke: var(--gold); stroke-width: 2.5; }
+
+    .auth-form-side {
+      flex: 1;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+    }
+    .auth-form-inner { width: 100%; max-width: 380px; }
+    .auth-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--navy); margin-bottom: 4px; }
+    .auth-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 28px; }
+
+    .tabs { display: flex; border-bottom: 1px solid var(--gray-200); margin-bottom: 24px; }
+    .tab { font-size: 13px; font-weight: 500; padding: 8px 16px; cursor: pointer; border: none; background: none; color: var(--gray-400); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; font-family: inherit; }
+    .tab.active { color: var(--navy); border-bottom-color: var(--gold); }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-600); margin-bottom: 5px; }
+    input[type=text], input[type=email] { width: 100%; padding: 10px 13px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; outline: none; transition: border-color .15s; font-family: inherit; color: var(--navy); }
+    input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(232,168,0,.1); }
+    input::placeholder { color: var(--gray-300); }
+    .btn-primary { width: 100%; padding: 12px 20px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); border: none; border-radius: 8px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 8px; transition: opacity .15s; font-family: inherit; letter-spacing: -.2px; }
+    .btn-primary:hover { opacity: .88; }
+    .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+    .msg { font-size: 13px; margin-top: 14px; padding: 10px 12px; border-radius: 8px; display: none; }
+    .msg.success { background: var(--green-light); color: var(--green); display: block; }
+    .msg.error { background: var(--red-light); color: var(--red); display: block; }
+
+    .auth-trust { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--gray-100); font-size: 12px; color: var(--gray-400); text-align: center; }
+
+    @media (max-width: 768px) {
+      #auth-screen { flex-direction: column; }
+      .auth-brand { width: 100%; padding: 36px 24px; }
+      .auth-brand-title { font-size: 28px; }
+      .auth-form-side { padding: 32px 24px; }
+    }
+
+    /* ── Dashboard header ── */
+    .dash-greeting { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 2px; color: var(--navy); }
+    .dash-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 24px; }
+    .dash-sub .code-inline { font-family: monospace; background: var(--navy); color: var(--gold); border: 1px solid var(--gold-border); padding: 2px 8px; border-radius: 4px; font-size: 12px; letter-spacing: 1px; }
+
+    /* ── Balance hero ── */
+    .balance-hero { background: var(--navy); color: var(--white); border-radius: 14px; padding: 28px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; position: relative; overflow: hidden; border: 1px solid rgba(232,168,0,.12); }
+    .balance-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(232,168,0,.18) 0%, transparent 65%); }
+    @media (max-width: 600px) { .balance-hero { grid-template-columns: 1fr; } }
+    .balance-main-label { font-size: 11px; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .balance-main-value { font-size: 44px; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; color: var(--gold); }
+    .balance-main-sub { font-size: 12px; color: rgba(255,255,255,.3); }
+    .balance-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: start; position: relative; z-index: 1; }
+    .bkd-item { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; padding: 12px 14px; }
+    .bkd-label { font-size: 11px; color: rgba(255,255,255,.3); margin-bottom: 4px; }
+    .bkd-value { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
+    .bkd-value.green  { color: #4ade80; }
+    .bkd-value.blue   { color: var(--gold-light); }
+    .bkd-value.orange { color: #fbbf24; }
+
+    /* ── Payout notice ── */
+    .payout-notice { background: rgba(232,168,0,.08); border: 1px solid rgba(232,168,0,.2); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #92400e; display: flex; align-items: center; gap: 10px; color: var(--gold); }
+    .payout-notice svg { flex-shrink: 0; stroke: var(--gold); }
+    .payout-notice .amount { font-weight: 700; }
+
+    /* ── KPI grid ── */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+    @media (max-width: 640px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; border-top: 2px solid transparent; }
+    .kpi-card:first-child { border-top-color: var(--gold); }
+    .kpi-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+    .kpi-value { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--navy); }
+    .kpi-delta { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
+    .kpi-delta.up { color: var(--green); }
+
+    /* ── Section ── */
+    .section { margin-bottom: 24px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .section-title { font-size: 15px; font-weight: 700; letter-spacing: -0.2px; color: var(--navy); }
+    .section-action { font-size: 12px; color: var(--gray-400); cursor: pointer; background: none; border: none; padding: 4px 8px; border-radius: 4px; font-family: inherit; }
+    .section-action:hover { color: var(--navy); background: var(--gray-100); }
+
+    /* ── Chart card ── */
+    .chart-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; }
+    .chart-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+    .chart-tab { font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 6px; cursor: pointer; background: none; border: 1px solid var(--gray-200); color: var(--gray-600); transition: all .15s; font-family: inherit; }
+    .chart-tab.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .chart-wrap { position: relative; height: 180px; }
+
+    /* ── Links card ── */
+    .links-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 22px; }
+    .code-display { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .code-badge { font-size: 24px; font-weight: 900; letter-spacing: 4px; font-family: monospace; background: var(--navy); color: var(--gold); padding: 10px 20px; border-radius: 8px; border: 1px solid var(--gold-border); }
+    .code-meta { font-size: 13px; color: var(--gray-600); }
+    .code-meta strong { color: var(--gold); }
+    .link-row { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; margin-bottom: 8px; }
+    .link-label { font-size: 12px; font-weight: 600; color: var(--gray-600); width: 90px; flex-shrink: 0; }
+    .link-url { font-size: 12px; font-family: monospace; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--navy); }
+    .btn-copy { font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 6px; background: var(--navy); color: var(--white); border: none; cursor: pointer; flex-shrink: 0; transition: all .15s; font-family: inherit; }
+    .btn-copy:hover { background: var(--gold); color: var(--navy); }
+    .btn-copy.copied { background: var(--green); }
+    .cookie-notice { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 14px; background: var(--gold-bg); border: 1px solid var(--gold-border); border-radius: 8px; font-size: 12px; color: #92400e; color: #b07800; }
+    .cookie-notice svg { flex-shrink: 0; stroke: var(--gold); }
+
+    /* ── Breakdown grid ── */
+    .breakdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .breakdown-grid { grid-template-columns: 1fr; } }
+    .bk-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; }
+    .bk-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; color: var(--navy); }
+    .bk-sub { font-size: 11px; color: var(--gray-400); margin-bottom: 12px; }
+    .bk-stat { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid var(--gray-100); }
+    .bk-stat:last-child { border-bottom: none; }
+    .bk-stat-label { color: var(--gray-600); }
+    .bk-stat-value { font-weight: 600; color: var(--navy); }
+    .bk-empty { font-size: 12px; color: var(--gray-400); text-align: center; padding: 16px 0; }
+
+    /* ── Active subs ── */
+    .sub-list { display: flex; flex-direction: column; gap: 8px; }
+    .sub-item { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .sub-product { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .sub-date { font-size: 12px; color: var(--gray-400); }
+    .sub-amount { font-size: 14px; font-weight: 700; color: var(--gold); }
+
+    /* ── Commissions table ── */
+    .commissions-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 560px; }
+    th { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: .5px; padding: 11px 16px; text-align: left; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
+    td { font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--gray-100); color: var(--navy); }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-pending   { background: var(--orange-light); color: var(--orange); }
+    .badge-validated { background: rgba(232,168,0,.1); color: #92400e; }
+    .badge-paid      { background: var(--green-light); color: var(--green); }
+    .badge-canceled  { background: var(--red-light);    color: var(--red); }
+    .recurring-tag { font-size: 10px; color: var(--gray-400); margin-left: 4px; }
+
+    /* ── Empty ── */
+    .empty { text-align: center; padding: 40px; color: var(--gray-400); font-size: 13px; }
+    .empty strong { display: block; color: var(--navy); font-size: 15px; margin-bottom: 4px; }
+
+    /* ── Validation bar ── */
+    .validation-bar { background: var(--orange-light); border: 1px solid var(--orange-border); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #92400e; }
+
+    /* ── Loading ── */
+    .loading { text-align: center; padding: 60px; color: var(--gray-400); font-size: 14px; }
+
+    /* ── Progress motivational ── */
+    .progress-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .progress-title { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .progress-target { font-size: 12px; color: var(--gray-400); }
+    .progress-bar-bg { background: var(--gray-100); border-radius: 100px; height: 6px; overflow: hidden; }
+    .progress-bar-fill { background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 100px; height: 6px; transition: width .6s ease; }
+    .progress-msg { font-size: 12px; color: var(--gray-600); margin-top: 8px; }
+    /* ── Logo image ── */
+    .logo-img { height: 26px; width: auto; display: block; }
+    /* ── Premium polish ── */
+    .balance-main-value, .kpi-value, .bkd-value, .auth-product-amount, .code-badge { font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
+    .auth-brand-title, .auth-title, .dash-greeting { text-wrap: balance; }
+    a:focus-visible, button:focus-visible, input:focus-visible, .tab:focus-visible, .btn-copy:focus-visible, .chart-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+    .auth-products-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .auth-products { gap: 8px; margin-bottom: 32px; }
+    .auth-product { padding: 11px 14px; }
+    .auth-product-name { display: flex; align-items: center; }
+    .auth-product-name svg { width: 14px; height: 14px; margin-right: 8px; flex-shrink: 0; }
+    .ico-gold { color: var(--gold); }
+    .chk{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--navy);font-weight:500;background:#f6f7f9;border:1px solid var(--gray-200);border-radius:8px;padding:6px 11px;cursor:pointer}
+  .chk input{margin:0}
+</style>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/speedecom_icon.png">
+
+  <!-- ===== DARK PREMIUM THEME OVERRIDE (additive, appended) ===== -->
+  <style id="dark-theme-override">
+    /* Page */
+    body{
+      background:#070b14 !important;
+      background:
+        radial-gradient(1200px 620px at 82% -12%, rgba(232,168,0,.06), transparent 60%),
+        radial-gradient(900px 520px at -10% 8%, rgba(46,74,133,.12), transparent 55%),
+        linear-gradient(180deg,#070b14 0%,#070b14 100%) !important;
+      color:#e7ecf5 !important;
+    }
+    /* Auth right column (was white) */
+    .auth-form-side{ background:#0b1220 !important; }
+    .auth-form-inner{ color:#e7ecf5 !important; }
+
+    /* Surfaces */
+    .kpi-card,.chart-card,.links-card,.bk-card,.sub-item,.commissions-card,.progress-card{
+      background:#0f1729 !important; border-color:#1e2a44 !important;
+    }
+    /* Remove the gold outline on the first KPI card (client asked why) */
+    .kpi-card:first-child{ border-top-color:#1e2a44 !important; }
+
+    /* Primary text */
+    .dash-greeting,.section-title,.kpi-value,.bk-name,.bk-stat-value,.sub-product,.auth-title,.progress-title{
+      color:#e7ecf5 !important;
+    }
+    .dash-greeting strong,.dash-greeting b{ color:#e7ecf5 !important; }
+
+    /* Muted / secondary text */
+    .dash-sub,.kpi-label,.kpi-delta,.bk-sub,.bk-stat-label,.progress-msg,.auth-sub,.sub-date,.progress-target,label{
+      color:#8a97ad !important;
+    }
+    .kpi-delta.up{ color:#34d399 !important; }
+
+    /* Inputs */
+    input,select,textarea{
+      background:#0b1220 !important; border-color:#26324c !important; color:#e7ecf5 !important;
+    }
+    input::placeholder,textarea::placeholder{ color:#54607a !important; }
+    select option{ background:#0b1220; color:#e7ecf5; }
+
+    /* Tables */
+    th{ background:#0b1220 !important; color:#8a97ad !important; border-bottom-color:#1e2a44 !important; }
+    td{ color:#e7ecf5 !important; border-bottom-color:#1e2a44 !important; }
+
+    /* Link rows */
+    .link-row{ background:#0b1220 !important; border-color:#1e2a44 !important; }
+    .link-url{ color:#e7ecf5 !important; }
+    .link-label{ color:#8a97ad !important; }
+    .chk{ background:#0b1220 !important; border-color:#26324c !important; color:#e7ecf5 !important; }
+
+    /* Auth tabs */
+    .tabs{ border-bottom-color:#1e2a44 !important; }
+    .tab{ color:#8a97ad !important; }
+    .tab.active{ color:#e7ecf5 !important; border-bottom-color:#e8a800 !important; }
+
+    /* Chart tabs */
+    .chart-tab{ background:#0b1220 !important; border-color:#26324c !important; color:#8a97ad !important; }
+    .chart-tab.active{ background:#e8a800 !important; border-color:#e8a800 !important; color:#0a0e1a !important; }
+
+    /* Badges (dark-friendly) */
+    .badge-pending{   background:rgba(251,191,36,.12) !important; color:#fbbf24 !important; }
+    .badge-validated{ background:rgba(52,211,153,.12) !important; color:#34d399 !important; }
+    .badge-paid{      background:rgba(94,179,230,.14) !important; color:#5eb3e6 !important; }
+    .badge-canceled{  background:rgba(220,38,38,.14)  !important; color:#f87171 !important; }
+
+    /* Misc */
+    .recurring-tag{ color:#6b7893 !important; }
+    .auth-trust{ color:#6b7893 !important; border-top-color:#1e2a44 !important; }
+    .empty{ color:#8a97ad !important; }
+    .empty strong{ color:#e7ecf5 !important; }
+    .bk-empty{ color:#8a97ad !important; }
+    .bk-stat{ border-bottom-color:#1e2a44 !important; }
+    .section-action{ color:#8a97ad !important; }
+    .section-action:hover{ color:#e7ecf5 !important; background:#0b1220 !important; }
+    .code-meta{ color:#8a97ad !important; }
+    .progress-bar-bg{ background:#0b1220 !important; }
+    .validation-bar{ background:rgba(251,191,36,.08) !important; border-color:rgba(251,191,36,.25) !important; color:#fbbf24 !important; }
+    .dash-sub .code-inline{ background:#0b1220 !important; }
+    .cookie-notice{ background:rgba(232,168,0,.08) !important; border-color:rgba(232,168,0,.2) !important; }
+    .loading{ color:#8a97ad !important; }
+    .msg.success{ background:rgba(52,211,153,.12) !important; color:#34d399 !important; }
+    .msg.error{   background:rgba(220,38,38,.14)  !important; color:#f87171 !important; }
+
+    /* ===== New additive components ===== */
+    /* Affiliate tab bar */
+    .aff-navbar{
+      display:flex; gap:4px; margin:0 0 22px; border-bottom:1px solid #1e2a44;
+      position:sticky; top:56px; z-index:15; background:#070b14; overflow-x:auto;
+    }
+    .afftab-btn{
+      background:none; border:none; color:#8a97ad; font-family:inherit; font-weight:700;
+      font-size:14px; padding:14px 16px; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap;
+    }
+    .afftab-btn:hover{ color:#e7ecf5; }
+    .afftab-btn.active{ color:#e7ecf5; border-bottom-color:#e8a800; }
+
+    /* Panels */
+    .aff-sec{ background:#0f1729; border:1px solid #1e2a44; border-radius:16px; padding:22px 24px; margin:0 0 16px; }
+    .aff-sec h2{ font-size:16px; font-weight:800; margin-bottom:4px; color:#e7ecf5; }
+    .aff-sec .aff-hint{ font-size:13px; color:#8a97ad; margin-bottom:16px; }
+    .aff-note{ font-size:12.5px; color:#6b7893; margin-top:14px; line-height:1.65; }
+    .aff-empty{ font-size:13px; color:#8a97ad; text-align:center; padding:26px; }
+
+    /* Messages */
+    .aff-msg{ font-size:13px; margin-top:14px; padding:10px 12px; border-radius:8px; display:none; }
+    .aff-msg.success{ background:rgba(52,211,153,.12); color:#34d399; display:block; }
+    .aff-msg.error{ background:rgba(220,38,38,.14); color:#f87171; display:block; }
+
+    /* Simulator */
+    .aff-simprods{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+    .aff-sp{ background:#0b1220; border:1px solid #26324c; color:#8a97ad; font-weight:700; font-size:12.5px; padding:8px 13px; border-radius:9px; cursor:pointer; font-family:inherit; }
+    .aff-sp.active{ background:#e8a800; color:#0a0e1a; border-color:#e8a800; }
+    .aff-sim{ display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:center; }
+    .aff-sim label{ font-size:12.5px; color:#8a97ad; display:block; margin-bottom:6px; }
+    .aff-sim input[type=range]{ width:100%; accent-color:#e8a800; }
+    .aff-out{ background:linear-gradient(135deg,#101a30,#0b1220); border:1px solid #1e2a44; border-radius:14px; padding:20px 22px; text-align:center; }
+    .aff-out .l{ font-size:12px; color:#6b7893; text-transform:uppercase; letter-spacing:.05em; font-weight:700; }
+    .aff-out .v{ font-size:32px; font-weight:900; color:#f7c948; margin-top:4px; }
+    .aff-out .d{ font-size:12.5px; color:#6b7893; margin-top:4px; }
+
+    /* Forms */
+    .aff-frm{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .aff-fld{ display:flex; flex-direction:column; gap:6px; }
+    .aff-fld.full{ grid-column:1/-1; }
+    .aff-fld label{ font-size:12px; color:#8a97ad; font-weight:600; }
+    .aff-fld input,.aff-fld select{ background:#0b1220; border:1px solid #26324c; color:#e7ecf5; border-radius:9px; padding:11px 13px; font-family:inherit; font-size:14px; outline:none; }
+    .aff-fld input:focus,.aff-fld select:focus{ border-color:#e8a800; }
+    .aff-btn{ background:#e8a800; color:#0a0e1a; border:none; border-radius:10px; padding:12px 22px; font-weight:800; font-size:14px; cursor:pointer; margin-top:18px; font-family:inherit; }
+    .aff-btn:hover{ opacity:.9; }
+    .aff-btn:disabled{ opacity:.5; cursor:not-allowed; }
+    .aff-btn.ghost{ background:transparent; color:#f7c948; border:1px solid #26324c; }
+    .aff-avatar-preview{ width:64px; height:64px; border-radius:50%; background:#0b1220 center/cover no-repeat; border:1px solid #26324c; flex-shrink:0; }
+
+    /* Resources kit links */
+    .aff-kit{ display:flex; flex-wrap:wrap; gap:10px; }
+    .aff-kit a{ color:#f7c948; text-decoration:none; font-weight:600; font-size:13px; background:#0b1220; border:1px solid #26324c; border-radius:9px; padding:9px 13px; }
+    .aff-kit a:hover{ border-color:#e8a800; }
+
+    @media(max-width:640px){ .aff-sim,.aff-frm{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="header">
+  <a href="https://speed-ecom.eu" class="logo">
+    <img class="logo-img" src="https://speed-ecom.eu/logo-speed-ecom.png" alt="Speed Ecom" />
+    <span class="logo-badge">Affiliés</span>
+  </a>
+  <div class="header-right">
+    <div class="user-pill" id="user-pill" style="display:none">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <span class="user-name" id="user-name"></span>
+    </div>
+    <button class="btn-sm" id="btn-logout" style="display:none" onclick="logout()">Déconnexion</button>
+  </div>
+</header>
+
+<!-- ── Auth ── -->
+<div id="auth-screen">
+
+  <!-- LEFT — Branding panel -->
+  <div class="auth-brand">
+    <p class="auth-brand-eyebrow">Programme Affilié</p>
+    <h1 class="auth-brand-title">Gagnez <span>30%</span><br>sur chaque vente</h1>
+    <p class="auth-brand-sub">Partagez Speedfly et Ecom Sphere.<br>Touchez une commission à chaque achat.</p>
+
+    <p class="auth-products-title">Vos commissions : 30% sur tout</p>
+    <div class="auth-products">
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="currentColor" class="ico-gold"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Speedfly mensuel</p>
+          <p class="auth-product-price">Abonnement 27€/mois</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">8,10€</p>
+          <p class="auth-product-freq">par mois, 6 mois</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="currentColor" class="ico-gold"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Speedfly annuel</p>
+          <p class="auth-product-price">Abonnement 197€/an</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">59,10€</p>
+          <p class="auth-product-freq">par vente</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="currentColor" class="ico-gold"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5z"/></svg>Speedfly Lifetime</p>
+          <p class="auth-product-price">Paiement unique 397€</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">119,10€</p>
+          <p class="auth-product-freq">par vente</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>Ecom Sphere</p>
+          <p class="auth-product-price">Communauté 49€/mois</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">14,70€</p>
+          <p class="auth-product-freq">par mois récurrent</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 11l2 2 4-4"/></svg>Plan de Lancement</p>
+          <p class="auth-product-price">Plan personnalisé 29€</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">8,70€</p>
+          <p class="auth-product-freq">par vente</p>
+        </div>
+      </div>
+      <div class="auth-product">
+        <div class="auth-product-info">
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>Audit de boutique</p>
+          <p class="auth-product-price">Audit Shopify 49€</p>
+        </div>
+        <div class="auth-product-commission">
+          <p class="auth-product-amount">14,70€</p>
+          <p class="auth-product-freq">par vente</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-divider"></div>
+
+    <div class="auth-features">
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Cookie 60 jours : vous êtes crédité même si l'achat est tardif
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Paiement par virement ou PayPal, dès 50€ le 1er du mois
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Dashboard temps réel : clics, ventes, commissions
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
+        Commissions récurrentes jusqu'à 6 mois sur les abonnements
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — Form -->
+  <div class="auth-form-side">
+    <div class="auth-form-inner">
+      <p class="auth-title">Programme partenaire Speed Ecom</p>
+      <p class="auth-sub">Invité ou déjà affilié : crée ton compte. Sinon, dépose ta candidature. Validation manuelle sous 24 à 48h.</p>
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('register')">Créer mon compte</button>
+        <button class="tab" onclick="switchTab('apply')">Candidature</button>
+        <button class="tab" onclick="switchTab('login')">Se connecter</button>
+      </div>
+      <div id="tab-register">
+        <p style="font-size:12.5px;color:var(--gray-600);margin:0 0 12px">Tu as été invité ou tu es déjà affilié Speed Ecom ? Crée ton compte.</p>
+        <div class="form-group"><label>Prénom et nom</label><input type="text" id="reg-name" placeholder="Cédric Anger" /></div>
+        <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="vous@exemple.com" /></div>
+        <div class="form-group"><label>Méthode de paiement</label><select id="reg-method" onchange="toggleMethod()" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none"><option value="paypal">PayPal</option><option value="virement">Virement bancaire (IBAN)</option></select></div>
+        <div class="form-group" id="grp-paypal"><label>Email PayPal</label><input type="email" id="reg-paypal" placeholder="paypal@exemple.com" /></div>
+        <div class="form-group" id="grp-iban" style="display:none"><label>IBAN</label><input type="text" id="reg-iban" placeholder="FR76 1234 5678 ..." /></div>
+        <label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--gray-600);font-weight:400;margin:2px 0 12px;cursor:pointer"><input type="checkbox" id="reg-cgu" style="margin-top:3px;flex-shrink:0" /><span>J'accepte les <a href="/cgu.html" target="_blank" style="color:var(--gold)">CGU du programme</a> et la <a href="/confidentialite.html" target="_blank" style="color:var(--gold)">politique de confidentialité</a>.</span></label>
+        <button class="btn-primary" id="btn-reg" onclick="doRegister()">Créer mon compte →</button>
+        <div class="msg" id="msg-reg"></div>
+      </div>
+      <div id="tab-apply" style="display:none">
+        <p style="font-size:12.5px;color:var(--gray-600);margin:0 0 12px">Tu veux rejoindre le programme partenaire ? Parle-nous de toi, on revient vers toi sous 24 à 48h.</p>
+        <div class="form-group"><label>Prénom et nom</label><input type="text" id="app-name" placeholder="Cédric Anger" /></div>
+        <div class="form-group"><label>Email</label><input type="email" id="app-email" placeholder="vous@exemple.com" /></div>
+        <div class="form-group"><label>Où fais-tu ta promotion ?</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:5px">
+            <label class="chk"><input type="checkbox" class="app-ch" value="TikTok" /> TikTok</label>
+            <label class="chk"><input type="checkbox" class="app-ch" value="Instagram" /> Instagram</label>
+            <label class="chk"><input type="checkbox" class="app-ch" value="YouTube" /> YouTube</label>
+            <label class="chk"><input type="checkbox" class="app-ch" value="Email / Newsletter" /> Email</label>
+            <label class="chk"><input type="checkbox" class="app-ch" value="Blog / SEO" /> Blog / SEO</label>
+            <label class="chk"><input type="checkbox" class="app-ch" value="Autre" /> Autre</label>
+          </div>
+        </div>
+        <div class="form-group"><label>Quel est ton profil ?</label><select id="app-speedfly" onchange="onAppProfile()" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none"><option value="">— Choisir —</option><option value="Client Speedfly">J'utilise déjà Speedfly</option><option value="Créateur / audience">J'ai une audience (créateur, influenceur)</option><option value="Agence / freelance">Je crée des boutiques (agence, freelance)</option></select></div>
+        <div class="form-group" id="app-adapt-client" style="display:none"><label>Lien de ta boutique sous Speedfly</label><input type="text" id="app-shop" placeholder="https://ta-boutique.com" /></div>
+        <div class="form-group" id="app-adapt-agence" style="display:none"><label>Combien de boutiques Shopify montes-tu par an ?</label><input type="text" id="app-nbshops" placeholder="Ex : 10 à 20 par an" /></div>
+        <div class="form-group"><label>Taille de ton audience / communauté</label><input type="text" id="app-audience" placeholder="Ex : 15 000 abonnés TikTok" /></div>
+        <div class="form-group"><label>Lien de ton profil principal</label><input type="text" id="app-profile" placeholder="https://tiktok.com/@..." /></div>
+        <div class="form-group"><label>Présente-toi en 2 lignes</label><textarea id="app-pitch" rows="3" placeholder="Qui es-tu, ton audience, pourquoi Speedfly ?" style="width:100%;padding:10px 13px;border:1px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;color:var(--navy);background:#fff;outline:none;resize:vertical"></textarea></div>
+        <label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--gray-600);font-weight:400;margin:2px 0 12px;cursor:pointer"><input type="checkbox" id="app-cgu" style="margin-top:3px;flex-shrink:0" /><span>J'accepte les <a href="/cgu.html" target="_blank" style="color:var(--gold)">CGU du programme</a> et la <a href="/confidentialite.html" target="_blank" style="color:var(--gold)">politique de confidentialité</a>.</span></label>
+        <button class="btn-primary" id="btn-apply" onclick="doApply()">Envoyer ma candidature →</button>
+        <div class="msg" id="msg-apply"></div>
+      </div>
+      <div id="tab-login" style="display:none">
+        <div class="form-group"><label>Votre email affilié</label><input type="email" id="login-email" placeholder="vous@exemple.com" /></div>
+        <button class="btn-primary" id="btn-login" onclick="doLogin()">Recevoir mon lien de connexion →</button>
+        <div class="msg" id="msg-login"></div>
+      </div>
+      <p class="auth-trust">Gratuit · Sans engagement · 8 000+ boutiques Speedfly depuis 2017</p>
+      <p class="auth-trust" style="margin-top:8px;padding-top:0;border:none"><a href="/ressources.html" target="_blank" style="color:var(--gold);font-weight:600">Ressources &amp; simulateur</a> · <a href="/cgu.html" target="_blank" style="color:var(--gray-400)">CGU du programme</a> · <a href="/confidentialite.html" target="_blank" style="color:var(--gray-400)">Confidentialité</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Dashboard ── -->
+<div id="dashboard-screen" style="display:none">
+  <div class="page">
+    <div class="loading" id="dash-loading">Chargement de votre dashboard...</div>
+    <div id="dash-content" style="display:none">
+
+      <!-- Affiliate navigation (added) -->
+      <div class="aff-navbar">
+        <button type="button" class="afftab-btn active" data-tab="dash" onclick="showAffTab('dash')">Tableau de bord</button>
+        <button type="button" class="afftab-btn" data-tab="ressources" onclick="showAffTab('ressources')">Ressources &amp; simulateur</button>
+        <button type="button" class="afftab-btn" data-tab="profil" onclick="showAffTab('profil')">Profil</button>
+        <button type="button" class="afftab-btn" data-tab="factures" onclick="showAffTab('factures')">Factures</button>
+      </div>
+      <div id="tab-dash" class="afftab">
+      <!-- Greeting -->
+      <p class="dash-greeting" id="dash-greeting">Bonjour</p>
+      <p class="dash-sub" id="dash-sub"></p>
+      <p style="margin:-14px 0 22px"><a href="#ressources" onclick="showAffTab('ressources');return false;" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">Ressources &amp; simulateur de gains →</a></p>
+
+      <!-- Payout notice -->
+      <div class="payout-notice" id="payout-notice" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span><span class="amount" id="payout-amount"></span> disponible · <span id="payout-date"></span></span>
+      </div>
+
+      <!-- Validation en attente -->
+      <div class="validation-bar" id="validation-bar" style="display:none">
+        <span id="validation-msg"></span>
+      </div>
+
+      <!-- Balance hero -->
+      <div class="balance-hero">
+        <div>
+          <p class="balance-main-label">Total gagné</p>
+          <p class="balance-main-value" id="bal-total">0€</p>
+          <p class="balance-main-sub">Depuis le début de votre affiliation</p>
+        </div>
+        <div class="balance-breakdown">
+          <div class="bkd-item">
+            <p class="bkd-label">À valider (J+30)</p>
+            <p class="bkd-value orange" id="bal-pending">0€</p>
+          </div>
+          <div class="bkd-item">
+            <p class="bkd-label">Validé</p>
+            <p class="bkd-value green" id="bal-validated">0€</p>
+          </div>
+          <div class="bkd-item">
+            <p class="bkd-label">Déjà payé</p>
+            <p class="bkd-value blue" id="bal-paid">0€</p>
+          </div>
+          <div class="bkd-item">
+            <p class="bkd-label">Abonnements actifs</p>
+            <p class="bkd-value" id="bal-subs">0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress motivational -->
+      <div class="progress-card" id="progress-card">
+        <div class="progress-header">
+          <span class="progress-title" id="progress-title">Objectif du mois</span>
+          <span class="progress-target" id="progress-target"></span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+        <p class="progress-msg" id="progress-msg"></p>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <p class="kpi-label">Clics (30j)</p>
+          <p class="kpi-value" id="kpi-clicks">0</p>
+          <p class="kpi-delta" id="kpi-clicks-sub">via vos liens</p>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">Ventes (total)</p>
+          <p class="kpi-value" id="kpi-conv">0</p>
+          <p class="kpi-delta" id="kpi-conv-sub">conversions</p>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">Taux conv.</p>
+          <p class="kpi-value" id="kpi-rate">·</p>
+          <p class="kpi-delta">clics → vente</p>
+        </div>
+        <div class="kpi-card">
+          <p class="kpi-label">Récurrents</p>
+          <p class="kpi-value" id="kpi-recur">0</p>
+          <p class="kpi-delta">paiements/mois</p>
+        </div>
+      </div>
+
+      <!-- Graphique -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Performance</span>
+          <div class="chart-tabs">
+            <button class="chart-tab active" onclick="switchChart('clicks')">Clics</button>
+            <button class="chart-tab" onclick="switchChart('commissions')">Commissions</button>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-wrap"><canvas id="perf-chart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Vos liens -->
+      <div class="section">
+        <p class="section-title">Vos liens affiliés</p>
+        <div class="links-card">
+          <div class="code-display">
+            <span class="code-badge" id="aff-code">·</span>
+            <div class="code-meta">Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 60 jours après le clic</span></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin:0 0 18px;flex-wrap:wrap">
+            <span style="font-size:13px;color:var(--gray-600);font-weight:600">Personnalise ton lien :</span>
+            <input id="slug-input" type="text" placeholder="ton-nom" maxlength="12" style="padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:inherit;width:150px;color:var(--navy);outline:none" />
+            <button class="btn-copy" onclick="saveSlug()" style="background:var(--gold);color:var(--navy)">Enregistrer</button>
+            <span id="slug-msg" style="font-size:12px"></span>
+          </div>
+          <div id="links-list"></div>
+          <div class="cookie-notice">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Le cookie est stocké 60 jours. Si votre filleul revient acheter plus tard, vous touchez quand même la commission.
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakdown produits -->
+      <div class="section">
+        <p class="section-title">Par produit</p>
+        <div class="breakdown-grid" id="breakdown-grid">
+          <div class="bk-card"><div class="bk-empty">Chargement...</div></div>
+          <div class="bk-card"><div class="bk-empty">Chargement...</div></div>
+        </div>
+      </div>
+
+      <!-- Abonnements actifs -->
+      <div class="section" id="subs-section" style="display:none">
+        <p class="section-title">Abonnements récurrents actifs</p>
+        <div class="sub-list" id="subs-list"></div>
+      </div>
+
+      <!-- Commissions -->
+      <div class="section">
+        <div class="section-header">
+          <span class="section-title">Historique des commissions</span>
+          <button class="section-action" onclick="loadDashboard()">↻ Actualiser</button>
+        </div>
+        <div class="validation-bar" id="anti-refund-notice" style="display:none;margin-bottom:12px">
+          Les commissions en attente sont validées automatiquement 30 jours après la vente (protection anti-remboursement).
+        </div>
+        <div class="commissions-card">
+          <div class="table-wrap">
+            <div class="empty" id="comm-empty" style="display:none"><strong>Aucune commission pour l'instant</strong>Partagez vos liens pour générer vos premières ventes.</div>
+            <table id="comm-table" style="display:none">
+              <thead><tr>
+                <th>Date</th>
+                <th>Produit</th>
+                <th>Vente</th>
+                <th>Commission</th>
+                <th>Statut</th>
+                <th>Valide le</th>
+              </tr></thead>
+              <tbody id="comm-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      </div><!-- /tab-dash -->
+      <!-- ===== RESSOURCES & SIMULATEUR ===== -->
+      <div id="tab-ressources" class="afftab" style="display:none">
+        <div class="aff-sec">
+          <h2>Ressources &amp; simulateur de gains</h2>
+          <p class="aff-hint">Choisis un produit, indique ton nombre de ventes par mois. Tu vois la commission exacte de CE produit (pas de moyenne) et ce que ça te rapporte.</p>
+          <div class="aff-simprods" id="sim-prods">
+            <button type="button" class="aff-sp active" onclick="affSimPick('sfa',this)">Speedfly annuel</button>
+            <button type="button" class="aff-sp" onclick="affSimPick('sfm',this)">Speedfly mensuel</button>
+            <button type="button" class="aff-sp" onclick="affSimPick('sfl',this)">Speedfly Lifetime</button>
+            <button type="button" class="aff-sp" onclick="affSimPick('es',this)">Ecom Sphere</button>
+            <button type="button" class="aff-sp" onclick="affSimPick('pl',this)">Plan de lancement</button>
+            <button type="button" class="aff-sp" onclick="affSimPick('au',this)">Audit boutique</button>
+          </div>
+          <div class="aff-sim">
+            <div>
+              <label>Ventes par mois : <b id="sim-nv" style="color:#e7ecf5">10</b></label>
+              <input type="range" id="sim-rg" min="0" max="30" value="10" oninput="affSim()">
+              <p class="aff-note" id="sim-note"></p>
+            </div>
+            <div class="aff-out">
+              <div class="l">Commission par vente</div><div class="v" id="sim-per" style="font-size:24px">59,10 &euro;</div>
+              <div class="l" style="margin-top:14px" id="sim-l2">Tu gagnes</div><div class="v" id="sim-v">591 &euro;</div><div class="d" id="sim-d">par mois</div>
+            </div>
+          </div>
+          <p class="aff-note"><b style="color:#e7ecf5">Récurrent, la différence à connaître :</b> les commissions <b>Speedfly mensuel</b> sont <b style="color:#fbbf24">plafonnées à 6 mois</b> par filleul (8,10 &euro;/mois &times; 6 = 48,60 &euro; au total par filleul). <b>Ecom Sphere</b> est <b style="color:#34d399">récurrent SANS limite</b> : 14,70 &euro;/mois à vie tant que ton filleul reste abonné.</p>
+        </div>
+
+        <div class="aff-sec">
+          <h2>Comment ça marche</h2>
+          <p class="aff-hint">3 étapes, aucune technique.</p>
+          <ol style="margin:0 0 4px 18px;color:#8a97ad;font-size:13.5px;line-height:1.9">
+            <li><b style="color:#e7ecf5">Copie ton lien</b> dans l'onglet Tableau de bord (il contient déjà ton code affilié).</li>
+            <li><b style="color:#e7ecf5">Partage-le</b> sur TikTok, Instagram, YouTube, en story, en DM, dans ta bio…</li>
+            <li><b style="color:#e7ecf5">Tu es payé</b> : dès qu'un filleul achète (cookie 60 jours), ta commission de 30 % tombe.</li>
+          </ol>
+          <p class="aff-note">Seuil de versement 50 &euro;, payé le 1er du mois par virement ou PayPal.</p>
+        </div>
+
+        <div class="aff-sec">
+          <h2>Kit média</h2>
+          <p class="aff-hint">Visuels, logos et supports prêts à l'emploi pour tes publications.</p>
+          <div class="aff-kit">
+            <a href="/assets/kit/" target="_blank">Ouvrir le kit média</a>
+            <a href="/ressources.html" target="_blank">Page ressources complète</a>
+          </div>
+        </div>
+      </div>
+      <!-- ===== PROFIL ===== -->
+      <div id="tab-profil" class="afftab" style="display:none">
+        <div class="aff-sec">
+          <h2>Profil &amp; paiement</h2>
+          <p class="aff-hint">Ces informations servent à te payer et à générer tes factures. Les affiliés Speed Ecom sont partout dans le monde : renseigne le pays et le statut qui te correspondent.</p>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+            <div class="aff-avatar-preview" id="pf-avatar-preview"></div>
+            <div class="aff-fld full" style="flex:1">
+              <label>Photo de profil (URL)</label>
+              <input type="text" id="pf-avatar" placeholder="https://..." oninput="updateAvatarPreview()">
+            </div>
+          </div>
+          <div class="aff-frm">
+            <div class="aff-fld full"><label>Prénom et nom</label><input type="text" id="pf-name" placeholder="Cédric Anger"></div>
+            <div class="aff-fld"><label>Pays</label>
+              <select id="pf-country" onchange="updateTaxLabel()">
+                <option value="">— Choisir —</option>
+                <option value="France">France</option>
+                <option value="Royaume-Uni">Royaume-Uni</option>
+                <option value="Belgique">Belgique</option>
+                <option value="Suisse">Suisse</option>
+                <option value="Canada">Canada</option>
+                <option value="Espagne">Espagne</option>
+                <option value="Allemagne">Allemagne</option>
+                <option value="États-Unis">États-Unis</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+            <div class="aff-fld"><label>Statut</label>
+              <select id="pf-status">
+                <option value="">— Choisir —</option>
+                <option value="Particulier">Particulier</option>
+                <option value="Auto-entrepreneur">Auto-entrepreneur</option>
+                <option value="Société">Société</option>
+              </select>
+            </div>
+            <div class="aff-fld"><label>Raison sociale</label><input type="text" id="pf-company" placeholder="Ma Société Ltd / SAS"></div>
+            <div class="aff-fld"><label id="pf-taxid-label">N° d'entreprise / TVA</label><input type="text" id="pf-taxid" placeholder="SIRET, company number, VAT…"></div>
+            <div class="aff-fld full"><label>Adresse</label><input type="text" id="pf-address" placeholder="Rue, code postal, ville, pays"></div>
+            <div class="aff-fld"><label>Téléphone</label><input type="text" id="pf-phone" placeholder="+44 7700 900000"></div>
+            <div class="aff-fld"><label>Méthode de paiement</label>
+              <select id="pf-paymethod" onchange="updatePayMethodVisibility()">
+                <option value="iban">Virement (IBAN)</option>
+                <option value="paypal">PayPal</option>
+              </select>
+            </div>
+            <div class="aff-fld full" id="pf-iban-group"><label>IBAN</label><input type="text" id="pf-iban" placeholder="FR76 3000 4000 0500 0600 7000 895"></div>
+            <div class="aff-fld full" id="pf-paypal-group" style="display:none"><label>Email PayPal</label><input type="text" id="pf-paypal" placeholder="paypal@exemple.com"></div>
+          </div>
+          <p class="aff-note">Pour être payé, tu dois pouvoir émettre une facture valide dans ton pays (auto-entrepreneur ou société en France, company number au Royaume-Uni, etc.). Ton identifiant d'entreprise peut être un N° SIRET, un company number ou un numéro de TVA — ça dépend d'où tu es.</p>
+          <button class="aff-btn" id="pf-save" onclick="saveProfile()">Enregistrer mon profil</button>
+          <div class="aff-msg" id="pf-msg"></div>
+        </div>
+      </div>
+      <!-- ===== FACTURES ===== -->
+      <div id="tab-factures" class="afftab" style="display:none">
+        <div class="aff-sec">
+          <h2>Factures</h2>
+          <p class="aff-hint">Tu factures Speed Ecom pour tes commissions validées. Un clic génère ta facture et l'envoie à notre comptabilité (facture@speed-ecom.eu). Ton virement est traité au prochain cycle de paiement.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:#0b1220;border:1px solid #1e2a44;border-radius:12px;padding:16px 18px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11.5px;color:#6b7893;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Disponible à facturer</div>
+              <div style="font-size:28px;font-weight:900;color:#f7c948;margin-top:4px" id="inv-available">0 &euro;</div>
+            </div>
+            <button class="aff-btn" id="inv-send" style="margin-top:0" onclick="sendInvoice()">Générer et envoyer ma facture</button>
+          </div>
+          <div class="aff-msg" id="inv-msg"></div>
+          <div id="inv-action" style="margin-top:12px"></div>
+        </div>
+        <div class="aff-sec">
+          <h2>Historique de tes factures</h2>
+          <p class="aff-hint">Statut : Transmise (envoyée à la compta) → Payée (virement effectué).</p>
+          <div id="inv-list"><div class="aff-empty">Chargement…</div></div>
+        </div>
+      </div>
+    </div><!-- /dash-content -->
+  </div>
+</div>
+
+<script>
+  const API = 'https://speedfly-api-production.up.railway.app/api';
+  let authToken = null;
+  let chartInstance = null;
+  let chartMode = 'clicks';
+  let timeseriesData = null;
+
+  window.addEventListener('DOMContentLoaded', function () {
+    var params = new URLSearchParams(location.search);
+    var tok = params.get('token');
+    if (tok) {
+      localStorage.setItem('affiliate_token', tok);
+      window.history.replaceState({}, '', location.pathname);
+    }
+    authToken = localStorage.getItem('affiliate_token');
+    if (authToken) {
+      showDash();
+    } else {
+      showAuth();
+      var route = (location.pathname + location.hash).toLowerCase();
+      if (route.indexOf('login') !== -1 || route.indexOf('connexion') !== -1) switchTab('login');
+    }
+  });
+
+  function showAuth() {
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('dashboard-screen').style.display = 'none';
+    document.getElementById('user-pill').style.display = 'none';
+    document.getElementById('btn-logout').style.display = 'none';
+  }
+  function showDash() {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('dashboard-screen').style.display = 'block';
+    loadDashboard();
+  }
+  function logout() {
+    localStorage.removeItem('affiliate_token');
+    authToken = null;
+    showAuth();
+  }
+  function onAppProfile() {
+    var v = document.getElementById('app-speedfly').value;
+    document.getElementById('app-adapt-client').style.display = (v === 'Client Speedfly') ? 'block' : 'none';
+    document.getElementById('app-adapt-agence').style.display = (v === 'Agence / freelance') ? 'block' : 'none';
+  }
+  function switchTab(t) {
+    var order = { register: 0, apply: 1, login: 2 };
+    document.querySelectorAll('.tab').forEach(function (el, i) {
+      el.classList.toggle('active', i === order[t]);
+    });
+    document.getElementById('tab-register').style.display = t === 'register' ? 'block' : 'none';
+    document.getElementById('tab-apply').style.display    = t === 'apply'    ? 'block' : 'none';
+    document.getElementById('tab-login').style.display    = t === 'login'    ? 'block' : 'none';
+  }
+
+  function toggleMethod() {
+    var m = document.getElementById('reg-method').value;
+    document.getElementById('grp-paypal').style.display = m === 'paypal' ? 'block' : 'none';
+    document.getElementById('grp-iban').style.display   = m === 'virement' ? 'block' : 'none';
+  }
+  async function doRegister() {
+    var name   = document.getElementById('reg-name').value.trim();
+    var email  = document.getElementById('reg-email').value.trim();
+    var method = document.getElementById('reg-method').value;
+    var paypal = document.getElementById('reg-paypal').value.trim();
+    var iban   = document.getElementById('reg-iban').value.trim();
+    if (!name || !email) { showMsg('msg-reg', 'Nom et email obligatoires.', 'error'); return; }
+    if (!document.getElementById('reg-cgu').checked) { showMsg('msg-reg', "Merci d'accepter les CGU pour continuer.", 'error'); return; }
+    if (method === 'paypal' && !paypal) { showMsg('msg-reg', 'Indiquez votre email PayPal.', 'error'); return; }
+    if (method === 'virement' && !iban) { showMsg('msg-reg', 'Indiquez votre IBAN.', 'error'); return; }
+    var btn = document.getElementById('btn-reg');
+    btn.disabled = true; btn.textContent = 'Envoi...';
+    try {
+      var r = await fetch(API + '/affiliates/register', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, paypalEmail: paypal || undefined, iban: iban || undefined, acceptedTerms: true, source: 'account' }),
+      });
+      var d = await r.json();
+      showMsg('msg-reg', d.message || d.error, r.ok ? 'success' : 'error');
+    } catch { showMsg('msg-reg', 'Erreur réseau. Réessayez.', 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Créer mon compte →'; }
+  }
+  async function doApply() {
+    var name = document.getElementById('app-name').value.trim();
+    var email = document.getElementById('app-email').value.trim();
+    var channels = Array.prototype.map.call(document.querySelectorAll('.app-ch:checked'), function (el) { return el.value; });
+    var audience = document.getElementById('app-audience').value.trim();
+    var profile = document.getElementById('app-profile').value.trim();
+    var pitch = document.getElementById('app-pitch').value.trim();
+    var speedfly = document.getElementById('app-speedfly').value;
+    var profileDetail = '';
+    if (speedfly === 'Client Speedfly') { var sh = document.getElementById('app-shop').value.trim(); if (sh) profileDetail = 'Boutique Speedfly: ' + sh; }
+    else if (speedfly === 'Agence / freelance') { var nb = document.getElementById('app-nbshops').value.trim(); if (nb) profileDetail = 'Boutiques Shopify/an: ' + nb; }
+    if (!name || !email) { showMsg('msg-apply', 'Nom et email obligatoires.', 'error'); return; }
+    if (!document.getElementById('app-cgu').checked) { showMsg('msg-apply', "Merci d'accepter les CGU pour continuer.", 'error'); return; }
+    var btn = document.getElementById('btn-apply');
+    btn.disabled = true; btn.textContent = 'Envoi...';
+    try {
+      var r = await fetch(API + '/affiliates/register', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, acceptedTerms: true, source: 'application', speedflyStatus: speedfly || undefined, profileDetail: profileDetail || undefined, channels: channels, audience: audience || undefined, profileUrl: profile || undefined, pitch: pitch || undefined }),
+      });
+      var d = await r.json();
+      showMsg('msg-apply', d.message || d.error, r.ok ? 'success' : 'error');
+    } catch { showMsg('msg-apply', 'Erreur réseau. Réessayez.', 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Envoyer ma candidature →'; }
+  }
+  async function doLogin() {
+    var email = document.getElementById('login-email').value.trim();
+    if (!email) { showMsg('msg-login', 'Email obligatoire.', 'error'); return; }
+    var btn = document.getElementById('btn-login');
+    btn.disabled = true; btn.textContent = 'Envoi...';
+    try {
+      var r = await fetch(API + '/affiliates/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      var d = await r.json();
+      showMsg('msg-login', d.message || d.error, r.ok ? 'success' : 'error');
+    } catch { showMsg('msg-login', 'Erreur réseau.', 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Recevoir mon lien de connexion →'; }
+  }
+  function showMsg(id, text, type) {
+    var el = document.getElementById(id);
+    el.textContent = text; el.className = 'msg ' + type;
+  }
+  async function saveSlug() {
+    var v = document.getElementById('slug-input').value.trim().toLowerCase();
+    var m = document.getElementById('slug-msg');
+    if (!/^[a-z0-9]{4,12}$/.test(v)) { m.style.color = '#dc2626'; m.textContent = '4 à 12 lettres ou chiffres, sans espace.'; return; }
+    try {
+      var r = await fetch(API + '/affiliates/me/slug', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + authToken }, body: JSON.stringify({ slug: v }) });
+      var d = await r.json();
+      if (r.ok) { m.style.color = '#16a34a'; m.textContent = 'Lien personnalisé enregistré.'; loadDashboard(); }
+      else { m.style.color = '#dc2626'; m.textContent = d.error || 'Erreur.'; }
+    } catch { m.style.color = '#dc2626'; m.textContent = 'Erreur réseau.'; }
+  }
+
+  async function loadDashboard() {
+    try {
+      var [statsRes, timeRes, breakRes] = await Promise.all([
+        fetch(API + '/affiliates/me/stats',      { headers: { Authorization: 'Bearer ' + authToken } }),
+        fetch(API + '/affiliates/me/timeseries?days=30', { headers: { Authorization: 'Bearer ' + authToken } }),
+        fetch(API + '/affiliates/me/breakdown',  { headers: { Authorization: 'Bearer ' + authToken } }),
+      ]);
+
+      if (statsRes.status === 401) { logout(); return; }
+
+      var stats     = await statsRes.json();
+      timeseriesData = timeRes.ok ? await timeRes.json() : null;
+      var breakdown = breakRes.ok ? await breakRes.json() : null;
+
+      renderDash(stats, timeseriesData, breakdown);
+    } catch (e) {
+      document.getElementById('dash-loading').textContent = 'Erreur de chargement. Rechargez la page.';
+    }
+  }
+
+  function renderDash(stats, timeseries, breakdown) {
+    document.getElementById('dash-loading').style.display  = 'none';
+    document.getElementById('dash-content').style.display = 'block';
+
+    var aff = stats.affiliate;
+    var bal = stats.balance;
+
+    document.getElementById('user-pill').style.display = 'flex';
+    document.getElementById('btn-logout').style.display = 'block';
+    document.getElementById('user-avatar').textContent = aff.name.charAt(0).toUpperCase();
+    document.getElementById('user-name').textContent   = aff.email;
+
+    document.getElementById('dash-greeting').innerHTML = 'Bonjour, <strong>' + aff.name.replace(/<[^>]*>/g,'').split(' ')[0] + '</strong>';
+    document.getElementById('dash-sub').innerHTML =
+      'Code affilié : <span class="code-inline">' + aff.code + '</span> · Membre depuis le ' + fmtDate(aff.createdAt);
+
+    document.getElementById('bal-total').textContent     = fmtEur(bal.totalEarned);
+    document.getElementById('bal-pending').textContent   = fmtEur(bal.pending);
+    document.getElementById('bal-validated').textContent = fmtEur(bal.validated);
+    document.getElementById('bal-paid').textContent      = fmtEur(bal.paid);
+
+    var recurringActive = stats.commissions.filter(function(c){ return c.isRecurring && c.status !== 'CANCELED'; });
+    var uniqueSubs = {};
+    recurringActive.forEach(function(c){ uniqueSubs[c.stripeSubscriptionId || c.id] = c; });
+    var subsCount = Object.keys(uniqueSubs).length;
+    document.getElementById('bal-subs').textContent = subsCount;
+    document.getElementById('kpi-recur').textContent = subsCount;
+
+    if (bal.validated > 0) {
+      var nextPayout = getNextPayoutDate();
+      document.getElementById('payout-notice').style.display = 'flex';
+      document.getElementById('payout-amount').textContent   = fmtEur(bal.validated);
+      document.getElementById('payout-date').textContent     = 'prochain virement le ' + nextPayout;
+    }
+
+    if (bal.pending > 0) {
+      document.getElementById('validation-bar').style.display = 'block';
+      document.getElementById('validation-msg').textContent =
+        fmtEur(bal.pending) + ' en cours de validation (délai 30 jours anti-remboursement).';
+    }
+    if (stats.commissions.some(function(c){ return c.status === 'PENDING'; })) {
+      document.getElementById('anti-refund-notice').style.display = 'block';
+    }
+
+    document.getElementById('kpi-clicks').textContent = stats.clicks;
+    document.getElementById('kpi-conv').textContent   = stats.conversions;
+    document.getElementById('kpi-rate').textContent   = stats.conversionRate + '%';
+
+    renderProgress(bal, stats.conversions);
+
+    if (timeseries) renderChart(timeseries, chartMode);
+
+    var ref   = aff.slug || aff.code;
+    var base  = 'https://speed-ecom.eu';
+    var links = [
+      { label: 'Speedfly',    url: base + '/speedfly?ref='     + ref },
+      { label: 'Ecom Sphere', url: base + '/ecom-sphere?ref='  + ref },
+      { label: 'Plan de lancement', url: 'https://buy.stripe.com/00w6oG86leG10kAcG53AY11?client_reference_id=' + ref },
+    ];
+    document.getElementById('aff-code').textContent = ref;
+    var si = document.getElementById('slug-input'); if (si && !si.value) si.value = aff.slug || '';
+    var ll = document.getElementById('links-list');
+    ll.innerHTML = '';
+    links.forEach(function(l){
+      var row = document.createElement('div');
+      row.className = 'link-row';
+      row.innerHTML = '<span class="link-label">' + l.label + '</span>' +
+        '<span class="link-url">' + l.url + '</span>' +
+        '<button class="btn-copy" onclick="copyLink(this,\'' + l.url + '\')">Copier</button>';
+      ll.appendChild(row);
+    });
+
+    renderBreakdown(breakdown);
+
+    if (subsCount > 0) {
+      document.getElementById('subs-section').style.display = 'block';
+      var sl = document.getElementById('subs-list');
+      sl.innerHTML = '';
+      Object.values(uniqueSubs).forEach(function(c){
+        var item = document.createElement('div');
+        item.className = 'sub-item';
+        item.innerHTML = '<div><p class="sub-product">' + c.productName + '</p>' +
+          '<p class="sub-date">Depuis le ' + fmtDate(c.createdAt) + '</p></div>' +
+          '<p class="sub-amount">+' + fmtEur(c.commissionAmountCents/100) + '/mois</p>';
+        sl.appendChild(item);
+      });
+    }
+
+    if (stats.commissions.length === 0) {
+      document.getElementById('comm-empty').style.display = 'block';
+      document.getElementById('comm-table').style.display = 'none';
+    } else {
+      document.getElementById('comm-empty').style.display = 'none';
+      document.getElementById('comm-table').style.display = 'table';
+      var tbody = document.getElementById('comm-body');
+      tbody.innerHTML = '';
+      stats.commissions.forEach(function(c){
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + fmtDate(c.createdAt) + '</td>' +
+          '<td>' + c.productName + (c.isRecurring ? ' <span class="recurring-tag">récurrent</span>' : '') + '</td>' +
+          '<td>' + fmtEur(c.saleAmountCents/100) + '</td>' +
+          '<td style="font-weight:700">' + fmtEur(c.commissionAmountCents/100) + '</td>' +
+          '<td>' + badge(c.status) + '</td>' +
+          '<td style="color:#999">' + (c.status === 'PENDING' ? fmtDate(c.validatesAt) : '·') + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+  }
+
+  function renderProgress(bal, conversions) {
+    var current = bal.totalEarned;
+    var milestones = [50, 100, 250, 500, 1000, 2500, 5000];
+    var next = milestones.find(function(m){ return m > current; }) || milestones[milestones.length-1];
+    var pct  = Math.min(100, (current / next) * 100);
+    document.getElementById('progress-title').textContent  = 'Vers ' + fmtEur(next) + ' de commissions';
+    document.getElementById('progress-target').textContent = fmtEur(current) + ' / ' + fmtEur(next);
+    document.getElementById('progress-fill').style.width   = pct + '%';
+    var remaining = next - current;
+    var ventes = Math.ceil(remaining / 59.10);
+    document.getElementById('progress-msg').textContent = remaining > 0
+      ? 'Plus que ' + fmtEur(remaining) + ', soit environ ' + ventes + ' vente' + (ventes > 1 ? 's' : '') + ' Speedfly.'
+      : 'Objectif atteint ! Prochain cap : ' + fmtEur(milestones[milestones.indexOf(next) + 1] || next * 2);
+  }
+
+  function renderBreakdown(data) {
+    var grid = document.getElementById('breakdown-grid');
+    if (!data || !data.breakdown || data.breakdown.length === 0) {
+      grid.innerHTML = '<div class="bk-card"><div class="bk-empty">Aucune donnée encore</div></div>';
+      return;
+    }
+    var products = [
+      { id: 'speedfly-v6',          name: 'Speedfly',          sub: 'Abonnement 27€/mois ou 197€/an' },
+      { id: 'speedfly-v6-lifetime', name: 'Speedfly Lifetime', sub: 'Paiement unique 397€' },
+      { id: 'ecom-sphere',          name: 'Ecom Sphere',       sub: 'Abonnement 49€/mois' },
+    ];
+    grid.innerHTML = '';
+    products.forEach(function(p){
+      var d = data.breakdown.find(function(b){ return b.productId === p.id; });
+      var card = document.createElement('div');
+      card.className = 'bk-card';
+      if (d) {
+        card.innerHTML = '<p class="bk-name">' + p.name + '</p>' +
+          '<p class="bk-sub">' + p.sub + '</p>' +
+          '<div class="bk-stat"><span class="bk-stat-label">Ventes</span><span class="bk-stat-value">' + d.count + '</span></div>' +
+          (d.recurringCount > 0 ? '<div class="bk-stat"><span class="bk-stat-label">Récurrents</span><span class="bk-stat-value">' + d.recurringCount + '/mois</span></div>' : '') +
+          '<div class="bk-stat"><span class="bk-stat-label">Commissions totales</span><span class="bk-stat-value" style="color:#16a34a">' + fmtEur(d.totalCommissionEuros) + '</span></div>' +
+          '<div class="bk-stat"><span class="bk-stat-label">À venir</span><span class="bk-stat-value">' + fmtEur(d.pendingEuros + d.validatedEuros) + '</span></div>';
+      } else {
+        card.innerHTML = '<p class="bk-name">' + p.name + '</p><p class="bk-sub">' + p.sub + '</p>' +
+          '<div class="bk-empty">Aucune vente encore<br><span style="font-size:11px">Partagez votre lien pour commencer</span></div>';
+      }
+      grid.appendChild(card);
+    });
+  }
+
+  function renderChart(data, mode) {
+    var ctx = document.getElementById('perf-chart').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+    var labels   = data.series.map(function(d){ return fmtDateShort(d.date); });
+    var values   = mode === 'clicks'
+      ? data.series.map(function(d){ return d.clicks; })
+      : data.series.map(function(d){ return d.commissionCents / 100; });
+    var maxVal = Math.max.apply(null, values.concat([1]));
+    chartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: values,
+          backgroundColor: 'rgba(232,168,0,0.22)',
+          borderColor: 'rgba(232,168,0,0.9)',
+          borderWidth: 1.5,
+          borderRadius: 3,
+        }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return mode === 'clicks' ? ctx.raw + ' clic' + (ctx.raw > 1 ? 's' : '') : fmtEur(ctx.raw);
+            }
+          }
+        }},
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#999', font: { size: 10 }, maxTicksLimit: 10 } },
+          y: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#999', font: { size: 10 }, stepSize: Math.max(1, Math.ceil(maxVal / 5)) } },
+        },
+      }
+    });
+  }
+
+  function switchChart(mode) {
+    chartMode = mode;
+    document.querySelectorAll('.chart-tab').forEach(function(el){
+      el.classList.toggle('active', el.textContent.toLowerCase().includes(mode === 'clicks' ? 'clic' : 'comm'));
+    });
+    if (timeseriesData) renderChart(timeseriesData, mode);
+  }
+
+  function fmtEur(v) {
+    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 }).format(v || 0);
+  }
+  function fmtDate(d) {
+    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+  }
+  function fmtDateShort(d) {
+    var parts = d.split('-');
+    return parts[2] + '/' + parts[1];
+  }
+  function badge(s) {
+    var m = { PENDING: ['badge-pending','En attente'], VALIDATED: ['badge-validated','Validée'], PAID: ['badge-paid','Payée'], CANCELED: ['badge-canceled','Annulée'] };
+    var b = m[s] || ['', s];
+    return '<span class="badge ' + b[0] + '">' + b[1] + '</span>';
+  }
+  function getNextPayoutDate() {
+    var d = new Date();
+    d.setMonth(d.getMonth() + 1, 1);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function copyLink(btn, url) {
+    navigator.clipboard.writeText(url).then(function(){
+      btn.textContent = 'Copié';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
+<script>
+/* ===== DARK THEME · ADDITIVE BEHAVIOUR (does not modify existing functions) ===== */
+(function(){
+  // ---- Tab navigation ----
+  window.showAffTab = function(k){
+    var keys = ['dash','ressources','profil','factures'];
+    keys.forEach(function(kk){
+      var el = document.getElementById('tab-'+kk);
+      if(el) el.style.display = (kk===k) ? 'block' : 'none';
+    });
+    var btns = document.querySelectorAll('.afftab-btn');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active', btns[i].getAttribute('data-tab')===k); }
+    if(k==='dash'){
+      try{
+        var _ts = null, _mode = 'clicks';
+        try{ if(typeof timeseriesData !== 'undefined' && timeseriesData) _ts = timeseriesData; }catch(e){}
+        if(!_ts && window.timeseriesData) _ts = window.timeseriesData;
+        try{ if(typeof chartMode !== 'undefined' && chartMode) _mode = chartMode; }catch(e){}
+        if(window.chartMode) _mode = window.chartMode;
+        if(_ts && typeof renderChart === 'function') renderChart(_ts, _mode || 'clicks');
+      }catch(e){ console.error(e); }
+    }
+    if(k==='factures'){
+      try{ if(!window._invLoaded){ window._invLoaded = true; window.loadInvoices(); } }catch(e){ console.error(e); }
+    }
+    try{ window.scrollTo(0,0); }catch(e){}
+  };
+
+  // ---- helpers ----
+  function _val(id){ var el=document.getElementById(id); return el ? String(el.value||'').trim() : ''; }
+  function _setVal(id,v){ var el=document.getElementById(id); if(el && v!=null && v!=='') el.value=v; }
+  window.showAffMsg = function(id,text,type){ var el=document.getElementById(id); if(!el) return; el.textContent=text; el.className='aff-msg '+type; el.style.display='block'; };
+
+  // ---- Simulator (per-product, from the validated demo logic) ----
+  var AFF_PRODS = {
+    sfa:{per:59.10,type:'oneshot'},
+    sfm:{per:8.10,type:'capped',cap:6},
+    sfl:{per:119.10,type:'oneshot'},
+    es:{per:14.70,type:'recur'},
+    pl:{per:8.70,type:'oneshot'},
+    au:{per:14.70,type:'oneshot'}
+  };
+  var affSimKey = 'sfa';
+  function affEur(x){ return x.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+  function affEur0(x){ return Math.round(x).toLocaleString('fr-FR')+' €'; }
+  window.affSim = function(){
+    var rg = document.getElementById('sim-rg'); if(!rg) return;
+    var n = +rg.value;
+    var nv = document.getElementById('sim-nv'); if(nv) nv.textContent = n;
+    var p = AFF_PRODS[affSimKey];
+    var rec = (p.type==='capped' || p.type==='recur');
+    document.getElementById('sim-per').textContent = affEur(p.per) + (rec ? ' / mois' : '');
+    var v, d, l2, note;
+    if(p.type==='oneshot'){
+      v = n*p.per; l2 = 'Tu gagnes'; d = 'par mois';
+      note = 'Commission unique de '+affEur(p.per)+' par vente. '+n+' ventes/mois = '+affEur0(v)+' ce mois-ci.';
+    } else if(p.type==='capped'){
+      v = n*p.per*p.cap; l2 = 'En rythme de croisière'; d = 'par mois (après '+p.cap+' mois)';
+      note = 'Récurrent PLAFONNÉ '+p.cap+' mois : '+affEur(p.per)+'/mois par filleul, soit '+affEur(p.per*p.cap)+' au total par filleul. En recrutant '+n+'/mois, ton récurrent grimpe jusqu\'à ~'+affEur0(v)+'/mois puis se stabilise.';
+    } else {
+      v = n*p.per; l2 = 'Récurrent ajouté'; d = 'chaque mois, sans limite';
+      note = 'Récurrent SANS plafond (à vie tant que le filleul reste abonné) : chaque mois tu ajoutes '+affEur0(v)+' de revenu récurrent. Au bout de 12 mois à ce rythme : ~'+affEur0(n*p.per*12)+'/mois.';
+    }
+    document.getElementById('sim-v').textContent = affEur0(v);
+    document.getElementById('sim-l2').textContent = l2;
+    document.getElementById('sim-d').textContent = d;
+    document.getElementById('sim-note').textContent = note;
+  };
+  window.affSimPick = function(k, el){
+    affSimKey = k;
+    var all = document.querySelectorAll('.aff-sp');
+    for(var i=0;i<all.length;i++){ all[i].classList.remove('active'); }
+    if(el) el.classList.add('active');
+    window.affSim();
+  };
+
+  // ---- Profil ----
+  window.updateTaxLabel = function(){
+    var sel=document.getElementById('pf-country'), lab=document.getElementById('pf-taxid-label');
+    if(!sel || !lab) return;
+    var m = { 'France':'N° SIRET', 'Royaume-Uni':'Company number' };
+    lab.textContent = m[sel.value] || "N° d'entreprise / TVA";
+  };
+  window.updatePayMethodVisibility = function(){
+    var sel=document.getElementById('pf-paymethod'); if(!sel) return;
+    var ib=document.getElementById('pf-iban-group'), pp=document.getElementById('pf-paypal-group');
+    if(ib) ib.style.display = (sel.value==='iban') ? 'flex' : 'none';
+    if(pp) pp.style.display = (sel.value==='paypal') ? 'flex' : 'none';
+  };
+  window.updateAvatarPreview = function(){
+    var url=_val('pf-avatar'), prev=document.getElementById('pf-avatar-preview');
+    if(!prev) return;
+    if(url){ prev.style.backgroundImage = 'url("'+url.replace(/["\\]/g,'')+'")'; }
+    else { prev.style.backgroundImage = 'none'; }
+  };
+  window.saveProfile = async function(){
+    var body = {
+      name:_val('pf-name'), country:_val('pf-country'), legalStatus:_val('pf-status'),
+      companyName:_val('pf-company'), taxId:_val('pf-taxid'), addressLine:_val('pf-address'),
+      phone:_val('pf-phone'), iban:_val('pf-iban'), paypalEmail:_val('pf-paypal'), avatarUrl:_val('pf-avatar')
+    };
+    var btn=document.getElementById('pf-save');
+    if(btn){ btn.disabled=true; btn.textContent='Enregistrement...'; }
+    try{
+      var r = await fetch(API + '/affiliates/me/profile', {
+        method:'PATCH',
+        headers:{ 'Content-Type':'application/json', Authorization:'Bearer ' + authToken },
+        body: JSON.stringify(body)
+      });
+      var d = {}; try{ d = await r.json(); }catch(e){}
+      if(r.ok){
+        window.showAffMsg('pf-msg', d.message || 'Profil enregistré.', 'success');
+        var ua=document.getElementById('user-avatar');
+        if(ua && body.name){
+          if(body.avatarUrl){ ua.style.background='#0b1220 center/cover no-repeat'; ua.style.backgroundImage='url("'+body.avatarUrl.replace(/["\\]/g,'')+'")'; ua.textContent=''; }
+          else { ua.textContent = body.name.charAt(0).toUpperCase(); }
+        }
+        window.updateAvatarPreview();
+      } else {
+        window.showAffMsg('pf-msg', d.error || "Erreur lors de l'enregistrement.", 'error');
+      }
+    }catch(e){ window.showAffMsg('pf-msg', 'Erreur réseau. Réessaye.', 'error'); }
+    finally{ if(btn){ btn.disabled=false; btn.textContent='Enregistrer mon profil'; } }
+  };
+
+  // ---- Factures ----
+  window.sendInvoice = async function(){
+    var btn=document.getElementById('inv-send');
+    var act=document.getElementById('inv-action'); if(act) act.innerHTML='';
+    if(btn){ btn.disabled=true; btn.textContent='Envoi...'; }
+    try{
+      var r = await fetch(API + '/affiliates/me/invoice/send', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', Authorization:'Bearer ' + authToken }
+      });
+      var d = {}; try{ d = await r.json(); }catch(e){}
+      if(r.ok){
+        var num = d.invoiceNumber || d.number || (d.invoice && d.invoice.number) || '';
+        window.showAffMsg('inv-msg', 'Facture ' + (num ? ('n° '+num+' ') : '') + 'générée et envoyée à notre comptabilité. Ton virement sera traité au prochain cycle de paiement.', 'success');
+        window.loadInvoices();
+      } else {
+        var err = d.error || 'Impossible de générer la facture pour le moment.';
+        window.showAffMsg('inv-msg', err, 'error');
+        if(act && /paiement|payment|moyen|iban|paypal|coordonn/i.test(err)){
+          act.innerHTML = '<button class="aff-btn ghost" onclick="showAffTab(\'profil\')">Compléter mon moyen de paiement →</button>';
+        }
+      }
+    }catch(e){ window.showAffMsg('inv-msg', 'Erreur réseau. Réessaye.', 'error'); }
+    finally{ if(btn){ btn.disabled=false; btn.textContent='Générer et envoyer ma facture'; } }
+  };
+  window.loadInvoices = async function(){
+    var wrap=document.getElementById('inv-list'); if(!wrap) return;
+    try{
+      var r = await fetch(API + '/affiliates/me/invoices', { headers:{ Authorization:'Bearer ' + authToken } });
+      if(!r.ok){ wrap.innerHTML = '<div class="aff-empty">Impossible de charger tes factures pour le moment.</div>'; return; }
+      var d = await r.json();
+      var list = Array.isArray(d) ? d : (d.invoices || []);
+      if(!list.length){ wrap.innerHTML = '<div class="aff-empty">Aucune facture pour l\'instant. Génère ta première facture ci-dessus dès que tu as des commissions validées.</div>'; return; }
+      var rows = list.map(function(inv){
+        var st = inv.status==='PAID' ? '<span class="badge badge-paid">Payée</span>'
+               : inv.status==='SUBMITTED' ? '<span class="badge badge-validated">Transmise</span>'
+               : '<span class="badge">'+(inv.status||'—')+'</span>';
+        var amount = fmtEur((inv.amountCents||0)/100);
+        var date = inv.submittedAt || inv.createdAt;
+        return '<tr><td>'+(inv.number||'—')+'</td><td>'+(inv.periodLabel||'—')+'</td><td>'+amount+'</td><td>'+st+'</td><td>'+(date?fmtDate(date):'·')+'</td></tr>';
+      }).join('');
+      wrap.innerHTML = '<div class="table-wrap"><table style="min-width:520px"><thead><tr><th>N°</th><th>Période</th><th>Montant</th><th>Statut</th><th>Date</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    }catch(e){ wrap.innerHTML = '<div class="aff-empty">Erreur réseau.</div>'; console.error(e); }
+  };
+
+  // ---- afterRender: prefill profil + invoice available amount ----
+  window.afterRender = function(stats){
+    try{
+      var aff = (stats && stats.affiliate) ? stats.affiliate : {};
+      _setVal('pf-name', aff.name);
+      _setVal('pf-country', aff.country);
+      _setVal('pf-status', aff.legalStatus);
+      _setVal('pf-company', aff.companyName);
+      _setVal('pf-taxid', aff.taxId);
+      _setVal('pf-address', aff.addressLine);
+      _setVal('pf-phone', aff.phone);
+      _setVal('pf-iban', aff.iban);
+      _setVal('pf-paypal', aff.paypalEmail);
+      _setVal('pf-avatar', aff.avatarUrl);
+      var pm=document.getElementById('pf-paymethod');
+      if(pm){ pm.value = (aff.paypalEmail && !aff.iban) ? 'paypal' : 'iban'; }
+      window.updateTaxLabel();
+      window.updatePayMethodVisibility();
+      window.updateAvatarPreview();
+      var bal = (stats && stats.balance) ? stats.balance : {};
+      var av = document.getElementById('inv-available');
+      if(av) av.textContent = fmtEur(bal.validated || 0);
+    }catch(e){ console.error(e); }
+  };
+
+  // ---- Wrap renderDash additively (do NOT modify the original) ----
+  if(typeof renderDash === 'function' && !window._renderDashWrapped){
+    window._renderDashWrapped = true;
+    var _origRenderDash = renderDash;
+    renderDash = function(stats, ts, bk){
+      _origRenderDash(stats, ts, bk);
+      try{ window._lastStats = stats; window.timeseriesData = ts; window.afterRender(stats); }catch(e){ console.error(e); }
+    };
+  }
+
+  // ---- init simulator default output ----
+  try{ if(document.getElementById('sim-rg')) window.affSim(); }catch(e){}
+})();
+</script>
+</body>
+</html>
