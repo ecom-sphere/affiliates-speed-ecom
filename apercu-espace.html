@@ -243,7 +243,7 @@ td.r,th.r{text-align:right}
     <h2>Ton statut</h2>
     <p class="hint">C'est TOI qui factures Speed Ecom pour tes commissions. Ton statut détermine ce qui apparaît sur ta facture.</p>
     <div class="seg" id="statutSeg"><span class="s" data-st="part">Particulier</span><span class="s active" data-st="ae">Auto-entrepreneur</span><span class="s" data-st="soc">Société</span></div>
-    <p class="note" style="margin-top:14px">Pour être payé, tu dois pouvoir émettre une facture. Le plus simple : le statut <b style="color:var(--txt)">auto-entrepreneur</b> (gratuit, 10 min en ligne, tu obtiens un numéro SIRET). Un simple particulier sans statut ne peut pas recevoir de commissions de façon régulière : pas de versement tant que le statut n'est pas créé.</p>
+    <p class="note" style="margin-top:14px">Pour être payé, tu dois pouvoir émettre une facture avec un statut valide dans ton pays (auto-entrepreneur ou société en France, company number au UK, etc.). En France, l'auto-entreprise est gratuite et se crée en 10 min. Sans statut valide, pas de versement.</p>
   </div>
 
   <div class="section">
@@ -257,14 +257,15 @@ td.r,th.r{text-align:right}
     </div>
     <div id="partWarn" style="display:none;background:#2a2410;border:1px solid #6b5410;color:var(--amber);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px">En tant que simple particulier sans statut, tu ne peux pas être payé. Déclare-toi en auto-entrepreneur (gratuit, 10 min en ligne) pour recevoir tes commissions.</div>
     <div class="frm">
-      <div class="fld full only-soc" style="display:none"><label>Raison sociale</label><input placeholder="Ma Société SAS"></div>
+      <div class="fld full only-soc" style="display:none"><label>Raison sociale</label><input placeholder="Ma Société Ltd / SAS"></div>
       <div class="fld"><label>Prénom</label><input value="Marc"></div>
       <div class="fld"><label>Nom</label><input value="Dubois"></div>
+      <div class="fld"><label>Pays</label><select id="paysSel"><option value="fr">France</option><option value="uk">Royaume-Uni</option><option value="be">Belgique</option><option value="ch">Suisse</option><option value="es">Espagne</option><option value="de">Allemagne</option><option value="lu">Luxembourg</option><option value="ca">Canada</option><option value="other">Autre pays</option></select></div>
       <div class="fld"><label>Email</label><input value="marc.dubois@gmail.com"></div>
-      <div class="fld"><label>Téléphone</label><input placeholder="06 12 34 56 78"></div>
-      <div class="fld full"><label>Adresse</label><input placeholder="12 rue des Lilas, 75011 Paris"></div>
-      <div class="fld only-pro"><label>SIRET <span style="color:var(--gold-l)">(requis pour être payé)</span></label><input placeholder="123 456 789 00012"></div>
-      <div class="fld only-soc" style="display:none"><label>N° TVA intracom</label><input placeholder="FR..."></div>
+      <div class="fld"><label>Téléphone</label><input placeholder="+33 6 12 34 56 78"></div>
+      <div class="fld full"><label>Adresse</label><input placeholder="Rue, code postal, ville, pays"></div>
+      <div class="fld only-pro"><label id="idlabel">Numéro d'entreprise <span style="color:var(--gold-l)">(requis pour être payé)</span></label><input id="idnum" placeholder="SIRET, company number, etc."></div>
+      <div class="fld only-soc" style="display:none"><label>Numéro de TVA (si applicable)</label><input placeholder="FR..., GB..., etc."></div>
     </div>
   </div>
 
@@ -309,7 +310,7 @@ td.r,th.r{text-align:right}
         <tr><td>Commissions d'affiliation · juillet 2026</td><td style="text-align:right">59,10 €</td></tr>
       </table>
       <div class="tot">Total à payer : 59,10 €</div>
-      <div class="leg">TVA non applicable, art. 293 B du CGI (si auto-entrepreneur). Règlement par virement sur l'IBAN indiqué au profil.</div>
+      <div class="leg">Mentions de TVA selon ton pays et ton statut (ex. France : TVA non applicable, art. 293 B du CGI ; UE hors France : autoliquidation ; hors UE : hors champ TVA). Règlement par virement (IBAN) ou PayPal indiqué au profil.</div>
     </div>
     <button class="btn" onclick="alert('(Démo) Ici : génération et téléchargement du PDF de la facture.')">Télécharger le PDF</button>
   </div>
@@ -350,6 +351,15 @@ function applyStatut(st){
 }
 var _ss=document.getElementById('statutSeg');
 if(_ss){ _ss.addEventListener('click',function(e){var b=e.target.closest('.s'); if(!b)return; applyStatut(b.getAttribute('data-st'));}); applyStatut('ae'); }
+
+// Pays -> adapte le libelle de l'identifiant d'entreprise
+var _pays=document.getElementById('paysSel');
+function applyPays(){ if(!_pays)return; var v=_pays.value;
+ var m={fr:['SIRET','123 456 789 00012'],uk:['Company number','12345678'],be:['Numero entreprise (BCE)','0123.456.789'],ch:['Numero IDE','CHE-123.456.789'],es:['NIF / CIF','B12345678'],de:['USt-IdNr. / Steuernummer','DE123456789'],lu:['Numero TVA','LU12345678'],ca:['Business Number (BN)','123456789 RT0001'],other:['Numero entreprise / identifiant fiscal','']};
+ var x=m[v]||m.other; var lab=document.getElementById('idlabel'), inp=document.getElementById('idnum');
+ if(lab) lab.innerHTML=x[0]+' <span style="color:#f7c948">(requis pour etre paye)</span>'; if(inp) inp.placeholder=x[1];
+}
+if(_pays){ _pays.addEventListener('change',applyPays); applyPays(); }
 </script>
 </body>
 </html>
