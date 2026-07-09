@@ -242,7 +242,7 @@ td.r,th.r{text-align:right}
   <div class="section">
     <h2>Ton statut</h2>
     <p class="hint">C'est TOI qui factures Speed Ecom pour tes commissions. Ton statut détermine ce qui apparaît sur ta facture.</p>
-    <div class="seg"><span class="s">Particulier</span><span class="s active">Auto-entrepreneur</span><span class="s">Société</span></div>
+    <div class="seg" id="statutSeg"><span class="s" data-st="part">Particulier</span><span class="s active" data-st="ae">Auto-entrepreneur</span><span class="s" data-st="soc">Société</span></div>
     <p class="note" style="margin-top:14px">Pour être payé, tu dois pouvoir émettre une facture. Le plus simple : le statut <b style="color:var(--txt)">auto-entrepreneur</b> (gratuit, 10 min en ligne, tu obtiens un numéro SIRET). Un simple particulier sans statut ne peut pas recevoir de commissions de façon régulière : pas de versement tant que le statut n'est pas créé.</p>
   </div>
 
@@ -255,14 +255,16 @@ td.r,th.r{text-align:right}
         <div style="font-size:12px;color:var(--txt3);margin-top:6px">JPG ou PNG, 2 Mo max. Optionnel.</div>
       </div>
     </div>
+    <div id="partWarn" style="display:none;background:#2a2410;border:1px solid #6b5410;color:var(--amber);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px">En tant que simple particulier sans statut, tu ne peux pas être payé. Déclare-toi en auto-entrepreneur (gratuit, 10 min en ligne) pour recevoir tes commissions.</div>
     <div class="frm">
+      <div class="fld full only-soc" style="display:none"><label>Raison sociale</label><input placeholder="Ma Société SAS"></div>
       <div class="fld"><label>Prénom</label><input value="Marc"></div>
       <div class="fld"><label>Nom</label><input value="Dubois"></div>
       <div class="fld"><label>Email</label><input value="marc.dubois@gmail.com"></div>
       <div class="fld"><label>Téléphone</label><input placeholder="06 12 34 56 78"></div>
       <div class="fld full"><label>Adresse</label><input placeholder="12 rue des Lilas, 75011 Paris"></div>
-      <div class="fld"><label>SIRET (si auto-entrepreneur / société)</label><input placeholder="123 456 789 00012"></div>
-      <div class="fld"><label>N° TVA intracom (si société)</label><input placeholder="FR..."></div>
+      <div class="fld only-pro"><label>SIRET <span style="color:var(--gold-l)">(requis pour être payé)</span></label><input placeholder="123 456 789 00012"></div>
+      <div class="fld only-soc" style="display:none"><label>N° TVA intracom</label><input placeholder="FR..."></div>
     </div>
   </div>
 
@@ -338,6 +340,16 @@ document.getElementById('simprods').addEventListener('click',function(e){var b=e
 sim();
 // seg toggles (statut, paiement)
 document.querySelectorAll('.seg').forEach(function(g){g.addEventListener('click',function(e){if(!e.target.classList.contains('s'))return;g.querySelectorAll('.s').forEach(function(x){x.classList.remove('active')});e.target.classList.add('active');});});
+
+// Profil : les champs s'adaptent au statut choisi
+function applyStatut(st){
+ var pro=(st==='ae'||st==='soc');
+ document.querySelectorAll('.only-pro').forEach(function(e){e.style.display=pro?'flex':'none';});
+ document.querySelectorAll('.only-soc').forEach(function(e){e.style.display=(st==='soc')?'flex':'none';});
+ var w=document.getElementById('partWarn'); if(w) w.style.display=(st==='part')?'block':'none';
+}
+var _ss=document.getElementById('statutSeg');
+if(_ss){ _ss.addEventListener('click',function(e){var b=e.target.closest('.s'); if(!b)return; applyStatut(b.getAttribute('data-st'));}); applyStatut('ae'); }
 </script>
 </body>
 </html>
