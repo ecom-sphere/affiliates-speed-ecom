@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace affilié Speed Ecom · proposition (données de démo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#e8a800;--gold-l:#f7c948;--navy:#0a0e1a;--card:#121a2e;--card2:#0e1626;--line:#22304d;--txt:#e9edf6;--txt2:#aab3c6;--txt3:#6f7a92;--green:#34d399;--greenbg:#0e2c22;--amber:#fbbf24;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#070b14;color:var(--txt);-webkit-font-smoothing:antialiased;line-height:1.5}
+.demo-flag{background:var(--gold);color:var(--navy);text-align:center;font-size:12.5px;font-weight:800;padding:7px;letter-spacing:.02em}
+.top{background:var(--navy);border-bottom:1px solid var(--line);padding:14px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.top .brand{display:flex;align-items:center;gap:12px}
+.top img{height:26px}
+.top .badge{background:rgba(232,168,0,.14);color:var(--gold-l);border:1px solid rgba(232,168,0,.3);font-size:11px;font-weight:800;letter-spacing:.12em;padding:3px 9px;border-radius:999px}
+.top .right{display:flex;align-items:center;gap:16px;color:var(--txt2);font-size:13.5px}
+.top .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#b97e00);color:var(--navy);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.wrap{max-width:1080px;margin:0 auto;padding:30px 26px 70px}
+.hello h1{font-size:26px;font-weight:800;letter-spacing:-.4px}
+.hello .sub{color:var(--txt2);font-size:14px;margin-top:5px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chip{background:#0e1626;border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:12.5px;color:var(--txt);font-weight:700;letter-spacing:1px}
+.hero{margin:22px 0;background:linear-gradient(135deg,#101a30,#0b1220);border:1px solid var(--line);border-radius:18px;padding:26px 28px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:22px}
+.hero .big .l{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--txt3);font-weight:700}
+.hero .big .v{font-size:44px;font-weight:900;letter-spacing:-1px;background:linear-gradient(120deg,var(--gold-l),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.05;margin-top:6px}
+.hero .big .d{color:var(--txt3);font-size:12.5px;margin-top:4px}
+.hero .mini .l{font-size:11.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.hero .mini .v{font-size:22px;font-weight:800;margin-top:4px}
+.v.amber{color:var(--amber)} .v.green{color:var(--green)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:16px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.kpi.act{border-color:rgba(232,168,0,.4);box-shadow:0 0 0 1px rgba(232,168,0,.15) inset}
+.kpi .l{font-size:11.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.kpi .v{font-size:28px;font-weight:800;margin-top:6px}
+.kpi .d{font-size:12px;color:var(--txt3);margin-top:3px}
+.section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:16px 0}
+.section h2{font-size:16px;font-weight:800;margin-bottom:4px}
+.section .hint{font-size:13px;color:var(--txt2);margin-bottom:16px}
+.payout{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.bar{flex:1;min-width:220px;height:12px;background:#0a1120;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.bar > i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l))}
+.payout .amt{font-weight:800;font-size:18px;color:var(--gold-l)}
+.chart{display:flex;align-items:flex-end;gap:6px;height:150px;padding-top:8px}
+.chart .col{flex:1;background:linear-gradient(180deg,var(--gold),#a06f00);border-radius:4px 4px 0 0;position:relative;min-width:5px;opacity:.9}
+.chart .col:hover{opacity:1}
+.chart-x{display:flex;justify-content:space-between;color:var(--txt3);font-size:11px;margin-top:8px}
+.linkrow{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.linkrow:last-child{border-bottom:none}
+.linkrow .ico{width:38px;height:38px;border-radius:10px;background:#0e1626;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--gold);flex:none}
+.linkrow .info{flex:1;min-width:0}
+.linkrow .nm{font-weight:700;font-size:14.5px}
+.linkrow .cm{font-size:12.5px;color:var(--txt2)}
+.linkrow .url{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--txt3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.copy{background:var(--gold);color:var(--navy);border:none;border-radius:9px;padding:9px 15px;font-weight:800;font-size:13px;cursor:pointer;flex:none}
+.copy:active{transform:translateY(1px)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--txt3);font-weight:700}
+td.r,th.r{text-align:right}
+.pill{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px}
+.pill.att{background:#2a2410;color:var(--amber)} .pill.val{background:var(--greenbg);color:var(--green)} .pill.pay{background:#0e1e2c;color:#5eb3e6}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sub-detail{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:#0e1626;border:1px solid var(--line);border-radius:11px;margin-bottom:10px}
+.sub-detail .tag{font-size:11px;font-weight:800;padding:2px 8px;border-radius:6px}
+.tag.cap{background:#2a2410;color:var(--amber)} .tag.inf{background:var(--greenbg);color:var(--green)}
+.sim{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+.sim label{font-size:12.5px;color:var(--txt2);display:block;margin-bottom:6px}
+.sim input[type=range]{width:100%;accent-color:var(--gold)}
+.sim .out{background:linear-gradient(135deg,#101a30,#0b1220);border:1px solid var(--line);border-radius:14px;padding:20px 22px;text-align:center}
+.sim .out .l{font-size:12px;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.sim .out .v{font-size:34px;font-weight:900;color:var(--gold-l);margin-top:4px}
+.sim .out .d{font-size:12.5px;color:var(--txt3);margin-top:4px}
+.note{font-size:12.5px;color:var(--txt3);margin-top:14px}
+.simprods{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.sp{background:#0e1626;border:1px solid var(--line);color:var(--txt2);font-weight:700;font-size:12.5px;padding:8px 13px;border-radius:9px;cursor:pointer}
+.sp.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+@media(max-width:820px){.hero{grid-template-columns:1fr 1fr}.grid4{grid-template-columns:1fr 1fr}.two,.sim{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="demo-flag">APERÇU LIVE · nouvel espace affilié · données de démonstration (affilié fictif "Marc")</div>
+<div class="top">
+  <div class="brand"><img src="https://speed-ecom.eu/logo-speed-ecom.png" alt="Speed Ecom"><span class="badge">AFFILIÉS</span></div>
+  <div class="right"><span class="av">MD</span><span>Marc Dubois</span><span style="color:var(--txt3)">Déconnexion</span></div>
+</div>
+
+<div class="wrap">
+  <div class="hello">
+    <h1>Bonjour Marc</h1>
+    <div class="sub">Code affilié <span class="chip">7XK2M9</span> · Membre depuis mars 2026 · Cookie 60 jours</div>
+  </div>
+
+  <div class="hero">
+    <div class="big">
+      <div class="l">Total gagné</div>
+      <div class="v">486,30 €</div>
+      <div class="d">Depuis le début de ton affiliation</div>
+    </div>
+    <div class="mini"><div class="l">À valider (J+30)</div><div class="v amber">147,00 €</div></div>
+    <div class="mini"><div class="l">Validé (dispo)</div><div class="v green">59,10 €</div></div>
+    <div class="mini"><div class="l">Déjà payé</div><div class="v">280,20 €</div></div>
+  </div>
+
+  <div class="grid4">
+    <div class="kpi act"><div class="l">Clics (30 j)</div><div class="v">214</div><div class="d">via tes liens</div></div>
+    <div class="kpi"><div class="l">Ventes</div><div class="v">12</div><div class="d">conversions</div></div>
+    <div class="kpi"><div class="l">Taux conv.</div><div class="v">5,6 %</div><div class="d">clic → vente</div></div>
+    <div class="kpi"><div class="l">Récurrent</div><div class="v">47,70 €</div><div class="d">par mois estimé</div></div>
+  </div>
+
+  <div class="section">
+    <h2>Ton prochain versement</h2>
+    <p class="hint">On te paie dès que ton solde validé atteint 50 €, le 1er du mois. Ça remplace l'ancien "Objectif du mois" qui n'était pas clair.</p>
+    <div class="payout">
+      <div class="bar"><i></i></div>
+      <div class="amt">59,10 € prêts</div>
+    </div>
+    <p class="note">Seuil de 50 € atteint. Ton prochain versement de <b style="color:var(--txt)">59,10 €</b> part le <b style="color:var(--txt)">1er août</b> sur ton PayPal. Les 147 € en cours de validation s'ajouteront une fois le délai J+30 passé.</p>
+  </div>
+
+  <div class="section">
+    <h2>Performance · 30 derniers jours</h2>
+    <p class="hint">Tes clics jour par jour. (Vue "Commissions" disponible en un clic.)</p>
+    <div class="chart" id="chart"></div>
+    <div class="chart-x"><span>Il y a 30 j</span><span>Il y a 20 j</span><span>Il y a 10 j</span><span>Aujourd'hui</span></div>
+  </div>
+
+  <div class="section">
+    <h2>Tes liens de partage</h2>
+    <p class="hint">Commission 30 % sur chaque vente. Cookie valide 60 jours après le clic : si ton filleul revient acheter jusqu'à 2 mois plus tard, tu touches quand même.</p>
+    <div class="linkrow"><div class="ico">S</div><div class="info"><div class="nm">Speedfly <span style="color:var(--gold-l)">· 8,10 à 119,10 €</span></div><div class="url">speed-ecom.eu/speedfly?ref=7XK2M9</div></div><button class="copy" onclick="cp(this,'https://speed-ecom.eu/speedfly?ref=7XK2M9')">Copier</button></div>
+    <div class="linkrow"><div class="ico">E</div><div class="info"><div class="nm">Ecom Sphere <span style="color:var(--gold-l)">· 14,70 €/mois récurrent</span></div><div class="url">speed-ecom.eu/ecom-sphere?ref=7XK2M9</div></div><button class="copy" onclick="cp(this,'https://speed-ecom.eu/ecom-sphere?ref=7XK2M9')">Copier</button></div>
+    <div class="linkrow"><div class="ico">P</div><div class="info"><div class="nm">Plan de lancement <span style="color:var(--gold-l)">· 8,70 €</span></div><div class="url">speed-ecom.eu/commander-plan?ref=7XK2M9</div></div><button class="copy" onclick="cp(this,'https://speed-ecom.eu/commander-plan?ref=7XK2M9')">Copier</button></div>
+    <div class="linkrow"><div class="ico">A</div><div class="info"><div class="nm">Audit de boutique <span style="color:var(--gold-l)">· 14,70 €</span></div><div class="url">speed-ecom.eu/analyse-de-boutique-audit-seo?ref=7XK2M9</div></div><button class="copy" onclick="cp(this,'https://speed-ecom.eu/analyse-de-boutique-audit-seo?ref=7XK2M9')">Copier</button></div>
+    <p class="note">Personnalise ton lien : <span class="chip" style="letter-spacing:0">ref=marc-ecom</span> au lieu du code, plus facile à partager.</p>
+  </div>
+
+  <div class="two">
+    <div class="section">
+      <h2>Tes abonnements récurrents</h2>
+      <p class="hint">La distinction importante : Speedfly est plafonné, Ecom Sphere ne l'est pas.</p>
+      <div class="sub-detail"><div><b>3 × Speedfly mensuel</b><div style="font-size:12px;color:var(--txt3)">8,10 €/mois chacun</div></div><span class="tag cap">plafonné 6 mois</span></div>
+      <div class="sub-detail"><div><b>2 × Ecom Sphere</b><div style="font-size:12px;color:var(--txt3)">14,70 €/mois chacun</div></div><span class="tag inf">récurrent illimité</span></div>
+      <p class="note">Total récurrent ce mois : <b style="color:var(--txt)">47,70 €</b>. Les Speedfly s'arrêtent après 6 mois par filleul ; les Ecom Sphere continuent tant que ton filleul reste abonné.</p>
+    </div>
+    <div class="section">
+      <h2>Par produit</h2>
+      <p class="hint">D'où viennent tes gains.</p>
+      <table>
+        <tr><th>Produit</th><th class="r">Ventes</th><th class="r">Gagné</th></tr>
+        <tr><td>Speedfly</td><td class="r">6</td><td class="r">331,80 €</td></tr>
+        <tr><td>Ecom Sphere</td><td class="r">2</td><td class="r">88,20 €</td></tr>
+        <tr><td>Plan de lancement</td><td class="r">3</td><td class="r">26,10 €</td></tr>
+        <tr><td>Audit de boutique</td><td class="r">1</td><td class="r">14,70 €</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Historique des commissions</h2>
+    <p class="hint">Chaque vente, son statut. En attente = délai anti-remboursement J+30, puis Validé, puis Payé.</p>
+    <table>
+      <tr><th>Date</th><th>Produit</th><th>Client</th><th class="r">Commission</th><th class="r">Statut</th></tr>
+      <tr><td>18 juil.</td><td>Speedfly annuel</td><td>l***@gmail.com</td><td class="r">59,10 €</td><td class="r"><span class="pill att">En attente</span></td></tr>
+      <tr><td>12 juil.</td><td>Audit de boutique</td><td>s***@outlook.fr</td><td class="r">14,70 €</td><td class="r"><span class="pill att">En attente</span></td></tr>
+      <tr><td>9 juil.</td><td>Ecom Sphere</td><td>m***@gmail.com</td><td class="r">14,70 €</td><td class="r"><span class="pill att">En attente</span></td></tr>
+      <tr><td>2 juil.</td><td>Speedfly Lifetime</td><td>k***@icloud.com</td><td class="r">119,10 €</td><td class="r"><span class="pill val">Validé</span></td></tr>
+      <tr><td>1 juin</td><td>Speedfly annuel</td><td>a***@gmail.com</td><td class="r">59,10 €</td><td class="r"><span class="pill pay">Payé</span></td></tr>
+      <tr><td>1 juin</td><td>Plan de lancement</td><td>j***@gmail.com</td><td class="r">8,70 €</td><td class="r"><span class="pill pay">Payé</span></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Simulateur de gains</h2>
+    <p class="hint">Choisis un produit, mets ton nombre de ventes par mois. Tu vois la commission exacte de ce produit et ce que ça donne. (Intégré ici, plus de nouvel onglet.)</p>
+    <div class="simprods" id="simprods">
+      <button class="sp active" data-k="sfa">Speedfly annuel</button>
+      <button class="sp" data-k="sfm">Speedfly mensuel</button>
+      <button class="sp" data-k="sfl">Speedfly Lifetime</button>
+      <button class="sp" data-k="es">Ecom Sphere</button>
+      <button class="sp" data-k="pl">Plan de lancement</button>
+      <button class="sp" data-k="au">Audit boutique</button>
+    </div>
+    <div class="sim">
+      <div>
+        <label>Ventes par mois : <b id="nv" style="color:var(--txt)">10</b></label>
+        <input type="range" id="rg" min="0" max="30" value="10" oninput="sim()">
+        <p class="note" id="simnote"></p>
+      </div>
+      <div class="out">
+        <div class="l">Commission par vente</div>
+        <div class="v" id="simper" style="font-size:24px">59,10 €</div>
+        <div class="l" style="margin-top:14px" id="siml2">Tu gagnes</div>
+        <div class="v" id="simv">591 €</div>
+        <div class="d" id="simd">par mois</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// chart demo data
+var d=[6,9,4,11,7,14,9,5,12,8,17,10,6,13,9,21,11,7,15,9,24,13,8,16,12,19,14,10,22,17];
+var mx=Math.max.apply(null,d), ch=document.getElementById('chart');
+d.forEach(function(v){var c=document.createElement('div');c.className='col';c.style.height=(14+(v/mx)*86)+'%';c.title=v+' clics';ch.appendChild(c);});
+function cp(b,u){navigator.clipboard&&navigator.clipboard.writeText(u);var t=b.textContent;b.textContent='Copié';setTimeout(function(){b.textContent=t},1200);}
+var PRODS={
+ sfa:{name:'Speedfly annuel',per:59.10,type:'oneshot'},
+ sfm:{name:'Speedfly mensuel',per:8.10,type:'capped',cap:6},
+ sfl:{name:'Speedfly Lifetime',per:119.10,type:'oneshot'},
+ es:{name:'Ecom Sphere',per:14.70,type:'recur'},
+ pl:{name:'Plan de lancement',per:8.70,type:'oneshot'},
+ au:{name:'Audit boutique',per:14.70,type:'oneshot'}
+};
+var simKey='sfa';
+function eur(x){return x.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';}
+function eur0(x){return Math.round(x).toLocaleString('fr-FR')+' €';}
+function sim(){
+ var n=+document.getElementById('rg').value; document.getElementById('nv').textContent=n;
+ var p=PRODS[simKey];
+ var rec=(p.type==='capped'||p.type==='recur');
+ document.getElementById('simper').textContent=eur(p.per)+(rec?' / mois':'');
+ var v,d,l2,note;
+ if(p.type==='oneshot'){
+   v=n*p.per; l2='Tu gagnes'; d='par mois';
+   note='Commission unique de '+eur(p.per)+' par vente. '+n+' ventes/mois = '+eur0(v)+' ce mois-ci.';
+ } else if(p.type==='capped'){
+   v=n*p.per*p.cap; l2='En rythme de croisière'; d='par mois (après '+p.cap+' mois)';
+   note='Récurrent plafonné '+p.cap+' mois : '+eur(p.per)+'/mois par filleul, soit '+eur(p.per*p.cap)+' au total par filleul. En recrutant '+n+'/mois, ton récurrent grimpe jusqu\'à ~'+eur0(v)+'/mois puis se stabilise.';
+ } else {
+   v=n*p.per; l2='Récurrent ajouté'; d='chaque mois, sans limite';
+   note='Récurrent SANS plafond : chaque mois tu ajoutes '+eur0(v)+' de revenu qui continue tant que ton filleul reste abonné. Au bout de 12 mois à ce rythme : ~'+eur0(n*p.per*12)+'/mois.';
+ }
+ document.getElementById('simv').textContent=eur0(v);
+ document.getElementById('siml2').textContent=l2;
+ document.getElementById('simd').textContent=d;
+ document.getElementById('simnote').textContent=note;
+}
+document.getElementById('simprods').addEventListener('click',function(e){
+ var b=e.target.closest('.sp'); if(!b) return;
+ document.querySelectorAll('.sp').forEach(function(x){x.classList.remove('active')});
+ b.classList.add('active'); simKey=b.getAttribute('data-k'); sim();
+});
+sim();
+</script>
+</body>
+</html>
