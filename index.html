@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Programme Affilié · Speed Ecom</title>
+  <meta name="description" content="Programme d'affiliation Speed Ecom : commissions récurrentes sur Speedfly et Ecom Sphere, suivi des clics et paiements dans un dashboard dédié." />
+  <link rel="canonical" href="https://affiliates.speed-ecom.eu/" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -467,7 +469,7 @@
       </div>
       <div class="auth-product">
         <div class="auth-product-info">
-          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="currentColor" class="ico-gold"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5z"/></svg>Speedfly Lifetime</p>
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5z"/></svg>Speedfly Lifetime</p>
           <p class="auth-product-price">Paiement unique 397€</p>
         </div>
         <div class="auth-product-commission">
@@ -1053,7 +1055,7 @@
     document.getElementById('user-avatar').textContent = aff.name.charAt(0).toUpperCase();
     document.getElementById('user-name').textContent   = aff.email;
 
-    document.getElementById('dash-greeting').innerHTML = 'Bonjour, <strong>' + aff.name.replace(/<[^>]*>/g,'').split(' ')[0] + '</strong>';
+    document.getElementById('dash-greeting').innerHTML = 'Bonjour, <strong>' + aff.name.replace(/<[^>]*>/g,'').split(' ')[0] + '</strong>';
     document.getElementById('dash-sub').innerHTML =
       'Code affilié : <span class="code-inline">' + aff.code + '</span> · Membre depuis le ' + fmtDate(aff.createdAt);
 
