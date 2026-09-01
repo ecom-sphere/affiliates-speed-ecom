@@ -293,7 +293,7 @@
   <div class="auth-brand">
     <p class="auth-brand-eyebrow">Programme Affilié</p>
     <h1 class="auth-brand-title">Gagnez <span>30%</span><br>sur chaque vente</h1>
-    <p class="auth-brand-sub">Partagez Speedfly et Ecom Sphere.<br>Touchez une commission à chaque achat.</p>
+    <p class="auth-brand-sub">Partagez Speedfly et La Sphère.<br>Touchez une commission à chaque achat.</p>
 
     <p class="auth-products-title">Vos commissions : 30% sur tout</p>
     <div class="auth-products">
@@ -329,12 +329,12 @@
       </div>
       <div class="auth-product">
         <div class="auth-product-info">
-          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>Ecom Sphere</p>
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>La Sphère</p>
           <p class="auth-product-price">Communauté 49€/mois</p>
         </div>
         <div class="auth-product-commission">
           <p class="auth-product-amount">14,70€</p>
-          <p class="auth-product-freq">par mois récurrent</p>
+          <p class="auth-product-freq">tant qu'il reste abonné</p>
         </div>
       </div>
       <div class="auth-product">
@@ -376,7 +376,7 @@
       </div>
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
-        Commissions récurrentes jusqu'à 6 mois sur les abonnements
+        La Sphère : 30 % chaque mois tant que le membre reste abonné
       </div>
     </div>
   </div>
@@ -816,7 +816,7 @@
     var base  = 'https://speed-ecom.eu';
     var links = [
       { label: 'Speedfly',    url: base + '/speedfly?ref='     + ref },
-      { label: 'Ecom Sphere', url: base + '/ecom-sphere?ref='  + ref },
+      { label: 'La Sphère', url: base + '/ecom-sphere?ref='  + ref },
       { label: 'Plan de lancement', url: 'https://buy.stripe.com/00w6oG86leG10kAcG53AY11?client_reference_id=' + ref },
     ];
     document.getElementById('aff-code').textContent = ref;
@@ -893,7 +893,7 @@
     var products = [
       { id: 'speedfly-v6',          name: 'Speedfly',          sub: 'Abonnement 27€/mois ou 197€/an' },
       { id: 'speedfly-v6-lifetime', name: 'Speedfly Lifetime', sub: 'Paiement unique 397€' },
-      { id: 'ecom-sphere',          name: 'Ecom Sphere',       sub: 'Abonnement 49€/mois' },
+      { id: 'ecom-sphere',          name: 'La Sphère',         sub: 'Abonnement 49€/mois' },
     ];
     grid.innerHTML = '';
     products.forEach(function(p){

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Programme Affilié · Speed Ecom</title>
-  <meta name="description" content="Programme d'affiliation Speed Ecom : commissions récurrentes sur Speedfly et Ecom Sphere, suivi des clics et paiements dans un dashboard dédié." />
+  <meta name="description" content="Programme d'affiliation Speed Ecom : commissions sur Speedfly et La Sphère, suivi des clics et paiements dans un espace dédié." />
   <link rel="canonical" href="https://affiliates.speed-ecom.eu/" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -443,7 +443,7 @@
   <div class="auth-brand">
     <p class="auth-brand-eyebrow">Programme Affilié</p>
     <h1 class="auth-brand-title">Gagnez <span>30%</span><br>sur chaque vente</h1>
-    <p class="auth-brand-sub">Partagez Speedfly et Ecom Sphere.<br>Touchez une commission à chaque achat.</p>
+    <p class="auth-brand-sub">Partagez Speedfly et La Sphère.<br>Touchez une commission à chaque achat.</p>
 
     <p class="auth-products-title">Vos commissions : 30% sur tout</p>
     <div class="auth-products">
@@ -479,12 +479,12 @@
       </div>
       <div class="auth-product">
         <div class="auth-product-info">
-          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>Ecom Sphere</p>
+          <p class="auth-product-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ico-gold"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>La Sphère</p>
           <p class="auth-product-price">Communauté 49€/mois</p>
         </div>
         <div class="auth-product-commission">
           <p class="auth-product-amount">14,70€</p>
-          <p class="auth-product-freq">par mois récurrent</p>
+          <p class="auth-product-freq">tant qu'il reste abonné</p>
         </div>
       </div>
       <div class="auth-product">
@@ -526,7 +526,7 @@
       </div>
       <div class="auth-feature">
         <div class="auth-feature-icon"><svg viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3"/></svg></div>
-        Commissions récurrentes jusqu'à 6 mois sur les abonnements
+        La Sphère : 30 % chaque mois tant que le membre reste abonné
       </div>
     </div>
   </div>
@@ -767,7 +767,7 @@
             <button type="button" class="aff-sp active" onclick="affSimPick('sfa',this)">Speedfly annuel</button>
             <button type="button" class="aff-sp" onclick="affSimPick('sfm',this)">Speedfly mensuel</button>
             <button type="button" class="aff-sp" onclick="affSimPick('sfl',this)">Speedfly Lifetime</button>
-            <button type="button" class="aff-sp" onclick="affSimPick('es',this)">Ecom Sphere</button>
+            <button type="button" class="aff-sp" onclick="affSimPick('es',this)">La Sphère</button>
             <button type="button" class="aff-sp" onclick="affSimPick('pl',this)">Plan de lancement</button>
             <button type="button" class="aff-sp" onclick="affSimPick('au',this)">Audit boutique</button>
           </div>
@@ -782,7 +782,7 @@
               <div class="l" style="margin-top:14px" id="sim-l2">Tu gagnes</div><div class="v" id="sim-v">591 &euro;</div><div class="d" id="sim-d">par mois</div>
             </div>
           </div>
-          <p class="aff-note"><b style="color:#e7ecf5">Récurrent, la différence à connaître :</b> les commissions <b>Speedfly mensuel</b> sont <b style="color:#fbbf24">plafonnées à 6 mois</b> par filleul (8,10 &euro;/mois &times; 6 = 48,60 &euro; au total par filleul). <b>Ecom Sphere</b> est <b style="color:#34d399">récurrent SANS limite</b> : 14,70 &euro;/mois à vie tant que ton filleul reste abonné.</p>
+          <p class="aff-note"><b style="color:#e7ecf5">Récurrent, la différence à connaître :</b> les commissions <b>Speedfly mensuel</b> sont <b style="color:#fbbf24">plafonnées à 6 mois</b> par filleul (8,10 &euro;/mois &times; 6 = 48,60 &euro; au total par filleul). <b>La Sphère</b> rapporte <b style="color:#34d399">14,70 &euro; chaque mois</b>, sans limite tant que ton filleul reste abonné.</p>
         </div>
 
         <div class="aff-sec">
@@ -1099,7 +1099,7 @@
     var base  = 'https://speed-ecom.eu';
     var links = [
       { label: 'Speedfly',    url: base + '/speedfly?ref='     + ref },
-      { label: 'Ecom Sphere', url: base + '/ecom-sphere?ref='  + ref },
+      { label: 'La Sphère', url: base + '/ecom-sphere?ref='  + ref },
       { label: 'Plan de lancement', url: 'https://buy.stripe.com/00w6oG86leG10kAcG53AY11?client_reference_id=' + ref },
     ];
     document.getElementById('aff-code').textContent = ref;
@@ -1124,7 +1124,7 @@
       Object.values(uniqueSubs).forEach(function(c){
         var item = document.createElement('div');
         item.className = 'sub-item';
-        item.innerHTML = '<div><p class="sub-product">' + c.productName + '</p>' +
+        item.innerHTML = '<div><p class="sub-product">' + displayProductName(c.productName) + '</p>' +
           '<p class="sub-date">Depuis le ' + fmtDate(c.createdAt) + '</p></div>' +
           '<p class="sub-amount">+' + fmtEur(c.commissionAmountCents/100) + '/mois</p>';
         sl.appendChild(item);
@@ -1142,7 +1142,7 @@
       stats.commissions.forEach(function(c){
         var tr = document.createElement('tr');
         tr.innerHTML = '<td>' + fmtDate(c.createdAt) + '</td>' +
-          '<td>' + c.productName + (c.isRecurring ? ' <span class="recurring-tag">récurrent</span>' : '') + '</td>' +
+          '<td>' + displayProductName(c.productName) + (c.isRecurring ? ' <span class="recurring-tag">récurrent</span>' : '') + '</td>' +
           '<td>' + fmtEur(c.saleAmountCents/100) + '</td>' +
           '<td style="font-weight:700">' + fmtEur(c.commissionAmountCents/100) + '</td>' +
           '<td>' + badge(c.status) + '</td>' +
@@ -1176,7 +1176,7 @@
     var products = [
       { id: 'speedfly-v6',          name: 'Speedfly',          sub: 'Abonnement 27€/mois ou 197€/an' },
       { id: 'speedfly-v6-lifetime', name: 'Speedfly Lifetime', sub: 'Paiement unique 397€' },
-      { id: 'ecom-sphere',          name: 'Ecom Sphere',       sub: 'Abonnement 49€/mois' },
+      { id: 'ecom-sphere',          name: 'La Sphère',         sub: 'Abonnement 49€/mois' },
     ];
     grid.innerHTML = '';
     products.forEach(function(p){
@@ -1245,6 +1245,9 @@
 
   function fmtEur(v) {
     return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 }).format(v || 0);
+  }
+  function displayProductName(name) {
+    return /^ecom sphere$/i.test(String(name || '').trim()) ? 'La Sphère' : name;
   }
   function fmtDate(d) {
     return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
@@ -1355,7 +1358,7 @@
       note = 'Récurrent PLAFONNÉ '+p.cap+' mois : '+affEur(p.per)+'/mois par filleul, soit '+affEur(p.per*p.cap)+' au total par filleul. En recrutant '+n+'/mois, ton récurrent grimpe jusqu\'à ~'+affEur0(v)+'/mois puis se stabilise.';
     } else {
       v = n*p.per; l2 = 'Récurrent ajouté'; d = 'chaque mois, sans limite';
-      note = 'Récurrent SANS plafond (à vie tant que le filleul reste abonné) : chaque mois tu ajoutes '+affEur0(v)+' de revenu récurrent. Au bout de 12 mois à ce rythme : ~'+affEur0(n*p.per*12)+'/mois.';
+      note = 'Récurrent sans limite tant que le filleul reste abonné : chaque mois tu ajoutes '+affEur0(v)+' de revenu récurrent. Au bout de 12 mois à ce rythme : ~'+affEur0(n*p.per*12)+'/mois.';
     }
     document.getElementById('sim-v').textContent = affEur0(v);
     document.getElementById('sim-l2').textContent = l2;
@@ -1559,7 +1562,7 @@
         subs.forEach(function(c){
           var item = document.createElement('div');
           item.className = 'sub-item';
-          item.innerHTML = '<div><p class="sub-product">' + (c.productName || 'Abonnement') + '</p>' +
+          item.innerHTML = '<div><p class="sub-product">' + displayProductName(c.productName || 'Abonnement') + '</p>' +
             '<p class="sub-date">Dernier paiement le ' + fmtDate(c.createdAt) + '</p></div>' +
             '<p class="sub-amount">+' + fmtEur((c.commissionAmountCents || 0)/100) + '/mois</p>';
           sl.appendChild(item);
@@ -1641,7 +1644,7 @@
     var products = [
       { id: 'speedfly-v6',          name: 'Speedfly',          sub: 'Abonnement 27€/mois ou 197€/an', always: true  },
       { id: 'speedfly-v6-lifetime', name: 'Speedfly Lifetime', sub: 'Paiement unique 397€',           always: true  },
-      { id: 'ecom-sphere',          name: 'Ecom Sphere',       sub: 'Abonnement 49€/mois',            always: true  },
+      { id: 'ecom-sphere',          name: 'La Sphère',         sub: 'Abonnement 49€/mois',            always: true  },
       { id: 'plan-lancement',       name: 'Plan de lancement', sub: 'Plan personnalisé 29€',          always: false },
       { id: 'audit-boutique',       name: 'Audit boutique',    sub: 'Audit Shopify 49€',              always: false },
       { id: 'speedfly',             name: 'Speedfly v5',       sub: 'Version historique 197€',        always: false }
