@@ -1098,15 +1098,16 @@
     var ref   = aff.slug || aff.code;
     var base  = 'https://speed-ecom.eu';
     var isCloser = aff.programType === 'CLOSER';
+    var isLudovic = isCloser && String(ref).toLowerCase() === 'ludovic';
     var links = isCloser
       ? [
           {
             label: 'La Sphère',
-            url: base + '/ecom-sphere/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=la-sphere&utm_content=' + encodeURIComponent(ref.toLowerCase())
+            url: isLudovic ? base + '/Ludo' : base + '/ecom-sphere/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=la-sphere&utm_content=' + encodeURIComponent(ref.toLowerCase())
           },
           {
             label: 'Speedfly',
-            url: base + '/speedfly/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=speedfly&utm_content=' + encodeURIComponent(ref.toLowerCase())
+            url: isLudovic ? base + '/Ludo-Speedfly' : base + '/speedfly/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=speedfly&utm_content=' + encodeURIComponent(ref.toLowerCase())
           }
         ]
       : [
