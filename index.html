@@ -1099,10 +1099,16 @@
     var base  = 'https://speed-ecom.eu';
     var isCloser = aff.programType === 'CLOSER';
     var links = isCloser
-      ? [{
-          label: 'La Sphère',
-          url: base + '/ecom-sphere/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=la-sphere&utm_content=' + encodeURIComponent(ref.toLowerCase())
-        }]
+      ? [
+          {
+            label: 'La Sphère',
+            url: base + '/ecom-sphere/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=la-sphere&utm_content=' + encodeURIComponent(ref.toLowerCase())
+          },
+          {
+            label: 'Speedfly',
+            url: base + '/speedfly/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=speedfly&utm_content=' + encodeURIComponent(ref.toLowerCase())
+          }
+        ]
       : [
           { label: 'Speedfly', url: base + '/speedfly?ref=' + encodeURIComponent(ref) },
           { label: 'La Sphère', url: base + '/ecom-sphere?ref=' + encodeURIComponent(ref) },
@@ -1112,7 +1118,7 @@
     if (commissionMeta) {
       var rate = isCloser ? Math.round((Number(aff.commissionRate) || 0.15) * 100) : 30;
       commissionMeta.innerHTML = isCloser
-        ? 'Commission closer : <strong>' + rate + '%</strong> sur La Sphère uniquement<br><span style="font-size:12px;color:#999">Attribution conservée 60 jours après le clic</span>'
+        ? 'Commission closer : <strong>' + rate + '%</strong> sur La Sphère et Speedfly<br><span style="font-size:12px;color:#999">Attribution conservée 60 jours après le clic</span>'
         : 'Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 60 jours après le clic</span>';
     }
     document.getElementById('aff-code').textContent = ref;
@@ -1537,7 +1543,7 @@
       window.updateAvatarPreview();
     }catch(e){ console.error(e); }
 
-    /* Les closers ont un programme distinct : 15 % sur La Sphère seulement. */
+    /* Les closers ont un programme distinct : 15 % sur La Sphère et Speedfly. */
     try{
       var closerAff = (stats && stats.affiliate) ? stats.affiliate : {};
       var isCloser = closerAff.programType === 'CLOSER';
@@ -1547,11 +1553,11 @@
       if(resourceShortcut && resourceShortcut.parentElement) resourceShortcut.parentElement.style.display = isCloser ? 'none' : '';
       if(isCloser){
         var dashSub = document.getElementById('dash-sub');
-        if(dashSub) dashSub.innerHTML = 'Code closer : <span class="code-inline">' + (closerAff.slug || closerAff.code) + '</span> · 15 % récurrents sur La Sphère';
+        if(dashSub) dashSub.innerHTML = 'Code closer : <span class="code-inline">' + (closerAff.slug || closerAff.code) + '</span> · 15 % sur La Sphère et Speedfly';
         var progressTitle = document.getElementById('progress-title');
         var progressMsg = document.getElementById('progress-msg');
-        if(progressTitle) progressTitle.textContent = 'Commissions La Sphère';
-        if(progressMsg) progressMsg.textContent = 'À plein tarif, une mensualité de 49 € encaissée génère 7,35 € de commission, après le délai anti-remboursement.';
+        if(progressTitle) progressTitle.textContent = 'Commissions closer';
+        if(progressMsg) progressMsg.textContent = 'Chaque paiement éligible génère 15 % de commission, après le délai anti-remboursement.';
       }
     }catch(e){ console.error(e); }
 
@@ -1681,7 +1687,7 @@
       { id: 'speedfly',             name: 'Speedfly v5',       sub: 'Version historique 197€',        always: false }
     ];
     if(window._lastStats && window._lastStats.affiliate && window._lastStats.affiliate.programType === 'CLOSER'){
-      products = products.filter(function(p){ return p.id === 'ecom-sphere'; });
+      products = products.filter(function(p){ return p.id === 'ecom-sphere' || p.id.indexOf('speedfly') === 0; });
     }
     grid.innerHTML = '';
     products.forEach(function(p){
