@@ -699,7 +699,7 @@
         <div class="links-card">
           <div class="code-display">
             <span class="code-badge" id="aff-code">·</span>
-            <div class="code-meta">Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 60 jours après le clic</span></div>
+            <div class="code-meta" id="commission-meta">Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 60 jours après le clic</span></div>
           </div>
           <div style="display:flex;gap:8px;align-items:center;margin:0 0 18px;flex-wrap:wrap">
             <span style="font-size:13px;color:var(--gray-600);font-weight:600">Personnalise ton lien :</span>
@@ -1097,11 +1097,24 @@
 
     var ref   = aff.slug || aff.code;
     var base  = 'https://speed-ecom.eu';
-    var links = [
-      { label: 'Speedfly',    url: base + '/speedfly?ref='     + ref },
-      { label: 'La Sphère', url: base + '/ecom-sphere?ref='  + ref },
-      { label: 'Plan de lancement', url: 'https://buy.stripe.com/00w6oG86leG10kAcG53AY11?client_reference_id=' + ref },
-    ];
+    var isCloser = aff.programType === 'CLOSER';
+    var links = isCloser
+      ? [{
+          label: 'La Sphère',
+          url: base + '/ecom-sphere/?ref=' + encodeURIComponent(ref) + '&utm_source=closer&utm_medium=closing&utm_campaign=la-sphere&utm_content=' + encodeURIComponent(ref.toLowerCase())
+        }]
+      : [
+          { label: 'Speedfly', url: base + '/speedfly?ref=' + encodeURIComponent(ref) },
+          { label: 'La Sphère', url: base + '/ecom-sphere?ref=' + encodeURIComponent(ref) },
+          { label: 'Plan de lancement', url: 'https://buy.stripe.com/00w6oG86leG10kAcG53AY11?client_reference_id=' + encodeURIComponent(ref) },
+        ];
+    var commissionMeta = document.getElementById('commission-meta');
+    if (commissionMeta) {
+      var rate = isCloser ? Math.round((Number(aff.commissionRate) || 0.15) * 100) : 30;
+      commissionMeta.innerHTML = isCloser
+        ? 'Commission closer : <strong>' + rate + '%</strong> sur La Sphère uniquement<br><span style="font-size:12px;color:#999">Attribution conservée 60 jours après le clic</span>'
+        : 'Commission : <strong>30%</strong> sur chaque vente<br><span style="font-size:12px;color:#999">Cookie valide 60 jours après le clic</span>';
+    }
     document.getElementById('aff-code').textContent = ref;
     var si = document.getElementById('slug-input'); if (si && !si.value) si.value = aff.slug || '';
     var ll = document.getElementById('links-list');
@@ -1524,6 +1537,24 @@
       window.updateAvatarPreview();
     }catch(e){ console.error(e); }
 
+    /* Les closers ont un programme distinct : 15 % sur La Sphère seulement. */
+    try{
+      var closerAff = (stats && stats.affiliate) ? stats.affiliate : {};
+      var isCloser = closerAff.programType === 'CLOSER';
+      var resourceTab = document.querySelector('.afftab-btn[data-tab="ressources"]');
+      if(resourceTab) resourceTab.style.display = isCloser ? 'none' : '';
+      var resourceShortcut = document.querySelector('a[href="#ressources"]');
+      if(resourceShortcut && resourceShortcut.parentElement) resourceShortcut.parentElement.style.display = isCloser ? 'none' : '';
+      if(isCloser){
+        var dashSub = document.getElementById('dash-sub');
+        if(dashSub) dashSub.innerHTML = 'Code closer : <span class="code-inline">' + (closerAff.slug || closerAff.code) + '</span> · 15 % récurrents sur La Sphère';
+        var progressTitle = document.getElementById('progress-title');
+        var progressMsg = document.getElementById('progress-msg');
+        if(progressTitle) progressTitle.textContent = 'Commissions La Sphère';
+        if(progressMsg) progressMsg.textContent = 'À plein tarif, une mensualité de 49 € encaissée génère 7,35 € de commission, après le délai anti-remboursement.';
+      }
+    }catch(e){ console.error(e); }
+
     /* Clics honnêtes : 30 jours dans le KPI, total en sous-texte */
     try{
       if(stats && stats.clicks30 != null){
@@ -1649,6 +1680,9 @@
       { id: 'audit-boutique',       name: 'Audit boutique',    sub: 'Audit Shopify 49€',              always: false },
       { id: 'speedfly',             name: 'Speedfly v5',       sub: 'Version historique 197€',        always: false }
     ];
+    if(window._lastStats && window._lastStats.affiliate && window._lastStats.affiliate.programType === 'CLOSER'){
+      products = products.filter(function(p){ return p.id === 'ecom-sphere'; });
+    }
     grid.innerHTML = '';
     products.forEach(function(p){
       var d = null;
@@ -1680,8 +1714,8 @@
         showDashError('Les données reçues sont incomplètes. Réessaie dans un instant.');
         return;
       }
-      _origRenderDash(stats, ts, bk);
       try{ window._lastStats = stats; window._tsData = ts; }catch(e){}
+      _origRenderDash(stats, ts, bk);
       try{ window.afterRender(stats); }catch(e){ console.error(e); }
     };
   }
