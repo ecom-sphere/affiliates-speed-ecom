@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /apercu-espace.html
+Disallow: /index-preview.html
+Disallow: /index-backup-dark-v1.html
+Disallow: /index-legacy-light.html
+
+Sitemap: https://affiliates.speed-ecom.eu/sitemap.xml
